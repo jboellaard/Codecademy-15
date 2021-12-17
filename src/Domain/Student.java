@@ -29,7 +29,6 @@ public class Student {
 
     @Override 
     public String toString(){
-        System.out.println("name");
         return this.name;
     }
     

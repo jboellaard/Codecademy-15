@@ -13,7 +13,6 @@ public class StudentRepo {
     public void create(Student student){
         // StudentRepo repo = new StudentRepo();
         // repo.create(new Student());
-        System.out.println("create");
         allStudents.add(student);
     }
 
