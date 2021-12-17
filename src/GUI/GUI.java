@@ -13,8 +13,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class GUI extends Application {
-    private Map<Button,Boolean> buttons = new HashMap<>();
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -45,8 +43,6 @@ public class GUI extends Application {
             repo.create(hans);
             gridPane.add(new Label(""+repo.getAllStudents()),1,7);
         });
-
-        // 3.2. Create the buttons
         
         Button createStudent = new Button("Create student");
         gridPane.add(createStudent,0,0);
@@ -65,13 +61,7 @@ public class GUI extends Application {
             gridPane.add(newStudent,1,6);
 
         });
-        // Button getAllStudents = new Button("Get all students");
-        // getAllStudents.setFont(Font.font("Monospaced", 25));
-        // getAllStudents.setOnAction((event) -> {
 
-        // 
-        // }); 
-        // layout.setCenter(createStudent);
         layout.setCenter(gridPane);
 
         Scene view = new Scene(layout, 600, 600);
