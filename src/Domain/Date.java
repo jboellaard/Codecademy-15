@@ -2,10 +2,10 @@ package Domain;
 
 public class Date {
 
-    private Date date;
+    private String date;
 
-    public Date(){
-        
+    public Date(String date){
+        this.date = date;
     }
 
     public boolean isValidDate(){
