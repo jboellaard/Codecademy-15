@@ -11,7 +11,11 @@ public class Address {
     private String country;
 
     public Address(String address){
-        
+        this.addressID = 1;
+    }
+
+    public int getAddressID(){
+        return this.addressID;
     }
 
     public boolean isValidAddress(){

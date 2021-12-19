@@ -15,6 +15,26 @@ public class Student {
         this.address = address;
     }
 
+    public Email getEmail(){
+        return this.emailAddress;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public Date getDOB(){
+        return this.dateOfBirth;
+    }
+
+    public int getAddressID(){
+        return this.address.getAddressID();
+    }
+
+    public Gender getGender(){
+        return this.gender;
+    }
+
     @Override 
     public String toString(){
         return this.name+ ": " + this.emailAddress;

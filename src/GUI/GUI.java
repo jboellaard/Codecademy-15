@@ -26,9 +26,9 @@ public class GUI extends Application {
         Label studentDOB = new Label("Student date of birth:");
         DatePicker studentDOBInput = new DatePicker();
         Label studentGender = new Label("Student gender:");
-        CheckBox GM = new CheckBox("M");
-        CheckBox GF = new CheckBox("F");
-        CheckBox GO = new CheckBox("O");
+        RadioButton GM = new RadioButton("M");
+        RadioButton GF = new RadioButton("F");
+        RadioButton GO = new RadioButton("O");
         GridPane studentGenderInput = new GridPane();
         studentGenderInput.add(GM,0,0);
         studentGenderInput.add(GF,1,0);
@@ -40,7 +40,7 @@ public class GUI extends Application {
         newStudent.setOnAction((event) -> {
             String name = studentNameInput.getText();
             Email email = new Email(studentEmailInput.getText());
-            Date dOB = new Date(studentDOBInput.toString());
+            Date dOB = new Date(String.valueOf(studentDOBInput.getValue()));
             Gender gender = Gender.M;
             if (GF.isSelected()){
                 gender = Gender.F;
