@@ -18,7 +18,7 @@ public class Address {
         return this.addressID;
     }
 
-    public boolean isValidAddress(){
+    public static boolean isValidAddress(){
         return true;
     }
     
