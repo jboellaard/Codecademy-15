@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 // import javafx.scene.text.Font;
+import javafx.scene.web.PromptData;
 
 public class AddStudentScene {
 
@@ -20,7 +21,8 @@ public class AddStudentScene {
         Label studentEmail = new Label("Student email:");
         TextField studentEmailInput = new TextField();
         Label studentDOB = new Label("Student date of birth:");
-        TextField studentDOBInput = new TextField("01-01-2000");
+        TextField studentDOBInput = new TextField();
+        studentDOBInput.setPromptText("01-01-2000");
         // DatePicker studentDOBInput = new DatePicker();
         Label studentGender = new Label("Student gender:");
         ToggleGroup tg = new ToggleGroup();
