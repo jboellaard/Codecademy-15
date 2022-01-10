@@ -22,7 +22,6 @@ public class StudentRepo {
             String SQL = "INSERT INTO Student VALUES ('"+ student.getEmail() +"','"+student.getName() + "','"+student.getDOB() + "','" + student.getGender() + "'," +student.getAddressID()+ ");";
             stmt = con.createStatement();
             stmt.executeUpdate(SQL);
-            
         }
 
         catch (Exception e) {

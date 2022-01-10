@@ -12,7 +12,4 @@ public class Main {
         Application.launch(GUI.class);
     }
 
-
-
-    
 }
