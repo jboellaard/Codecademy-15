@@ -4,18 +4,20 @@ public class Student {
     private String emailAddress;
     private String name;
     private String dateOfBirth;
-    private Address address;
     private Gender gender;
+    // private Address address;
+    private int addressID;
 
-    public Student(String name, String emailAddress, String dateOfBirth, Gender gender, Address address){
+    public Student(String name, String emailAddress, String dateOfBirth, Gender gender, int addressID){
+        //do we save address or addressid, considering we need to get the info from the database
         this.name = name;
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        this.address = address;
+        this.addressID = addressID;
     }
 
-    public String getEmail(){
+    public String getEmailAddress(){
         return this.emailAddress;
     }
 
@@ -23,16 +25,16 @@ public class Student {
         return this.name;
     }
 
-    public String getDOB(){
+    public String getDateOfBirth(){
         return this.dateOfBirth;
-    }
-
-    public int getAddressID(){
-        return this.address.getAddressID();
     }
 
     public Gender getGender(){
         return this.gender;
+    }
+
+    public int getAddressID(){
+        return this.addressID;
     }
 
     @Override 

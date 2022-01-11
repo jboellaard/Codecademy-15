@@ -1,5 +1,8 @@
 package GUI;
 
+import GUI.StudentScenes.NewStudentScene;
+import GUI.StudentScenes.StudentOverview;
+
 // import DB.*;
 // import Domain.*;
 
@@ -21,6 +24,14 @@ public class HomeScene {
             NewStudentScene addStudent = new NewStudentScene();
             GUI.getStage().setScene(addStudent.getScene());
             GUI.getStage().setTitle("Add new Student");
+        });
+
+        Button allStudents = new Button("All students");
+        gridPane.add(allStudents,1,0);
+        allStudents.setOnAction((event) -> {
+            StudentOverview overview = new StudentOverview();
+            GUI.getStage().setScene(overview.getScene());
+            GUI.getStage().setTitle("All students");
         });
 
         layout.setCenter(gridPane);

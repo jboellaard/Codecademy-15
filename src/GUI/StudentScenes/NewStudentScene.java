@@ -1,4 +1,4 @@
-package GUI;
+package GUI.StudentScenes;
 
 import DB.*;
 import Domain.*;
@@ -150,7 +150,7 @@ public class NewStudentScene {
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
                 StudentRepo repo = new StudentRepo();
-                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
+                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress.getAddressID());
                 repo.create(newStudent);
                 //tableview of students
                 gridPane.add(new Label(""+repo.getAllStudents()),0,7);
@@ -169,6 +169,8 @@ public class NewStudentScene {
         gridPane.add(address,0,6);
         gridPane.add(addressInput,1,6,1,4);
         gridPane.add(submit,0,10);
+
+        //return button here
 
         layout.setCenter(gridPane);
         Scene newStudentView = new Scene(layout, 600, 600);

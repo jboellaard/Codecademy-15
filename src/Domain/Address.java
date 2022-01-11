@@ -1,5 +1,7 @@
 package Domain;
 
+import DB.AddressRepo;
+
 public class Address {
 
     private String address;
@@ -20,10 +22,36 @@ public class Address {
         this.street = street;
         this.city = city;
         this.country = country;
+        AddressRepo repo = new AddressRepo();
+        this.addressID = repo.findAddressID(this);
     }
 
     public int getAddressID(){
         return this.addressID;
+    }
+
+    public String getZipCode(){
+        return this.zipCode;
+    }
+
+    public int getHouseNumber(){
+        return this.houseNo;
+    }
+
+    public String getSuffix(){
+        return this.suffix;
+    }
+
+    public String getStreet(){
+        return this.street;
+    }
+
+    public String getCity(){
+        return this.city;
+    }
+
+    public String getCountry(){
+        return this.country;
     }
 
     public static String formatZipCode(String zipCode){
