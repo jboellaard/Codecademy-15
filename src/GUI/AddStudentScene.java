@@ -15,11 +15,13 @@ public class AddStudentScene {
         BorderPane layout = new BorderPane();
         GridPane gridPane = new GridPane();
 
-        Label name = new Label("Student name:");
+        Label name = new Label("Full name:");
         TextField nameInput = new TextField();
-        Label email = new Label("Student email:");
+
+        Label email = new Label("Emailaddress:");
         TextField emailInput = new TextField();
-        Label dOB = new Label("Student date of birth: ");
+
+        Label dOB = new Label("Date of birth: ");
         TextField dOBDay = new TextField();
         dOBDay.setPrefWidth(40);
         dOBDay.setPromptText("dd");
@@ -30,14 +32,11 @@ public class AddStudentScene {
         dOBYear.setPrefWidth(80);
         dOBYear.setPromptText("yyyy");
         GridPane dOBInput = new GridPane();
-        // dOBInput.add(day,0,0);
         dOBInput.add(dOBDay,0,0);
-        // dOBInput.add(month,0,1);
         dOBInput.add(dOBMonth,1,0);
-        // dOBInput.add(year,0,2);
         dOBInput.add(dOBYear,2,0);
-        // DatePicker studentDOBInput = new DatePicker();
-        Label gender = new Label("Student gender:");
+
+        Label gender = new Label("Gender:");
         ToggleGroup tg = new ToggleGroup();
         RadioButton GM = new RadioButton("Male");
         RadioButton GF = new RadioButton("Female");
@@ -50,14 +49,46 @@ public class AddStudentScene {
         genderInput.add(GM,0,0);
         genderInput.add(GF,1,0);
         genderInput.add(GO,2,0);
-        Label address = new Label("Student address:");
-        TextField addressInput = new TextField();
+
+        Label address = new Label("Address:");
+        Label zipCode = new Label("Zipcode:");
+        TextField zipCodeInput = new TextField();
+        Label street = new Label("Street:");
+        TextField streetInput = new TextField();
+        Label houseNumber = new Label("No:");
+        TextField houseNumberInput = new TextField();
+        houseNumberInput.setMaxWidth(50);
+        Label suffix = new Label("Suffix:");
+        TextField suffixInput = new TextField();
+        suffixInput.setMaxWidth(50);
+        Label city = new Label("City:");
+        TextField cityInput = new TextField();
+        Label country = new Label("Country");
+        TextField countryInput = new TextField();
+        GridPane addressInput = new GridPane();
+        addressInput.add(street,0,0);
+        addressInput.add(streetInput,1,0);
+        addressInput.add(houseNumber,0,1);
+        addressInput.add(houseNumberInput,1,1);
+        addressInput.add(suffix,2,1);
+        addressInput.add(suffixInput,3,1);
+        addressInput.add(city,0,2);
+        addressInput.add(cityInput,1,2);
+        addressInput.add(country,0,3);
+        addressInput.add(countryInput,1,3);
 
         Button newStudent = new Button("submit form");
+        Label emailError = new Label("");
+        gridPane.add(emailError,2,2);
         Label dateError = new Label("");
         gridPane.add(dateError,2,3);
         newStudent.setOnAction((event) -> {
+            emailError.setText("");
             dateError.setText("");
+            if (!Email.isValidEmail(emailInput.getText())){
+                emailError.setText("This is not a valid email");
+            }
+            
             try {
                 Integer.parseInt(dOBDay.getText());
                 Integer.parseInt(dOBMonth.getText());
@@ -69,6 +100,8 @@ public class AddStudentScene {
             } catch (NumberFormatException nfe) {
                 dateError.setText("Please enter a number");
             }
+            
+
             
             
             // Address address = new Address(studentAddressInput.getText());
