@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 // import javafx.scene.text.Font;
-import javafx.scene.web.PromptData;
 
 public class AddStudentScene {
 
@@ -16,59 +15,89 @@ public class AddStudentScene {
         BorderPane layout = new BorderPane();
         GridPane gridPane = new GridPane();
 
-        Label studentName = new Label("Student name:");
-        TextField studentNameInput = new TextField();
-        Label studentEmail = new Label("Student email:");
-        TextField studentEmailInput = new TextField();
-        Label studentDOB = new Label("Student date of birth:");
-        TextField studentDOBInput = new TextField();
-        studentDOBInput.setPromptText("01-01-2000");
+        Label name = new Label("Student name:");
+        TextField nameInput = new TextField();
+        Label email = new Label("Student email:");
+        TextField emailInput = new TextField();
+        Label dOB = new Label("Student date of birth: ");
+        TextField dOBDay = new TextField();
+        dOBDay.setPrefWidth(40);
+        dOBDay.setPromptText("dd");
+        TextField dOBMonth = new TextField();
+        dOBMonth.setPrefWidth(40);
+        dOBMonth.setPromptText("mm");
+        TextField dOBYear = new TextField();
+        dOBYear.setPrefWidth(80);
+        dOBYear.setPromptText("yyyy");
+        GridPane dOBInput = new GridPane();
+        // dOBInput.add(day,0,0);
+        dOBInput.add(dOBDay,0,0);
+        // dOBInput.add(month,0,1);
+        dOBInput.add(dOBMonth,1,0);
+        // dOBInput.add(year,0,2);
+        dOBInput.add(dOBYear,2,0);
         // DatePicker studentDOBInput = new DatePicker();
-        Label studentGender = new Label("Student gender:");
+        Label gender = new Label("Student gender:");
         ToggleGroup tg = new ToggleGroup();
-        RadioButton GM = new RadioButton("M");
-        RadioButton GF = new RadioButton("F");
-        RadioButton GO = new RadioButton("O");
+        RadioButton GM = new RadioButton("Male");
+        RadioButton GF = new RadioButton("Female");
+        RadioButton GO = new RadioButton("Other");
         GM.setSelected(true);
         GM.setToggleGroup(tg);
         GF.setToggleGroup(tg);
         GO.setToggleGroup(tg);
-        GridPane studentGenderInput = new GridPane();
-        studentGenderInput.add(GM,0,0);
-        studentGenderInput.add(GF,1,0);
-        studentGenderInput.add(GO,2,0);
-        Label studentAddress = new Label("Student address:");
-        TextField studentAddressInput = new TextField();
+        GridPane genderInput = new GridPane();
+        genderInput.add(GM,0,0);
+        genderInput.add(GF,1,0);
+        genderInput.add(GO,2,0);
+        Label address = new Label("Student address:");
+        TextField addressInput = new TextField();
 
         Button newStudent = new Button("submit form");
+        Label dateError = new Label("");
+        gridPane.add(dateError,2,3);
         newStudent.setOnAction((event) -> {
-            int[] dOBList = Date.stringToIntList(studentDOBInput.getText());
-            Address address = new Address(studentAddressInput.getText());
-            if (Date.isValidDate(dOBList[0],dOBList[1],dOBList[2]) && Address.isValidAddress() && 
-                Email.isValidEmail(studentEmailInput.getText())){
-                String name = studentNameInput.getText();
-                Email email = new Email(studentEmailInput.getText());
-                Date dOB = new Date(dOBList[0],dOBList[1],dOBList[2]);
-                Gender gender = Gender.M;
-                if (GF.isSelected()) gender = Gender.F;
-                if (GO.isSelected()) gender = Gender.O;
-                StudentRepo repo = new StudentRepo();
-                Student hans = new Student(name,email,dOB,gender,address);
-                repo.create(hans);
-                gridPane.add(new Label(""+repo.getAllStudents()),0,7);
+            dateError.setText("");
+            try {
+                Integer.parseInt(dOBDay.getText());
+                Integer.parseInt(dOBMonth.getText());
+                Integer.parseInt(dOBYear.getText());
+
+                if (!DateTools.isValidDate(Integer.parseInt(dOBDay.getText()), Integer.parseInt(dOBMonth.getText()), Integer.parseInt(dOBYear.getText()))){
+                    dateError.setText("This is not a valid date");
+                }
+            } catch (NumberFormatException nfe) {
+                dateError.setText("Please enter a number");
             }
+            
+            
+            // Address address = new Address(studentAddressInput.getText());
+            
+            // if (DateTools.isValidDate(dOBList[0],dOBList[1],dOBList[2]) && Address.isValidAddress() && 
+            //     Email.isValidEmail(studentEmailInput.getText())){
+            //     String name = studentNameInput.getText();
+            //     Email email = new Email(studentEmailInput.getText());
+            //     DateTools dOB = new DateTools(dOBList[0],dOBList[1],dOBList[2]);
+            //     Gender gender = Gender.M;
+            //     if (GF.isSelected()) gender = Gender.F;
+            //     if (GO.isSelected()) gender = Gender.O;
+            //     StudentRepo repo = new StudentRepo();
+            //     Student hans = new Student(name,email,dOB,gender,address);
+            //     repo.create(hans);
+            //     gridPane.add(new Label(""+repo.getAllStudents()),0,7);
+            // }
         });
 
-        gridPane.add(studentName,0,1);
-        gridPane.add(studentNameInput,1,1);
-        gridPane.add(studentEmail,0,2);
-        gridPane.add(studentEmailInput,1,2);
-        gridPane.add(studentDOB,0,3);
-        gridPane.add(studentDOBInput,1,3);
-        gridPane.add(studentGender,0,4);
-        gridPane.add(studentGenderInput,1,4);
-        gridPane.add(studentAddress,0,5);
-        gridPane.add(studentAddressInput,1,5);
+        gridPane.add(name,0,1);
+        gridPane.add(nameInput,1,1);
+        gridPane.add(email,0,2);
+        gridPane.add(emailInput,1,2);
+        gridPane.add(dOB,0,3);
+        gridPane.add(dOBInput,1,3);
+        gridPane.add(gender,0,4);
+        gridPane.add(genderInput,1,4);
+        gridPane.add(address,0,5);
+        gridPane.add(addressInput,1,5);
         gridPane.add(newStudent,0,6);
 
         layout.setCenter(gridPane);

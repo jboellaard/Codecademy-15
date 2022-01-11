@@ -1,12 +1,12 @@
 package Domain;
 
-public class Date {
+public class DateTools {
 
     private String day;
     private String month;
     private String year;
 
-    public Date(int day, int month, int year){
+    public DateTools(int day, int month, int year){
         if (day<10){
             this.day = "0" + day;
         }
