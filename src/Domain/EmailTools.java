@@ -1,12 +1,9 @@
 package Domain;
 
-public class Email {
+public class EmailTools {
 
-    private String email;
+    public EmailTools(){
 
-    public Email(String mailAddress){
-        mailAddress = mailAddress.trim();
-        this.email=mailAddress;
     }
 
     public static boolean isValidEmail(String mailAddress){
@@ -23,11 +20,6 @@ public class Email {
             return false; 
         }
         return true;
-    }
-
-    @Override
-    public String toString(){
-        return this.email;
     }
     
 }

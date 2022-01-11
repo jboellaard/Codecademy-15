@@ -7,37 +7,16 @@ public class DateTools {
     private String year;
 
     public DateTools(int day, int month, int year){
-        if (day<10){
-            this.day = "0" + day;
-        }
-        if (month<10){
-            this.month = "0" + month;
-        }
-        this.year = "" + year;
+        
     }
 
-    public static int[] stringToIntList(String stringDate){
-        if (stringDate!=null){
-            String[] split = new String[3];
-            if (stringDate.contains("-")){
-                if (stringDate.split("-").length==3){
-                    split = stringDate.split("-");
-                } else {
-                    throw new IllegalArgumentException("Please enter three values");
-                }
-            } else if (stringDate.contains("/")){
-                if (stringDate.split("/").length==3){
-                    split = stringDate.split("/");
-                } else {
-                    throw new IllegalArgumentException("Please enter three values");
-                }
-            } else {
-                throw new IllegalArgumentException("This is not a valid format for the date");
-            }
-            return new int[]{Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2])};
-        } else {
-            throw new NullPointerException("The date cannot be null");
-        }
+    public static String formatDate(int day, int month, int year){
+        String date = "";
+        if (day<10) date += "0";
+        date += day + "-";
+        if (month<10) date += "0";
+        date += month + "-" + year;
+        return date;
     }
 
     public static boolean isValidDate(int day, int month, int year){

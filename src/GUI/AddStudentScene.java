@@ -50,75 +50,112 @@ public class AddStudentScene {
         genderInput.add(GF,1,0);
         genderInput.add(GO,2,0);
 
-        Label address = new Label("Address:");
-        Label zipCode = new Label("Zipcode:");
+        Label address = new Label("Address: ");
+        Label zipCode = new Label("Zipcode: ");
         TextField zipCodeInput = new TextField();
-        Label street = new Label("Street:");
+        zipCodeInput.setMaxWidth(100);
+        Label street = new Label("Street: ");
         TextField streetInput = new TextField();
-        Label houseNumber = new Label("No:");
-        TextField houseNumberInput = new TextField();
-        houseNumberInput.setMaxWidth(50);
-        Label suffix = new Label("Suffix:");
+        Label houseNo = new Label("No: ");
+        TextField houseNoInput = new TextField();
+        houseNoInput.setMaxWidth(50);
+        Label suffix = new Label("Suffix: ");
         TextField suffixInput = new TextField();
         suffixInput.setMaxWidth(50);
-        Label city = new Label("City:");
+        Label city = new Label("City: ");
         TextField cityInput = new TextField();
-        Label country = new Label("Country");
+        Label country = new Label("Country: ");
         TextField countryInput = new TextField();
         GridPane addressInput = new GridPane();
-        addressInput.add(street,0,0);
-        addressInput.add(streetInput,1,0);
-        addressInput.add(houseNumber,0,1);
-        addressInput.add(houseNumberInput,1,1);
-        addressInput.add(suffix,2,1);
-        addressInput.add(suffixInput,3,1);
-        addressInput.add(city,0,2);
-        addressInput.add(cityInput,1,2);
-        addressInput.add(country,0,3);
-        addressInput.add(countryInput,1,3);
+        addressInput.add(zipCode,0,0,1,1);
+        addressInput.add(zipCodeInput,1,0,1,1);
+        addressInput.add(houseNo,2,0,1,1);
+        addressInput.add(houseNoInput,3,0,1,1);
+        addressInput.add(suffix,4,0,1,1);
+        addressInput.add(suffixInput,5,0,1,1);
+        addressInput.add(street,0,1,1,1);
+        addressInput.add(streetInput,1,1,5,1);
+        addressInput.add(city,0,2,1,1);
+        addressInput.add(cityInput,1,2,5,1);
+        addressInput.add(country,0,3,2,1);
+        addressInput.add(countryInput,1,3,5,1);
 
-        Button newStudent = new Button("submit form");
+        Button submit = new Button("submit form");
         Label emailError = new Label("");
         gridPane.add(emailError,2,2);
         Label dateError = new Label("");
         gridPane.add(dateError,2,3);
-        newStudent.setOnAction((event) -> {
+        Label addressError = new Label("");
+        gridPane.add(addressError,2,6);
+        submit.setOnAction((event) -> {
+            boolean validInput = true;
+            String studentName = nameInput.getText().trim();
+            String studentEmail = "";
+            String studentDOB = "";
+            Gender studentGender = Gender.M;
+            if (GF.isSelected()) studentGender = Gender.F;
+            if (GO.isSelected()) studentGender = Gender.O;
+
+            String studentZipCode = "";
+            int studentHouseNo = -1;
+            String studentSuffix = suffixInput.getText().trim();
+            String studentStreet = streetInput.getText().trim();
+            String studentCity = cityInput.getText().trim();
+            String studentCountry = countryInput.getText().trim();
+            //check if address exists in database (zipcode, housenumber and suffix)
+            //if not create new with new addressid, if yes then get addressid
+
             emailError.setText("");
             dateError.setText("");
-            if (!Email.isValidEmail(emailInput.getText())){
-                emailError.setText("This is not a valid email");
+            addressError.setText("");
+            if (EmailTools.isValidEmail(emailInput.getText())){
+                studentEmail = emailInput.getText().trim();
+            } else {
+                emailError.setText("This is not a valid email.");
+                validInput = false;
             }
             
             try {
-                Integer.parseInt(dOBDay.getText());
-                Integer.parseInt(dOBMonth.getText());
-                Integer.parseInt(dOBYear.getText());
+                int day = Integer.parseInt(dOBDay.getText());
+                int month = Integer.parseInt(dOBMonth.getText());
+                int year = Integer.parseInt(dOBYear.getText());
 
-                if (!DateTools.isValidDate(Integer.parseInt(dOBDay.getText()), Integer.parseInt(dOBMonth.getText()), Integer.parseInt(dOBYear.getText()))){
-                    dateError.setText("This is not a valid date");
+                if (DateTools.isValidDate(day, month, year)){
+                    studentDOB = DateTools.formatDate(day, month, year);
+                } else {
+                    dateError.setText("This is not a valid date.");
+                    validInput = false;
                 }
             } catch (NumberFormatException nfe) {
-                dateError.setText("Please enter a number");
+                dateError.setText("Please enter a number.");
+                validInput = false;
             }
-            
 
-            
-            
-            // Address address = new Address(studentAddressInput.getText());
-            
-            // if (DateTools.isValidDate(dOBList[0],dOBList[1],dOBList[2]) && Address.isValidAddress() && 
-            //     Email.isValidEmail(studentEmailInput.getText())){
-            //     String name = studentNameInput.getText();
-            //     Email email = new Email(studentEmailInput.getText());
-            //     DateTools dOB = new DateTools(dOBList[0],dOBList[1],dOBList[2]);
-            //     Gender gender = Gender.M;
-            //     if (GF.isSelected()) gender = Gender.F;
-            //     if (GO.isSelected()) gender = Gender.O;
-            //     StudentRepo repo = new StudentRepo();
-            //     Student hans = new Student(name,email,dOB,gender,address);
-            //     repo.create(hans);
-            //     gridPane.add(new Label(""+repo.getAllStudents()),0,7);
-            // }
+            try {
+                studentHouseNo = Integer.parseInt(houseNo.getText());
+            } catch (NumberFormatException nfe) {
+                addressError.setText("Please enter a housenumber.");
+                validInput = false;
+            }
+            try {
+                studentZipCode = Address.formatZipCode(zipCodeInput.getText());
+            } catch (NullPointerException nfe) {
+                addressError.setText("Please enter a zipcode.");
+                validInput = false;
+            } catch (IllegalArgumentException iae) {
+                addressError.setText("This is not a valid zipcode.");
+                validInput = false;
+            }
+
+            if (validInput){
+                Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
+                StudentRepo repo = new StudentRepo();
+                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
+                repo.create(newStudent);
+                //tableview of students
+                gridPane.add(new Label(""+repo.getAllStudents()),0,7);
+            }
+
         });
 
         gridPane.add(name,0,1);
@@ -129,9 +166,9 @@ public class AddStudentScene {
         gridPane.add(dOBInput,1,3);
         gridPane.add(gender,0,4);
         gridPane.add(genderInput,1,4);
-        gridPane.add(address,0,5);
-        gridPane.add(addressInput,1,5);
-        gridPane.add(newStudent,0,6);
+        gridPane.add(address,0,6);
+        gridPane.add(addressInput,1,6,1,4);
+        gridPane.add(submit,0,10);
 
         layout.setCenter(gridPane);
         Scene studentView = new Scene(layout, 600, 600);

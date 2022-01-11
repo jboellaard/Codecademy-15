@@ -1,13 +1,13 @@
 package Domain;
 
 public class Student {
-    private Email emailAddress;
+    private String emailAddress;
     private String name;
-    private DateTools dateOfBirth;
+    private String dateOfBirth;
     private Address address;
     private Gender gender;
 
-    public Student(String name, Email emailAddress, DateTools dateOfBirth, Gender gender, Address address){
+    public Student(String name, String emailAddress, String dateOfBirth, Gender gender, Address address){
         this.name = name;
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
@@ -15,7 +15,7 @@ public class Student {
         this.address = address;
     }
 
-    public Email getEmail(){
+    public String getEmail(){
         return this.emailAddress;
     }
 
@@ -23,7 +23,7 @@ public class Student {
         return this.name;
     }
 
-    public DateTools getDOB(){
+    public String getDOB(){
         return this.dateOfBirth;
     }
 
