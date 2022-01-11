@@ -4,7 +4,6 @@ import DB.AddressRepo;
 
 public class Address {
 
-    private String address;
     private int addressID;
     private String zipCode;
     private int houseNo;

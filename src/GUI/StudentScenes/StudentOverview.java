@@ -1,7 +1,5 @@
 package GUI.StudentScenes;
 
-import java.util.*;
-
 import DB.StudentRepo;
 import Domain.Gender;
 import Domain.Student;
@@ -30,15 +28,26 @@ public class StudentOverview {
         TableColumn<Student,Integer> addressIDCol = new TableColumn<>("Address ID");
         addressIDCol.setCellValueFactory(new PropertyValueFactory<>("addressID"));
 
- 
+        // nameCol.setSortType(TableColumn.SortType.DESCENDING);
         table.getColumns().setAll(nameCol,emailCol,dobCol,genderCol,addressIDCol);
+        table.sort();
         
         VBox vBox = new VBox();
-        // // adding table to the vBox
         vBox.getChildren().add(table);
-        // // creating a scene for adding vBox
-        Scene scene = new Scene(vBox, 600, 600);
 
+        Student selectedStudent = table.getSelectionModel().getSelectedItem();
+        Button courses = new Button("Show courses for this student");
+        courses.setOnAction((event) -> {
+            //new scene tableview with courses selected student
+        });
+        Button certificates = new Button("Show certificates for this student");
+        certificates.setOnAction((event) -> {
+            //new scene tableview with certificates selected student
+        });
+        //crud buttons below table
+
+
+        Scene scene = new Scene(vBox, 600, 400);
         return scene;
     }
     

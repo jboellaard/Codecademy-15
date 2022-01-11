@@ -2,9 +2,9 @@ package Domain;
 
 public class DateTools {
 
-    private String day;
-    private String month;
-    private String year;
+    // private String day;
+    // private String month;
+    // private String year;
 
     public DateTools(int day, int month, int year){
         
@@ -33,11 +33,6 @@ public class DateTools {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String toString(){
-        return this.day+"-"+this.month+"-"+this.year;
     }
     
 }

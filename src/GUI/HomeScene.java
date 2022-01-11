@@ -35,7 +35,7 @@ public class HomeScene {
         });
 
         layout.setCenter(gridPane);
-        Scene home = new Scene(layout, 600, 600);
+        Scene home = new Scene(layout, 600, 400);
         return home;
     }
     
