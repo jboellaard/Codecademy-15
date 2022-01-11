@@ -5,23 +5,27 @@ import java.sql.*;
 import Domain.*;
 
 public class StudentRepo {
+    private String connectionUrl = DBConnection.getConnectionUrl();
 
     public StudentRepo(){
         
     }
 
     public void create(Student student){
-        String connectionUrl = "jdbc:sqlserver://localhost;databaseName=StudentTemp;integratedSecurity=true;";
         Connection con = null;
         Statement stmt = null;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO Student VALUES ('?','?','?','?',?);");
+            pstmt.setString(1, student.getEmail());
+            pstmt.setString(2, student.getName());
+            pstmt.setString(3, student.getDOB());
+            pstmt.setString(4, student.getGender().name());
+            pstmt.setInt(5, student.getAddressID());
 
-            String SQL = "INSERT INTO Student VALUES ('"+ student.getEmail() +"','"+student.getName() + "','"+student.getDOB() + "','" + student.getGender() + "'," +student.getAddressID()+ ");";
-            stmt = con.createStatement();
-            stmt.executeUpdate(SQL);
+            pstmt.executeUpdate();
         }
 
         catch (Exception e) {
@@ -36,7 +40,6 @@ public class StudentRepo {
 
     public String getAllStudents(){
         String all = "";
-        String connectionUrl = "jdbc:sqlserver://localhost;databaseName=StudentTemp;integratedSecurity=true;";
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -44,10 +47,8 @@ public class StudentRepo {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-
-            String SQL = "SELECT * FROM Student";
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(SQL);
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Student");
+            rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 String email = rs.getString("EmailAddress");

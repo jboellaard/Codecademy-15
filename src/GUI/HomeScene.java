@@ -18,7 +18,7 @@ public class HomeScene {
         Button createStudent = new Button("Create student");
         gridPane.add(createStudent,0,0);
         createStudent.setOnAction((event) -> {
-            AddStudentScene addStudent = new AddStudentScene();
+            NewStudentScene addStudent = new NewStudentScene();
             GUI.getStage().setScene(addStudent.getScene());
             GUI.getStage().setTitle("Add new Student");
         });

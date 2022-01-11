@@ -1,7 +1,15 @@
 package DB;
 
-public class DBConnection {
+// import java.sql.*;
 
-    
+public class DBConnection {
+    // private String connectionUrl = "jdbc:sqlserver://localhost;databaseName=StudentTemp;integratedSecurity=true;";
+
+    public DBConnection(){
+    }
+
+    public static String getConnectionUrl(){
+        return "jdbc:sqlserver://localhost;databaseName=StudentTemp;integratedSecurity=true;";
+    }
     
 }

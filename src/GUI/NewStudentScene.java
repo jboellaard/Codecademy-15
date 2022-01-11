@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 // import javafx.scene.text.Font;
 
-public class AddStudentScene {
+public class NewStudentScene {
 
     public Scene getScene(){
         BorderPane layout = new BorderPane();
@@ -79,14 +79,14 @@ public class AddStudentScene {
         addressInput.add(cityInput,1,2,5,1);
         addressInput.add(country,0,3,2,1);
         addressInput.add(countryInput,1,3,5,1);
-
-        Button submit = new Button("submit form");
         Label emailError = new Label("");
         gridPane.add(emailError,2,2);
         Label dateError = new Label("");
         gridPane.add(dateError,2,3);
         Label addressError = new Label("");
         gridPane.add(addressError,2,6);
+
+        Button submit = new Button("submit form");
         submit.setOnAction((event) -> {
             boolean validInput = true;
             String studentName = nameInput.getText().trim();
@@ -171,8 +171,8 @@ public class AddStudentScene {
         gridPane.add(submit,0,10);
 
         layout.setCenter(gridPane);
-        Scene studentView = new Scene(layout, 600, 600);
-        return studentView;
+        Scene newStudentView = new Scene(layout, 600, 600);
+        return newStudentView;
     }
     
 }
