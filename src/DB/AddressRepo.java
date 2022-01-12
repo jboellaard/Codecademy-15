@@ -66,7 +66,7 @@ public class AddressRepo {
             pstmt.setString(3, address.getSuffix());
             pstmt.setString(4, address.getStreet());
             pstmt.setString(5, address.getCity());
-            pstmt.setString(5, address.getCountry());
+            pstmt.setString(6, address.getCountry());
 
             pstmt.executeUpdate();
 
