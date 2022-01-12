@@ -22,7 +22,6 @@ public class GUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         GUIStage = stage;
-        // HomeScene home = new HomeScene();
         Scene homePage = GUI.getHomeScene();
         stage.setTitle("Home");
         stage.setScene(homePage);
@@ -40,6 +39,7 @@ public class GUI extends Application {
             GUI.getStage().setScene(overview.getScene());
             GUI.getStage().setTitle("All students");
         });
+        //button for all courses
 
         layout.setCenter(gridPane);
         Scene home = new Scene(layout, 600, 400);

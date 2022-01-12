@@ -12,7 +12,15 @@ import javafx.scene.layout.*;
 
 public class NewStudentScene {
 
-    public Scene getScene(){
+    public Scene getCreateScene(){
+        return getScene(true);
+    } 
+
+    public Scene getUpdateScene(Student exiStudent){
+        return getScene(false);
+    }
+
+    private Scene getScene(boolean create ){
         BorderPane layout = new BorderPane();
         GridPane gridPane = new GridPane();
 
@@ -153,7 +161,7 @@ public class NewStudentScene {
 
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
-                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress.getAddressID());
+                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
                 GUI.studentRepo.create(newStudent);
                 gridPane.add(studentAdded,0,11);
             }

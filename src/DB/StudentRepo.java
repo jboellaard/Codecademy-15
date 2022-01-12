@@ -3,6 +3,7 @@ package DB;
 import java.sql.*;
 
 import Domain.*;
+import GUI.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -60,7 +61,12 @@ public class StudentRepo {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                allStudents.add(new Student(rs.getString("Name"),rs.getString("EmailAddress"),rs.getString("DateOfBirth"),Gender.valueOf(rs.getString("Gender")),rs.getInt("AddressID")));
+                for (Address address : GUI.addressRepo.getAllAddresses()){
+                    if (rs.getInt("AddressID") == address.getAddressID()){
+                        allStudents.add(new Student(rs.getString("Name"),rs.getString("EmailAddress"),rs.getString("DateOfBirth"),Gender.valueOf(rs.getString("Gender")),address));
+                        break;
+                    }
+                }
             }
         }
         // Handle any errors that may have occurred.

@@ -5,17 +5,14 @@ public class Student {
     private String name;
     private String dateOfBirth;
     private Gender gender;
-    // private Address address;
-    private int addressID;
+    private Address address;
 
-    public Student(String name, String emailAddress, String dateOfBirth, Gender gender, int addressID){
-        //do we save address or addressid, considering we need to get the info from the database
+    public Student(String name, String emailAddress, String dateOfBirth, Gender gender, Address address){
         this.name = name;
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        // this.address = address;
-        this.addressID= addressID;
+        this.address = address;
     }
 
     public String getEmailAddress(){
@@ -35,8 +32,7 @@ public class Student {
     }
 
     public int getAddressID(){
-        // return this.address.getAddressID();
-        return this.addressID;
+        return this.address.getAddressID();
     }
 
     @Override 

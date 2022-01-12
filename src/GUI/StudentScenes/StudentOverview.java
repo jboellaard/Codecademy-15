@@ -42,7 +42,7 @@ public class StudentOverview {
         Button createStudent = new Button("Add new student");
         createStudent.setOnAction((event -> {
             NewStudentScene newStudent = new NewStudentScene();
-            GUI.getStage().setScene(newStudent.getScene());
+            GUI.getStage().setScene(newStudent.getCreateScene());
             GUI.getStage().setTitle("Add student");
         }));
         Button back = new Button("Go back");
@@ -55,10 +55,16 @@ public class StudentOverview {
         vBox.getChildren().add(createStudent);
 
         Student selectedStudent = table.getSelectionModel().getSelectedItem();
+        Button updateStudent = new Button("Change info student");
+        updateStudent.setOnAction((event -> {
+            NewStudentScene newStudent = new NewStudentScene();
+            GUI.getStage().setScene(newStudent.getUpdateScene(selectedStudent));
+            GUI.getStage().setTitle("Add student");
+        }));
         Button courses = new Button("Show enrollments");
         courses.setOnAction((event) -> {
-            
             //new scene tableview with courses selected student
+            //in that scene a button to enroll to a new course
         });
         Button certificates = new Button("Show certificates for this student");
         certificates.setOnAction((event) -> {
