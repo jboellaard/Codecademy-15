@@ -48,8 +48,6 @@ public class StudentRepo {
     }
 
     public void getAllStudentsFromDB(){
-        // final ObservableList<Student> allStudents = FXCollections.observableArrayList();
-        // List<Student> allStudents = new ArrayList<>();
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -80,8 +78,31 @@ public class StudentRepo {
         }
     }
 
-    public void update(Student student){
-        
+    public void update(Student student, String previousEmail){
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection(connectionUrl);
+            PreparedStatement pstmt = con.prepareStatement("UPDATE Student SET EmailAddress=?, Name=?, DateOfBirth=?, Gender=?, AddressID=? WHERE EmailAddress=?;");
+            pstmt.setString(1, student.getEmailAddress());
+            pstmt.setString(2, student.getName());
+            pstmt.setString(3, student.getDateOfBirth());
+            pstmt.setString(4, student.getGender().name());
+            pstmt.setInt(5, student.getAddressID());
+            pstmt.setString(6, previousEmail);
+
+            pstmt.executeUpdate();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
     }
     
     public void delete(){

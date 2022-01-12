@@ -13,31 +13,36 @@ import javafx.scene.layout.*;
 public class NewStudentScene {
 
     public Scene getCreateScene(){
-        return getScene(true);
+        String[] txtValues = new String[]{"", "", "", "", "", "", "", "", "", "", ""};
+        return getScene(true, null, txtValues);
     } 
 
     public Scene getUpdateScene(Student exiStudent){
-        return getScene(false);
+        String[] dob = exiStudent.getDateOfBirth().split("-");
+        Address a = exiStudent.getAddress();
+        String[] txtValues = new String[]{exiStudent.getName(), exiStudent.getEmailAddress(),dob[0],dob[1],dob[2],
+            a.getZipCode(),String.valueOf(a.getHouseNumber()),a.getSuffix(),a.getStreet(),a.getCity(),a.getCountry()};
+        return getScene(false, exiStudent, txtValues);
     }
 
-    private Scene getScene(boolean create ){
+    private Scene getScene(boolean create, Student exiStudent, String[] txtValues){
         BorderPane layout = new BorderPane();
         GridPane gridPane = new GridPane();
 
         Label name = new Label("Full name:");
-        TextField nameInput = new TextField();
+        TextField nameInput = new TextField(txtValues[0]);
 
         Label email = new Label("Emailaddress:");
-        TextField emailInput = new TextField();
+        TextField emailInput = new TextField(txtValues[1]);
 
         Label dOB = new Label("Date of birth: ");
-        TextField dOBDay = new TextField();
+        TextField dOBDay = new TextField(txtValues[2]);
         dOBDay.setPrefWidth(40);
         dOBDay.setPromptText("dd");
-        TextField dOBMonth = new TextField();
+        TextField dOBMonth = new TextField(txtValues[3]);
         dOBMonth.setPrefWidth(40);
         dOBMonth.setPromptText("mm");
-        TextField dOBYear = new TextField();
+        TextField dOBYear = new TextField(txtValues[4]);
         dOBYear.setPrefWidth(80);
         dOBYear.setPromptText("yyyy");
         GridPane dOBInput = new GridPane();
@@ -51,6 +56,10 @@ public class NewStudentScene {
         RadioButton GF = new RadioButton("Female");
         RadioButton GO = new RadioButton("Other");
         GM.setSelected(true);
+        if (!create){
+            if (exiStudent.getGender().equals(Gender.F)) GF.setSelected(true); 
+            if (exiStudent.getGender().equals(Gender.O)) GO.setSelected(true); 
+        }
         GM.setToggleGroup(tg);
         GF.setToggleGroup(tg);
         GO.setToggleGroup(tg);
@@ -61,20 +70,20 @@ public class NewStudentScene {
 
         Label address = new Label("Address: ");
         Label zipCode = new Label("Zipcode: ");
-        TextField zipCodeInput = new TextField();
+        TextField zipCodeInput = new TextField(txtValues[5]);
         zipCodeInput.setMaxWidth(100);
-        Label street = new Label("Street: ");
-        TextField streetInput = new TextField();
         Label houseNo = new Label("No: ");
-        TextField houseNoInput = new TextField();
+        TextField houseNoInput = new TextField(txtValues[6]);
         houseNoInput.setMaxWidth(50);
         Label suffix = new Label("Suffix: ");
-        TextField suffixInput = new TextField();
+        TextField suffixInput = new TextField(txtValues[7]);
         suffixInput.setMaxWidth(50);
+        Label street = new Label("Street: ");
+        TextField streetInput = new TextField(txtValues[8]);
         Label city = new Label("City: ");
-        TextField cityInput = new TextField();
+        TextField cityInput = new TextField(txtValues[9]);
         Label country = new Label("Country: ");
-        TextField countryInput = new TextField();
+        TextField countryInput = new TextField(txtValues[10]);
         GridPane addressInput = new GridPane();
         addressInput.add(zipCode,0,0,1,1);
         addressInput.add(zipCodeInput,1,0,1,1);
@@ -95,9 +104,9 @@ public class NewStudentScene {
         Label addressError = new Label("");
         gridPane.add(addressError,2,6);
 
-        Label studentAdded = new Label("Student added succesfully!");
+        Label studentAdded = new Label();
 
-        Button submit = new Button("submit form");
+        Button submit = new Button("Submit");
         submit.setOnAction((event) -> {
             boolean validInput = true;
             String studentName = nameInput.getText().trim();
@@ -109,13 +118,11 @@ public class NewStudentScene {
 
             String studentZipCode = "";
             int studentHouseNo = -1;
-            String studentSuffix = suffixInput.getText().trim();
-            if (studentSuffix.isEmpty()) studentSuffix = null;
+            String studentSuffix = null;
+            if (suffixInput.getText()!=null && !suffixInput.getText().isBlank()) studentSuffix = suffixInput.getText().trim();
             String studentStreet = streetInput.getText().trim();
             String studentCity = cityInput.getText().trim();
             String studentCountry = countryInput.getText().trim();
-            //check if address exists in database (zipcode, housenumber and suffix)
-            //if not create new with new addressid, if yes then get addressid
 
             emailError.setText("");
             dateError.setText("");
@@ -161,8 +168,16 @@ public class NewStudentScene {
 
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
-                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
-                GUI.studentRepo.create(newStudent);
+                if (!create){
+                    String previousEmail = exiStudent.getEmailAddress();
+                    studentAdded.setText("Student succefully updated");
+                    exiStudent.adjustAllValues(studentName,studentEmail,studentDOB,studentGender,studentAddress);
+                    GUI.studentRepo.update(exiStudent,previousEmail);
+                } else {
+                    studentAdded.setText("Student succefully created");
+                    Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
+                    GUI.studentRepo.create(newStudent);
+                }
                 gridPane.add(studentAdded,0,11);
             }
 

@@ -53,14 +53,18 @@ public class StudentOverview {
         }));
         vBox.getChildren().add(back);
         vBox.getChildren().add(createStudent);
+        
 
-        Student selectedStudent = table.getSelectionModel().getSelectedItem();
         Button updateStudent = new Button("Change info student");
         updateStudent.setOnAction((event -> {
-            NewStudentScene newStudent = new NewStudentScene();
-            GUI.getStage().setScene(newStudent.getUpdateScene(selectedStudent));
+            Student selectedStudent = table.getSelectionModel().getSelectedItem();
+            // System.out.println(selectedStudent.getName());
+            if (selectedStudent!=null) System.out.println(selectedStudent.getName());
+            NewStudentScene changeInfoStudent = new NewStudentScene();
+            GUI.getStage().setScene(changeInfoStudent.getUpdateScene(selectedStudent));
             GUI.getStage().setTitle("Add student");
         }));
+        vBox.getChildren().add(updateStudent);
         Button courses = new Button("Show enrollments");
         courses.setOnAction((event) -> {
             //new scene tableview with courses selected student
