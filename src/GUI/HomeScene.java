@@ -17,14 +17,6 @@ public class HomeScene {
     public Scene getScene(){
         BorderPane layout = new BorderPane();
         GridPane gridPane = new GridPane();
-        
-        Button createStudent = new Button("Create student");
-        gridPane.add(createStudent,0,0);
-        createStudent.setOnAction((event) -> {
-            NewStudentScene addStudent = new NewStudentScene();
-            GUI.getStage().setScene(addStudent.getScene());
-            GUI.getStage().setTitle("Add new Student");
-        });
 
         Button allStudents = new Button("All students");
         gridPane.add(allStudents,1,0);

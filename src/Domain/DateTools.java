@@ -11,11 +11,11 @@ public class DateTools {
     }
 
     public static String formatDate(int day, int month, int year){
-        String date = "";
-        if (day<10) date += "0";
-        date += day + "-";
+        String date = year + "-";
         if (month<10) date += "0";
-        date += month + "-" + year;
+        date += month + "-" ;
+        if (day<10) date += "0";
+        date += day;
         return date;
     }
 

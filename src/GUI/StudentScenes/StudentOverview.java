@@ -1,8 +1,8 @@
 package GUI.StudentScenes;
 
 import DB.StudentRepo;
-import Domain.Gender;
-import Domain.Student;
+import Domain.*;
+import GUI.*;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -34,6 +34,20 @@ public class StudentOverview {
         
         VBox vBox = new VBox();
         vBox.getChildren().add(table);
+        Button createStudent = new Button("Add new student");
+        createStudent.setOnAction((event -> {
+            NewStudentScene newStudent = new NewStudentScene();
+            GUI.getStage().setScene(newStudent.getScene());
+            GUI.getStage().setTitle("Add student");
+        }));
+        Button back = new Button("Go back");
+        back.setOnAction((event -> {
+            HomeScene home = new HomeScene();
+            GUI.getStage().setScene(home.getScene());
+            GUI.getStage().setTitle("Home");
+        }));
+        vBox.getChildren().add(back);
+        vBox.getChildren().add(createStudent);
 
         Student selectedStudent = table.getSelectionModel().getSelectedItem();
         Button courses = new Button("Show courses for this student");

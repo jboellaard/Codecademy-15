@@ -2,6 +2,7 @@ package GUI.StudentScenes;
 
 import DB.*;
 import Domain.*;
+import GUI.*;
 
 // import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -132,7 +133,7 @@ public class NewStudentScene {
             }
 
             try {
-                studentHouseNo = Integer.parseInt(houseNo.getText());
+                studentHouseNo = Integer.parseInt(houseNoInput.getText());
             } catch (NumberFormatException nfe) {
                 addressError.setText("Please enter a housenumber.");
                 validInput = false;
@@ -150,13 +151,18 @@ public class NewStudentScene {
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
                 StudentRepo repo = new StudentRepo();
-                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress.getAddressID());
+                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,1); //studentAddress.getAddressID
                 repo.create(newStudent);
-                //tableview of students
-                gridPane.add(new Label(""+repo.getAllStudents()),0,7);
             }
 
         });
+
+        Button back = new Button("Go back");
+        back.setOnAction((event -> {
+            StudentOverview overview = new StudentOverview();
+            GUI.getStage().setScene(overview.getScene());
+            GUI.getStage().setTitle("overview");
+        }));
 
         gridPane.add(name,0,1);
         gridPane.add(nameInput,1,1);
@@ -169,6 +175,7 @@ public class NewStudentScene {
         gridPane.add(address,0,6);
         gridPane.add(addressInput,1,6,1,4);
         gridPane.add(submit,0,10);
+        gridPane.add(back,1,10);
 
         //return button here
 

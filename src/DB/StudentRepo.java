@@ -23,7 +23,7 @@ public class StudentRepo {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO Student VALUES ('?','?','?','?',?);");
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO Student VALUES (?,?,?,?,?);");
             pstmt.setString(1, student.getEmailAddress());
             pstmt.setString(2, student.getName());
             pstmt.setString(3, student.getDateOfBirth());
