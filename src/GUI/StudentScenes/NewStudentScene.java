@@ -87,6 +87,8 @@ public class NewStudentScene {
         Label addressError = new Label("");
         gridPane.add(addressError,2,6);
 
+        Label studentAdded = new Label("Student added succesfully!");
+
         Button submit = new Button("submit form");
         submit.setOnAction((event) -> {
             boolean validInput = true;
@@ -100,6 +102,7 @@ public class NewStudentScene {
             String studentZipCode = "";
             int studentHouseNo = -1;
             String studentSuffix = suffixInput.getText().trim();
+            if (studentSuffix.isEmpty()) studentSuffix = null;
             String studentStreet = streetInput.getText().trim();
             String studentCity = cityInput.getText().trim();
             String studentCountry = countryInput.getText().trim();
@@ -150,9 +153,9 @@ public class NewStudentScene {
 
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
-                GUI.addressRepo.findAddressID(studentAddress);
                 Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress.getAddressID());
                 GUI.studentRepo.create(newStudent);
+                gridPane.add(studentAdded,0,11);
             }
 
         });

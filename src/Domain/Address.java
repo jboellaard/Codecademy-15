@@ -1,6 +1,6 @@
 package Domain;
 
-import DB.AddressRepo;
+// import DB.AddressRepo;
 import GUI.*;
 
 public class Address {
@@ -13,14 +13,23 @@ public class Address {
     private String city;
     private String country;
 
-    public Address(String zipCode, int houseNo, String suffix, String street, String city, String country){
-        GUI.addressRepo.findAddressID(this);
+    public Address(int addressID, String zipCode, int houseNo, String suffix, String street, String city, String country){
         this.zipCode = zipCode;
         this.houseNo = houseNo;
         this.suffix = suffix;
         this.street = street;
         this.city = city;
         this.country = country;
+        if (addressID==-1){
+            GUI.addressRepo.findAddressID(this);
+        } else {
+            this.addressID = addressID;
+        }
+        
+    }
+
+    public Address(String zipCode, int houseNo, String suffix, String street, String city, String country){
+        this(-1,zipCode,houseNo,suffix,street,city,country);
     }
 
     public void setAddressID(int addressID){
@@ -42,13 +51,25 @@ public class Address {
     public String getSuffix(){
         return this.suffix;
     }
+    
+    public void setStreet(String street){
+        this.street = street;
+    }
 
     public String getStreet(){
         return this.street;
     }
 
+    public void setCity(String city){
+        this.city = city;
+    }
+
     public String getCity(){
         return this.city;
+    }
+
+    public void setCountry(String country){
+        this.country = country;
     }
 
     public String getCountry(){

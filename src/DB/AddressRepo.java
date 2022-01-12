@@ -16,9 +16,22 @@ public class AddressRepo {
 
     public void findAddressID(Address address){
         for (Address addressInDB : allAddresses){
-            if (address.getZipCode().equals(addressInDB.getZipCode()) && address.getHouseNumber()==addressInDB.getHouseNumber() && address.getSuffix().equals(addressInDB.getSuffix())){
-                addressInDB.setAddressID(addressInDB.getAddressID());
-                return;
+            if (address.getSuffix()!=null){
+                if (address.getZipCode().equals(addressInDB.getZipCode()) && address.getHouseNumber()==addressInDB.getHouseNumber() && address.getSuffix().equals(addressInDB.getSuffix())){
+                    address.setAddressID(addressInDB.getAddressID());
+                    address.setStreet(addressInDB.getStreet());
+                    address.setCity(addressInDB.getCity());
+                    address.setCountry(addressInDB.getCountry());
+                    return;
+                }
+            } else {
+                if (address.getZipCode().equals(addressInDB.getZipCode()) && address.getHouseNumber()==addressInDB.getHouseNumber() && addressInDB.getSuffix()==null){
+                    address.setAddressID(addressInDB.getAddressID());
+                    address.setStreet(addressInDB.getStreet());
+                    address.setCity(addressInDB.getCity());
+                    address.setCountry(addressInDB.getCountry());
+                    return;
+                }
             }
         }
         this.create(address);
@@ -70,13 +83,19 @@ public class AddressRepo {
 
             pstmt.executeUpdate();
 
-            PreparedStatement getID = con.prepareStatement("SELECT AddressID FROM Address WHERE Zipcode=? AND HouseNumber=? AND Suffix=?;");
+            PreparedStatement getID = con.prepareStatement("SELECT AddressID FROM Address WHERE ZipCode=? AND HouseNumber=? AND Suffix is NULL;");
+            if (address.getSuffix()!=null){
+                getID = con.prepareStatement("SELECT AddressID FROM Address WHERE ZipCode=? AND HouseNumber=? AND Suffix=?;");
+                getID.setString(3, address.getSuffix());
+            }
             getID.setString(1, address.getZipCode());
             getID.setInt(2, address.getHouseNumber());
-            getID.setString(3, address.getSuffix());
 
             rs = getID.executeQuery();
-            address.setAddressID(rs.getInt("AddressID"));
+            while (rs.next()){
+                address.setAddressID(rs.getInt("AddressID"));
+            }
+            
             allAddresses.add(address);
 
         }
@@ -105,8 +124,8 @@ public class AddressRepo {
             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Address");
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                Address addressInDB = new Address(rs.getString("ZipCode"),rs.getInt("HouseNumber"),rs.getString("Suffix"),rs.getString("Street"),rs.getString("City"),rs.getString("Country"));
-                addressInDB.setAddressID(rs.getInt("AddressID"));
+                //
+                Address addressInDB = new Address(rs.getInt("AddressID"),rs.getString("ZipCode"),rs.getInt("HouseNumber"),rs.getString("Suffix"),rs.getString("Street"),rs.getString("City"),rs.getString("Country"));
                 allAddresses.add(addressInDB);
             }
         }
