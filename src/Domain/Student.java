@@ -14,7 +14,8 @@ public class Student {
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        this.addressID = addressID;
+        // this.address = address;
+        this.addressID= addressID;
     }
 
     public String getEmailAddress(){
@@ -34,6 +35,7 @@ public class Student {
     }
 
     public int getAddressID(){
+        // return this.address.getAddressID();
         return this.addressID;
     }
 

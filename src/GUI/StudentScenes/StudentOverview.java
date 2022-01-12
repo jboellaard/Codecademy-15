@@ -13,8 +13,8 @@ public class StudentOverview {
 
     public Scene getScene(){
         TableView<Student> table = new TableView<>();
-        StudentRepo repo = new StudentRepo();
-        ObservableList<Student> allStudents = repo.getAllStudents();
+        // StudentRepo repo = new StudentRepo();
+        ObservableList<Student> allStudents = GUI.studentRepo.getAllStudents();
         table.setItems(allStudents);
  
         TableColumn<Student,String> nameCol = new TableColumn<>("Name");
@@ -42,9 +42,9 @@ public class StudentOverview {
         }));
         Button back = new Button("Go back");
         back.setOnAction((event -> {
-            HomeScene home = new HomeScene();
-            GUI.getStage().setScene(home.getScene());
-            GUI.getStage().setTitle("Home");
+            // HomeScene home = new HomeScene();
+            GUI.GUIStage.setScene(GUI.getHomeScene());
+            GUI.GUIStage.setTitle("Home");
         }));
         vBox.getChildren().add(back);
         vBox.getChildren().add(createStudent);

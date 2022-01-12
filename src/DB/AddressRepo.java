@@ -105,7 +105,9 @@ public class AddressRepo {
             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Address");
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                allAddresses.add(new Address(rs.getInt("AddressID"),rs.getString("ZipCode"),rs.getInt("HouseNumber"),rs.getString("Suffix"),rs.getString("Street"),rs.getString("City"),rs.getString("Country")));
+                Address addressInDB = new Address(rs.getString("ZipCode"),rs.getInt("HouseNumber"),rs.getString("Suffix"),rs.getString("Street"),rs.getString("City"),rs.getString("Country"));
+                addressInDB.setAddressID(rs.getInt("AddressID"));
+                allAddresses.add(addressInDB);
             }
         }
         // Handle any errors that may have occurred.
