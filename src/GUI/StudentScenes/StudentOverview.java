@@ -1,6 +1,6 @@
 package GUI.StudentScenes;
 
-import DB.StudentRepo;
+// import DB.StudentRepo;
 import Domain.*;
 import GUI.*;
 import javafx.collections.ObservableList;
@@ -29,7 +29,12 @@ public class StudentOverview {
         addressIDCol.setCellValueFactory(new PropertyValueFactory<>("addressID"));
 
         // nameCol.setSortType(TableColumn.SortType.DESCENDING);
-        table.getColumns().setAll(nameCol,emailCol,dobCol,genderCol,addressIDCol);
+        // table.getColumns().setAll(nameCol,emailCol,dobCol,genderCol,addressIDCol);
+        table.getColumns().add(nameCol);
+        table.getColumns().add(emailCol);
+        table.getColumns().add(dobCol);
+        table.getColumns().add(genderCol);
+        table.getColumns().add(addressIDCol);
         table.sort();
         
         VBox vBox = new VBox();
@@ -50,8 +55,9 @@ public class StudentOverview {
         vBox.getChildren().add(createStudent);
 
         Student selectedStudent = table.getSelectionModel().getSelectedItem();
-        Button courses = new Button("Show courses for this student");
+        Button courses = new Button("Show enrollments");
         courses.setOnAction((event) -> {
+            
             //new scene tableview with courses selected student
         });
         Button certificates = new Button("Show certificates for this student");
