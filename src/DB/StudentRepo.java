@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 public class StudentRepo {
     private String connectionUrl = DBConnection.getConnectionUrl();
     //add list of students so it can be used faster than making a connection every time?
-    //private ObservableList<Student> allStudents; (and don't forget to add new student when student is added to db as well)
     final ObservableList<Student> allStudents = FXCollections.observableArrayList();
 
     public StudentRepo(){

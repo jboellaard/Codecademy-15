@@ -8,6 +8,7 @@ public class DBConnection {
     public DBConnection(){
     }
 
+
     public static String getConnectionUrl(){
         return "jdbc:sqlserver://localhost;databaseName=StudentTemp;integratedSecurity=true;";
     }

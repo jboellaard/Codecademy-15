@@ -151,7 +151,7 @@ public class NewStudentScene {
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
                 StudentRepo repo = new StudentRepo();
-                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,1); //studentAddress.getAddressID
+                Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,1); //studentAddress.getAddressID()
                 repo.create(newStudent);
             }
 

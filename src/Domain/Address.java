@@ -12,17 +12,38 @@ public class Address {
     private String city;
     private String country;
 
-    public Address(String zipCode, int houseNo, String suffix, String street, String city, String country){
+    public Address(int addressID, String zipCode, int houseNo, String suffix, String street, String city, String country){
         //create new address in database?
         //cross check with database?
+        if (addressID==-1){
+            AddressRepo repo = new AddressRepo();
+            addressID = repo.findAddressID(this);
+        }
+        this.addressID = addressID;
         this.zipCode = zipCode;
         this.houseNo = houseNo;
         this.suffix = suffix;
         this.street = street;
         this.city = city;
         this.country = country;
-        AddressRepo repo = new AddressRepo();
-        this.addressID = repo.findAddressID(this);
+    }
+
+    public Address(String zipCode, int houseNo, String suffix, String street, String city, String country){
+        // AddressRepo repo = new AddressRepo();
+        // int addressIDFound = repo.findAddressID(this);
+        this(-1,zipCode,houseNo,suffix,street,city,country);
+
+        // this.zipCode = zipCode;
+        // this.houseNo = houseNo;
+        // this.suffix = suffix;
+        // this.street = street;
+        // this.city = city;
+        // this.country = country;
+        
+    }
+
+    public void setAddressID(int addressID){
+        this.addressID = addressID;
     }
 
     public int getAddressID(){
