@@ -8,9 +8,12 @@ import javafx.collections.ObservableList;
 
 public class StudentRepo {
     private String connectionUrl = DBConnection.getConnectionUrl();
+    //add list of students so it can be used faster than making a connection every time?
+    //private ObservableList<Student> allStudents; (and don't forget to add new student when student is added to db as well)
+    final ObservableList<Student> allStudents = FXCollections.observableArrayList();
 
     public StudentRepo(){
-        
+        getAllStudentsFromDB();
     }
 
     public void create(Student student){
@@ -28,6 +31,7 @@ public class StudentRepo {
             pstmt.setInt(5, student.getAddressID());
 
             pstmt.executeUpdate();
+            allStudents.add(student);
         }
 
         catch (Exception e) {
@@ -37,11 +41,14 @@ public class StudentRepo {
             if (stmt != null) try { stmt.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
-
     }
 
     public ObservableList<Student> getAllStudents(){
-        final ObservableList<Student> allStudents = FXCollections.observableArrayList();
+        return this.allStudents;
+    }
+
+    public void getAllStudentsFromDB(){
+        // final ObservableList<Student> allStudents = FXCollections.observableArrayList();
         // List<Student> allStudents = new ArrayList<>();
         Connection con = null;
         Statement stmt = null;
@@ -56,7 +63,6 @@ public class StudentRepo {
             while (rs.next()) {
                 allStudents.add(new Student(rs.getString("Name"),rs.getString("EmailAddress"),rs.getString("DateOfBirth"),Gender.valueOf(rs.getString("Gender")),rs.getInt("AddressID")));
             }
-            return allStudents;
         }
         // Handle any errors that may have occurred.
         catch (Exception e) {
@@ -67,7 +73,6 @@ public class StudentRepo {
             if (stmt != null) try { stmt.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
-        return null;
     }
 
     public void update(Student student){
