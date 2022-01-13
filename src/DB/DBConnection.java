@@ -12,5 +12,9 @@ public class DBConnection {
     public static String getConnectionUrl(){
         return "jdbc:sqlserver://localhost;databaseName=StudentTemp;integratedSecurity=true;";
     }
+
+    public static String getDriverUrl(){
+        return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    }
     
 }

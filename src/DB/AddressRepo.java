@@ -8,6 +8,7 @@ import javafx.collections.*;
 
 public class AddressRepo {
     private String connectionUrl = DBConnection.getConnectionUrl();
+    private String driverUrl = DBConnection.getDriverUrl();
     final ObservableList<Address> allAddresses = FXCollections.observableArrayList();
 
     public AddressRepo(){
@@ -44,7 +45,7 @@ public class AddressRepo {
         ResultSet rs = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("INSERT INTO Address VALUES (?,?,?,?,?,?);");
             pstmt.setString(1, address.getZipCode());
@@ -93,7 +94,7 @@ public class AddressRepo {
         ResultSet rs = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("SELECT * FROM Address");
             rs = pstmt.executeQuery();

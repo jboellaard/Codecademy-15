@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 
 public class StudentRepo {
     private String connectionUrl = DBConnection.getConnectionUrl();
-    //add list of students so it can be used faster than making a connection every time?
+    private String driverUrl = DBConnection.getDriverUrl();
     final ObservableList<Student> allStudents = FXCollections.observableArrayList();
 
     public StudentRepo(){
@@ -21,7 +21,7 @@ public class StudentRepo {
         PreparedStatement pstmt = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("INSERT INTO Student VALUES (?,?,?,?,?);");
             pstmt.setString(1, student.getEmailAddress());
@@ -53,7 +53,7 @@ public class StudentRepo {
         ResultSet rs = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("SELECT * FROM Student");
             rs = pstmt.executeQuery();
@@ -83,7 +83,7 @@ public class StudentRepo {
         PreparedStatement pstmt = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("UPDATE Student SET EmailAddress=?, Name=?, DateOfBirth=?, Gender=?, AddressID=? WHERE EmailAddress=?;");
             pstmt.setString(1, student.getEmailAddress());
@@ -110,7 +110,7 @@ public class StudentRepo {
         PreparedStatement pstmt = null;
 
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("DELETE FROM Student WHERE EmailAddress=?;");
             pstmt.setString(1, student.getEmailAddress());
