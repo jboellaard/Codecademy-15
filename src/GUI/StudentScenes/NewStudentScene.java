@@ -46,9 +46,9 @@ public class NewStudentScene {
         dOBYear.setPrefWidth(80);
         dOBYear.setPromptText("yyyy");
         GridPane dOBInput = new GridPane();
-        dOBInput.add(dOBDay,0,0);
+        dOBInput.add(dOBDay,2,0);
         dOBInput.add(dOBMonth,1,0);
-        dOBInput.add(dOBYear,2,0);
+        dOBInput.add(dOBYear,0,0);
 
         Label gender = new Label("Gender:");
         ToggleGroup tg = new ToggleGroup();

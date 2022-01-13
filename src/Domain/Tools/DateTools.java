@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Tools;
 
 public class DateTools {
 

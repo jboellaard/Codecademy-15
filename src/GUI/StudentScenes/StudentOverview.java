@@ -58,11 +58,14 @@ public class StudentOverview {
         Button updateStudent = new Button("Change info student");
         updateStudent.setOnAction((event -> {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
-            // System.out.println(selectedStudent.getName());
-            if (selectedStudent!=null) System.out.println(selectedStudent.getName());
-            NewStudentScene changeInfoStudent = new NewStudentScene();
-            GUI.getStage().setScene(changeInfoStudent.getUpdateScene(selectedStudent));
-            GUI.getStage().setTitle("Add student");
+            if (selectedStudent!=null){
+                NewStudentScene changeInfoStudent = new NewStudentScene();
+                GUI.getStage().setScene(changeInfoStudent.getUpdateScene(selectedStudent));
+                GUI.getStage().setTitle("Add student");
+            } else {
+                //message no student selected
+            }
+            
         }));
         vBox.getChildren().add(updateStudent);
         Button courses = new Button("Show enrollments");
@@ -74,7 +77,8 @@ public class StudentOverview {
         certificates.setOnAction((event) -> {
             //new scene tableview with certificates selected student
         });
-        //crud buttons below table
+
+        //delete button
 
 
         Scene scene = new Scene(vBox, 600, 400);
