@@ -2,6 +2,9 @@ package GUI.StudentScenes;
 
 // import DB.*;
 import Domain.*;
+import Domain.Tools.DateTools;
+import Domain.Tools.EmailTools;
+import Domain.Tools.ZipCodeTools;
 import GUI.*;
 
 // import javafx.scene.Node;
@@ -157,7 +160,7 @@ public class NewStudentScene {
                 validInput = false;
             }
             try {
-                studentZipCode = Address.formatZipCode(zipCodeInput.getText());
+                studentZipCode = ZipCodeTools.formatZipCode(zipCodeInput.getText());
             } catch (NullPointerException nfe) {
                 addressError.setText("Please enter a zipcode.");
                 validInput = false;
