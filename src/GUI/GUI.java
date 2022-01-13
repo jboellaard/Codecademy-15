@@ -2,6 +2,7 @@ package GUI;
 
 import DB.*;
 import GUI.StudentScenes.*;
+import GUI.CourseScenes.*;
 import javafx.application.Application;
 // import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -40,7 +41,14 @@ public class GUI extends Application {
             GUI.getStage().setScene(overview.getScene());
             GUI.getStage().setTitle("All students");
         });
-        //button for all courses
+
+        Button allCourses = new Button("All courses");
+        gridPane.add(allCourses,2,0);
+        allCourses.setOnAction((event) -> {
+            CourseOverview overview = new CourseOverview();
+            GUI.getStage().setScene(overview.getScene());
+            GUI.getStage().setTitle("All courses");
+        });
 
         layout.setCenter(gridPane);
         Scene home = new Scene(layout, 600, 400);

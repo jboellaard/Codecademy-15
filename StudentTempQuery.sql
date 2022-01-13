@@ -43,3 +43,18 @@ VALUES ('marc0tjevp@gmail.com', 'Marco van Poortvliet', '1998-05-05', 'M',1),
  ('joeyletens@hotmail.com', 'Joey Letens', '2002-02-18', 'M',5),
  ('danirohder@kpn.com', 'Dani Rohder', '2001-08-09', 'M',6),
  ('johanneshoefman@hotmail.com', 'Johannes Hoefman', '1999-06-12', 'M',7);
+
+ DROP TABLE IF EXISTS Course;
+CREATE TABLE Course (
+	CourseName varchar(64) NOT NULL PRIMARY KEY,
+	Subject varchar(64) NOT NULL,
+	IntroductionText varchar(64) NOT NULL,
+	LevelIndication varchar(10) NOT NULL,
+);
+
+INSERT INTO Course
+VALUES ('Web development', 'De basics', 'Bouw websites en web apps', 'Beginner'),
+ ('Data science', 'Annalyseren', 'Vind logica in data', 'Beginner'),
+ ('Computer Science', 'Annalyseren', 'Computer sciences, ook wel cs, is een breed bregrip', 'Advanced'),
+ ('Machine learning', 'Data science', 'Machine learning is een opkomend onderdeel van data science', 'Advanced'),
+ ('Web design', 'Opmaak en layout', 'Web design is verslavend als je eraan begint', 'Expert');

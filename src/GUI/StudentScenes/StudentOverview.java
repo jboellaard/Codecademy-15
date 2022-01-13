@@ -53,6 +53,8 @@ public class StudentOverview {
         }));
         vBox.getChildren().add(back);
         vBox.getChildren().add(createStudent);
+
+        Label noStudentSelected = new Label("Please select a student");
         
 
         Button updateStudent = new Button("Change info student");
@@ -64,6 +66,7 @@ public class StudentOverview {
                 GUI.getStage().setTitle("Add student");
             } else {
                 //message no student selected
+                vBox.getChildren().add(noStudentSelected);
             }
             
         }));

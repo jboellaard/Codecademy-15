@@ -1,5 +1,4 @@
-public class GUI {
-    package GUI;
+package GUI.EnrollmentScenes;
 
 import DB.*;
 import Domain.*;
@@ -12,11 +11,9 @@ import javafx.scene.layout.*;
 // import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class GUI extends Application {
+public class EnrollmentScene {
 
-    @Override
-    public void start(Stage stage) throws Exception {
-
+    public Scene getScene(){
         BorderPane layout = new BorderPane();
         GridPane gridPane = new GridPane();
 
@@ -29,14 +26,14 @@ public class GUI extends Application {
 
         Button newStudent = new Button("submit form");
         newStudent.setOnAction((event) -> {
-            Date sUP = new Date(String.valueOf(courseSUP.getValue()));
-            String course = courseInput.getText();
-            String student = new Email(studentNameInput.getText());
+            // Date sUP = new Date(String.valueOf(courseSUP.getValue()));
+            // String course = courseInput.getText();
+            // String student = new Email(studentNameInput.getText());
             
-            EnrollmentRepo repo = new EnrollmentRepo();
-            Enrollment math = new Enrollment(signUpDate, course, student);
-            repo.create(hans);
-            gridPane.add(new Label(""+repo.getAllStudents()),0,7);
+            // EnrollmentRepo repo = new EnrollmentRepo();
+            // Enrollment math = new Enrollment(signUpDate, course, student);
+            // repo.create(hans);
+            // gridPane.add(new Label(""+repo.getAllStudents()),0,7);
         });
         
         Button createStudent = new Button("Create enrollment");
@@ -48,19 +45,16 @@ public class GUI extends Application {
             gridPane.add(courseInput,1,2);
             gridPane.add(studentName,0,3);
             gridPane.add(studentNameInput,1,3);
-            gridPane.add(createEnrollment,0,6);
+            // gridPane.add(createEnrollment,0,6);
 
         });
 
         layout.setCenter(gridPane);
 
         Scene view = new Scene(layout, 600, 600);
-        stage.setTitle("GUI");
-        stage.setScene(view);
-        stage.show();
+        return view;
     }
 
-    
-}
+        
 
 }
