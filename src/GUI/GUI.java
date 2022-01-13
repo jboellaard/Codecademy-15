@@ -14,6 +14,7 @@ public class GUI extends Application {
     public static Stage GUIStage;
     public static AddressRepo addressRepo = new AddressRepo();
     public static StudentRepo studentRepo = new StudentRepo();
+    public static CourseRepo courseRepo = new CourseRepo();
 
     public static Stage getStage() {
         return GUIStage;

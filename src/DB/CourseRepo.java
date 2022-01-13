@@ -3,7 +3,7 @@ package DB;
 import java.sql.*;
 
 import Domain.*;
-import GUI.*;
+// import GUI.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -100,6 +100,8 @@ public class CourseRepo {
     }
     
     public void delete(Course course){
+        //may not be deleted if there are enrollments to this course
+        //via query or via list of enrollments?
         Connection con = null;
         PreparedStatement pstmt = null;
 

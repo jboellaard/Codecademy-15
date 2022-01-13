@@ -106,6 +106,7 @@ public class StudentRepo {
     }
     
     public void delete(Student student){
+        //remove all enrollments, certificates and progress of this student
         Connection con = null;
         PreparedStatement pstmt = null;
 
