@@ -39,13 +39,13 @@ public class NewStudentScene {
         TextField emailInput = new TextField(txtValues[1]);
 
         Label dOB = new Label("Date of birth: ");
-        TextField dOBDay = new TextField(txtValues[2]);
+        TextField dOBDay = new TextField(txtValues[4]);
         dOBDay.setPrefWidth(40);
         dOBDay.setPromptText("dd");
         TextField dOBMonth = new TextField(txtValues[3]);
         dOBMonth.setPrefWidth(40);
         dOBMonth.setPromptText("mm");
-        TextField dOBYear = new TextField(txtValues[4]);
+        TextField dOBYear = new TextField(txtValues[2]);
         dOBYear.setPrefWidth(80);
         dOBYear.setPromptText("yyyy");
         GridPane dOBInput = new GridPane();

@@ -1,15 +1,15 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.base.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.controls.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.fxml.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.graphics.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.media.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.swing.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.web.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx-swt.jar",
-        "c:\\Program Files\\sqljdbc_9.4.1.0_enu\\enu\\mssql-jdbc-9.4.1.jre11.jar",
-        "c:\\Code\\junit-platform-console-standalone-1.7.0-all.jar"
+        "jar files/sqljdbc_9.4.1.0_enu/enu/mssql-jdbc-9.4.1.jre11.jar",
+        "jar files/junit-platform-console-standalone-1.7.0-all.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx.base.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx.controls.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx.fxml.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx.graphics.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx.media.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx.swing.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx.web.jar",
+        "jar files/javafx-sdk-17.0.1/lib/javafx-swt.jar"
     ]
 }
