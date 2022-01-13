@@ -35,45 +35,18 @@ public class AddressRepo {
             }
         }
         this.create(address);
-        // Connection con = null;
-        // Statement stmt = null;
-        // ResultSet rs = null;
-
-        // try {
-        //     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        //     con = DriverManager.getConnection(connectionUrl);
-        //     PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Address");
-        //     rs = pstmt.executeQuery();
-
-        //     while (rs.next()) {
-        //         String zipCode = rs.getString("Zipcode");
-        //         int houseNo = rs.getInt("HouseNumber");
-        //         String suffix = rs.getString("Suffix");
-        //         if (address.getZipCode().equals(zipCode) && address.getHouseNumber()==houseNo && address.getSuffix().equals(suffix)){
-        //             addressID = rs.getInt("AddressID");
-        //             return addressID;
-        //         }
-        //     }
-        // }
-        // catch (Exception e) {
-        //     e.printStackTrace();
-        // }
-        // finally {
-        //     if (stmt != null) try { stmt.close(); } catch(Exception e) {}
-        //     if (con != null) try { con.close(); } catch(Exception e) {}
-        // }
-        // return addressID;
     }
 
     public void create(Address address){
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        PreparedStatement getID = null;
         ResultSet rs = null;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO Address VALUES (?,?,?,?,?,?);");
+            pstmt = con.prepareStatement("INSERT INTO Address VALUES (?,?,?,?,?,?);");
             pstmt.setString(1, address.getZipCode());
             pstmt.setInt(2, address.getHouseNumber());
             pstmt.setString(3, address.getSuffix());
@@ -83,7 +56,7 @@ public class AddressRepo {
 
             pstmt.executeUpdate();
 
-            PreparedStatement getID = con.prepareStatement("SELECT AddressID FROM Address WHERE ZipCode=? AND HouseNumber=? AND Suffix is NULL;");
+            getID = con.prepareStatement("SELECT AddressID FROM Address WHERE ZipCode=? AND HouseNumber=? AND Suffix is NULL;");
             if (address.getSuffix()!=null){
                 getID = con.prepareStatement("SELECT AddressID FROM Address WHERE ZipCode=? AND HouseNumber=? AND Suffix=?;");
                 getID.setString(3, address.getSuffix());
@@ -104,7 +77,8 @@ public class AddressRepo {
             e.printStackTrace();
         }
         finally {
-            if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (getID != null) try { getID.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
     }
@@ -115,13 +89,13 @@ public class AddressRepo {
 
     public void getAllAddressesFromDB(){
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Address");
+            pstmt = con.prepareStatement("SELECT * FROM Address");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 //
@@ -135,7 +109,7 @@ public class AddressRepo {
         }
         finally {
             if (rs != null) try { rs.close(); } catch(Exception e) {}
-            if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
     }

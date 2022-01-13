@@ -2,9 +2,7 @@ package GUI.StudentScenes;
 
 // import DB.*;
 import Domain.*;
-import Domain.Tools.DateTools;
-import Domain.Tools.EmailTools;
-import Domain.Tools.ZipCodeTools;
+import Domain.Tools.*;
 import GUI.*;
 
 // import javafx.scene.Node;
@@ -205,8 +203,6 @@ public class NewStudentScene {
         gridPane.add(addressInput,1,6,1,4);
         gridPane.add(submit,0,10);
         gridPane.add(back,1,10);
-
-        //return button here
 
         layout.setCenter(gridPane);
         Scene newStudentView = new Scene(layout, 600, 400);

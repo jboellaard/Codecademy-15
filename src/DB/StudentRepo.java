@@ -18,12 +18,12 @@ public class StudentRepo {
 
     public void create(Student student){
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO Student VALUES (?,?,?,?,?);");
+            pstmt = con.prepareStatement("INSERT INTO Student VALUES (?,?,?,?,?);");
             pstmt.setString(1, student.getEmailAddress());
             pstmt.setString(2, student.getName());
             pstmt.setString(3, student.getDateOfBirth());
@@ -38,7 +38,7 @@ public class StudentRepo {
             e.printStackTrace();
         }
         finally {
-            if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
     }
@@ -49,13 +49,13 @@ public class StudentRepo {
 
     public void getAllStudentsFromDB(){
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Student");
+            pstmt = con.prepareStatement("SELECT * FROM Student");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -73,19 +73,19 @@ public class StudentRepo {
         }
         finally {
             if (rs != null) try { rs.close(); } catch(Exception e) {}
-            if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
     }
 
     public void update(Student student, String previousEmail){
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             con = DriverManager.getConnection(connectionUrl);
-            PreparedStatement pstmt = con.prepareStatement("UPDATE Student SET EmailAddress=?, Name=?, DateOfBirth=?, Gender=?, AddressID=? WHERE EmailAddress=?;");
+            pstmt = con.prepareStatement("UPDATE Student SET EmailAddress=?, Name=?, DateOfBirth=?, Gender=?, AddressID=? WHERE EmailAddress=?;");
             pstmt.setString(1, student.getEmailAddress());
             pstmt.setString(2, student.getName());
             pstmt.setString(3, student.getDateOfBirth());
@@ -100,12 +100,31 @@ public class StudentRepo {
             e.printStackTrace();
         }
         finally {
-            if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
     }
     
-    public void delete(){
+    public void delete(Student student){
+        Connection con = null;
+        PreparedStatement pstmt = null;
 
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("DELETE FROM Student WHERE EmailAddress=?;");
+            pstmt.setString(1, student.getEmailAddress());
+
+            pstmt.executeUpdate();
+            allStudents.remove(student);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
     }
 }
