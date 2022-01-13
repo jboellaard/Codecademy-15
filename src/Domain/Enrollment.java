@@ -16,4 +16,28 @@ public class Enrollment {
     public void addCertificate(Certificate certificate){
         this.certificate = certificate;
     }
+
+    public Student getStudent(){
+        return this.student;
+    }
+
+    public String getStudentName(){
+        return this.student.getName();
+    }
+
+    public String getStudentEmailAddress(){
+        return this.student.getEmailAddress();
+    }
+
+    public Course getCourse(){
+        return this.course;
+    }
+
+    public String getCourseName(){
+        return this.course.getCourseName();
+    }
+
+    public String getSignUpDate(){
+        return this.signUpDate;
+    }
 }

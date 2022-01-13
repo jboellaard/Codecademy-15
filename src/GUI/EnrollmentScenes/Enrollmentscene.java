@@ -54,7 +54,5 @@ public class EnrollmentScene {
         Scene view = new Scene(layout, 600, 600);
         return view;
     }
-
-        
-
+    
 }

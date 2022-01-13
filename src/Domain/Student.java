@@ -1,5 +1,9 @@
 package Domain;
 
+import DB.EnrollmentRepo;
+import GUI.*;
+import javafx.collections.ObservableList;
+
 public class Student {
     private String emailAddress;
     private String name;

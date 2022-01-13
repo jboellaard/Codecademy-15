@@ -13,6 +13,7 @@ CREATE TABLE Address (
 	Street varchar(64) NOT NULL,
 	City varchar(64) NOT NULL,
 	Country varchar(64) NOT NULL,
+	CONSTRAINT UA_Address UNIQUE (ZipCode, HouseNumber, Suffix)
 );
 
 INSERT INTO Address
@@ -58,3 +59,27 @@ VALUES ('Web development', 'De basics', 'Bouw websites en web apps', 'Beginner')
  ('Computer Science', 'Annalyseren', 'Computer sciences, ook wel cs, is een breed bregrip', 'Advanced'),
  ('Machine learning', 'Data science', 'Machine learning is een opkomend onderdeel van data science', 'Advanced'),
  ('Web design', 'Opmaak en layout', 'Web design is verslavend als je eraan begint', 'Expert');
+
+DROP TABLE IF EXISTS Enrollment;
+CREATE TABLE Enrollment (
+	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
+	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
+	SignUpDate varchar(64) NOT NULL,
+	CONSTRAINT PK_Enrollment PRIMARY KEY (StudentEmail, CourseName, SignUpDate)
+);
+
+INSERT INTO Enrollment
+VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15'),
+('marc0tjevp@gmail.com', 'Computer science', '2021-01-20'),
+('marc0tjevp@gmail.com', 'Data science', '2021-01-23'),
+('lisatyem@gmail.com', 'Web development', '2021-01-07'),
+('renzoremmers@gmail.com', 'Web development', '2021-01-10'),
+('renzoremmers@gmail.com', 'Machine learning', '2021-01-01'),
+('rubenstrik@kpn.com', 'Data science', '2021-01-19'),
+('joeyletens@hotmail.com', 'Data science', '2021-01-03'),
+('joeyletens@hotmail.com', 'Computer science', '2021-01-18'),
+('danirohder@kpn.com', 'Web development', '2021-01-09'),
+('danirohder@kpn.com', 'Machine learning', '2021-01-16'),
+('johanneshoefman@hotmail.com', 'Data science', '2021-01-06'),
+('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14'),
+('johanneshoefman@hotmail.com', 'Web development', '2021-01-18');

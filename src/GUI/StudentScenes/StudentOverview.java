@@ -71,11 +71,23 @@ public class StudentOverview {
             
         }));
         vBox.getChildren().add(updateStudent);
-        Button courses = new Button("Show enrollments");
-        courses.setOnAction((event) -> {
+
+        Button enrollments = new Button("Show enrollments");
+        enrollments.setOnAction((event) -> {
+            Student selectedStudent = table.getSelectionModel().getSelectedItem();
+            if (selectedStudent!=null){
+                EnrollmentOverviewStudent showEnrollments = new EnrollmentOverviewStudent();
+                GUI.getStage().setScene(showEnrollments.getScene(selectedStudent));
+                GUI.getStage().setTitle("Add student");
+            } else {
+                //message no student selected
+                vBox.getChildren().add(noStudentSelected);
+            }
             //new scene tableview with courses selected student
             //in that scene a button to enroll to a new course
         });
+        vBox.getChildren().add(enrollments);
+        
         Button certificates = new Button("Show certificates for this student");
         certificates.setOnAction((event) -> {
             //new scene tableview with certificates selected student
