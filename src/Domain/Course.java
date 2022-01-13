@@ -6,7 +6,7 @@ public class Course {
     private String courseName;
     private String subject;
     private String introductionText;
-    private LevelIndication level;
+    private LevelIndication levelIndication;
     private ArrayList<Module> modules;
     private ArrayList<Course> recommendedCourses;
 
@@ -14,7 +14,23 @@ public class Course {
         this.courseName = courseName;
         this.subject = subject;
         this.introductionText = introductionText;
-        this.level = level;
+        this.levelIndication = level;
+    }
+
+    public String getCourseName(){
+        return this.courseName;
+    }
+
+    public String getSubject(){
+        return this.subject;
+    }
+
+    public String getIntroductionText(){
+        return this.introductionText;
+    }
+
+    public LevelIndication getLevelIndication(){
+        return this.levelIndication;
     }
 
     public void addModule(Module module){

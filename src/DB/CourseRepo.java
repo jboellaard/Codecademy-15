@@ -23,15 +23,14 @@ public class CourseRepo {
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            pstmt = con.prepareStatement("INSERT INTO Student VALUES (?,?,?,?,?);");
-            pstmt.setString(1, student.getEmailAddress());
-            pstmt.setString(2, student.getName());
-            pstmt.setString(3, student.getDateOfBirth());
-            pstmt.setString(4, student.getGender().name());
-            pstmt.setInt(5, student.getAddressID());
+            pstmt = con.prepareStatement("INSERT INTO Course VALUES (?,?,?,?);");
+            pstmt.setString(1, course.getCourseName());
+            pstmt.setString(2, course.getIntroductionText());
+            pstmt.setString(3, course.getSubject());
+            pstmt.setString(4, course.getLevelIndication().name());
 
             pstmt.executeUpdate();
-            allStudents.add(student);
+            allCourses.add(course);
         }
 
         catch (Exception e) {
@@ -82,12 +81,11 @@ public class CourseRepo {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("UPDATE Course SET CourseName=?, Subject=?, IntroductionText=?, LevelIndication=? WHERE CourseName=?;");
-            pstmt.setString(1, course.getName());
-            pstmt.setString(2, student.getName());
-            pstmt.setString(3, student.getDateOfBirth());
-            pstmt.setString(4, student.getGender().name());
-            pstmt.setInt(5, student.getAddressID());
-            pstmt.setString(6, previousEmail);
+            pstmt.setString(1, course.getCourseName());
+            pstmt.setString(2, course.getSubject());
+            pstmt.setString(3, course.getIntroductionText());
+            pstmt.setString(4, course.getLevelIndication().name());
+            pstmt.setString(5, previousName);
 
             pstmt.executeUpdate();
         }
@@ -101,18 +99,18 @@ public class CourseRepo {
         }
     }
     
-    public void delete(Student student){
+    public void delete(Course course){
         Connection con = null;
         PreparedStatement pstmt = null;
 
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            pstmt = con.prepareStatement("DELETE FROM Student WHERE EmailAddress=?;");
-            pstmt.setString(1, student.getEmailAddress());
+            pstmt = con.prepareStatement("DELETE FROM Course WHERE CourseName=?;");
+            pstmt.setString(1, course.getCourseName());
 
             pstmt.executeUpdate();
-            allStudents.remove(student);
+            allCourses.remove(course);
         }
 
         catch (Exception e) {
