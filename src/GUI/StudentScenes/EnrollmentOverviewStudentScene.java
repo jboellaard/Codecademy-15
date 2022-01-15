@@ -3,24 +3,25 @@ package GUI.StudentScenes;
 import DB.EnrollmentRepo;
 // import DB.*;
 import Domain.*;
-import Domain.Tools.*;
+// import Domain.Tools.*;
 import GUI.*;
-
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import java.util.*;
 
-public class EnrollmentOverviewStudent {
+public class EnrollmentOverviewStudentScene {
 
     public Scene getScene(Student student){
         Label studentName = new Label(student.getName()+" enrollments");
 
         TableView<Enrollment> table = new TableView<>();
         // StudentRepo repo = new StudentRepo();
-        ObservableList<Enrollment> allEnrollments = EnrollmentRepo.getEnrollmentsFromDB(student);
-        table.setItems(allEnrollments);
+        ObservableList<Enrollment> allEnrollmentsStudent = EnrollmentRepo.getEnrollmentsFromDB(student);
+        table.setItems(allEnrollmentsStudent);
  
         TableColumn<Enrollment,String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("StudentName"));
@@ -40,12 +41,24 @@ public class EnrollmentOverviewStudent {
         VBox vBox = new VBox();
         vBox.getChildren().add(studentName);
         vBox.getChildren().add(table);
-        // Button createStudent = new Button("Add new student");
-        // createStudent.setOnAction((event -> {
-        //     NewStudentScene newStudent = new NewStudentScene();
-        //     GUI.getStage().setScene(newStudent.getCreateScene());
-        //     GUI.getStage().setTitle("Add student");
-        // }));
+
+        Button createEnrollment = new Button("Enroll in new course");
+        createEnrollment.setOnAction((event -> {
+            NewEnrollmentStudentScene newEnrollment = new NewEnrollmentStudentScene();
+            // ObservableList<Course> coursesAlreadyEnrolled = FXCollections.observableArrayList();
+            List<Course> coursesAlreadyEnrolled = new ArrayList<>();
+            for (Enrollment enrollment : allEnrollmentsStudent){
+                coursesAlreadyEnrolled.add(enrollment.getCourse());
+            }
+            ObservableList<Course> coursesToEnroll = FXCollections.observableArrayList();
+            for (Course course : GUI.courseRepo.getAllCourses()){
+                if (!coursesAlreadyEnrolled.contains(course)) coursesToEnroll.add(course) ;
+            }
+            GUI.getStage().setScene(newEnrollment.getScene(student, coursesToEnroll));
+            GUI.getStage().setTitle("Add enrollment");
+        }));
+        vBox.getChildren().add(createEnrollment);
+
         Button back = new Button("Go back");
         back.setOnAction((event -> {
             StudentOverview overview = new StudentOverview();
@@ -53,7 +66,7 @@ public class EnrollmentOverviewStudent {
             GUI.GUIStage.setTitle("Student overview");
         }));
         vBox.getChildren().add(back);
-        // vBox.getChildren().add(createStudent);
+        
 
         Label noStudentSelected = new Label("Please select a student");
         //if all modules of a course are at 100%, add a button to add a certificate for the enrollment

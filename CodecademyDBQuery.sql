@@ -2,7 +2,7 @@ USE master;
 DROP DATABASE IF EXISTS CodecademyData;
 CREATE DATABASE CodecademyData;
 GO
-USE StudentTemp;
+USE CodecademyData;
 
  DROP TABLE IF EXISTS Address;
 CREATE TABLE Address (
@@ -60,6 +60,16 @@ VALUES ('Web development', 'De basics', 'Bouw websites en web apps', 'Beginner')
  ('Machine learning', 'Data science', 'Machine learning is een opkomend onderdeel van data science', 'Advanced'),
  ('Web design', 'Opmaak en layout', 'Web design is verslavend als je eraan begint', 'Expert');
 
+  DROP TABLE IF EXISTS RecommendedCourse;
+CREATE TABLE RecommendedCourse (
+	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
+	RecommendedCourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
+	CONSTRAINT PK_RecommendedCourse PRIMARY KEY (CourseName, RecommendedCourseName)
+);
+
+--INSERT INTO RecommendedCourse
+--VALUES ();
+
 
 DROP TABLE IF EXISTS Enrollment;
 CREATE TABLE Enrollment (
@@ -85,7 +95,7 @@ VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15'),
 ('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14'),
 ('johanneshoefman@hotmail.com', 'Web development', '2021-01-18');
 
-
+/*
 DROP TABLE IF EXISTS Module;
 CREATE TABLE Module (
 	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY ,
@@ -95,7 +105,7 @@ CREATE TABLE Module (
 	ContactPersoon varchar(64) NOT NULL,
 	EmailContactPersoon varchar(64) NOT NULL,
 	Volgnummer int NOT NULL,
-	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(Name),
+	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
 	CONSTRAINT UC_Module UNIQUE (Titel, Versie)
 );
 
@@ -152,9 +162,9 @@ DROP TABLE IF EXISTS Bekeken;
 CREATE TABLE Bekeken (
 	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	ContentId int NOT NULL,
-	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursist(Email) ON DELETE CASCADE,
+--	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(Email) ON DELETE CASCADE,
 	Voortgang int NOT NULL DEFAULT '0',
-	CONSTRAINT UC_Bekeken UNIQUE (ContentId, CursistEmail)
+--	CONSTRAINT UC_Bekeken UNIQUE (ContentId, CursistEmail)
 );
 
 INSERT INTO Bekeken
@@ -178,8 +188,8 @@ VALUES ('4', 'marc0tjevp@gmail.com', 0),
 DROP TABLE IF EXISTS Certificaat;
 CREATE TABLE Certificaat (
 	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursist(Email) ON DELETE CASCADE,
-	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursus(Naam),
+--	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursist(Email) ON DELETE CASCADE,
+--	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursus(Naam),
 	Beoordeling int NOT NULL,
 	BaanMedewerker varchar(32)
 );
@@ -190,4 +200,4 @@ VALUES ('marc0tjevp@gmail.com', 'Data science', 8, 'Harrie van Tilburg'),
 ('rubenstrik@kpn.com', 'Machine learning', 5, 'Sam van der Flaas'),
 ('danirohder@kpn.com', 'Web design', 10, 'Karel Hasselt'),
 ('johanneshoefman@hotmail.com', 'Web design', 6, 'Felix Martens'),
-('johanneshoefman@hotmail.com', 'Web development', 9, 'Karel Hasselt');
+('johanneshoefman@hotmail.com', 'Web development', 9, 'Karel Hasselt'); */
