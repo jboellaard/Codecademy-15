@@ -3,15 +3,11 @@ package Domain;
 public abstract class ContentItem {
     private int contentItemID;
     private String publicationDate;
-    private String title;
-    private String description;
     private Status status; 
 
-    public ContentItem(int contentItemID, String publicationDate, String title, String description, Status status){
+    public ContentItem(int contentItemID, String publicationDate, Status status){
         this.contentItemID = contentItemID;
         this.publicationDate = publicationDate;
-        this.title = title;
-        this.description = description;
         this.status = status;
     }
 
@@ -30,23 +26,7 @@ public abstract class ContentItem {
     public void setPublicationDate(String publicationDate){
         this.publicationDate = publicationDate;
     }
-
-    public String getTitle(){
-        return this.title;
-    }
-
-    public void setTitle(String title){
-        this.title = title;
-    }
-
-    public String getDescription(){
-        return this.description;
-    } 
-
-    public void setDescription(String description){
-        this.description = description;
-    }
-
+    
     public Status getStatus(){
         return this.status;
     }

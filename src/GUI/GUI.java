@@ -4,7 +4,7 @@ import DB.*;
 import GUI.StudentScenes.*;
 import GUI.CourseScenes.*;
 import javafx.application.Application;
-import javafx.geometry.Insets;
+// import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 // import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,9 +16,7 @@ import javafx.stage.Stage;
 
 public class GUI extends Application {
     public static Stage GUIStage;
-    public static AddressRepo addressRepo = new AddressRepo();
-    public static StudentRepo studentRepo = new StudentRepo();
-    public static CourseRepo courseRepo = new CourseRepo();
+    public static DBConnection dBConnection = new DBConnection();
 
     public static Stage getStage() {
         return GUIStage;

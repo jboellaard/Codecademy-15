@@ -1,6 +1,6 @@
 package Domain;
 
-import GUI.*;
+import DB.DBConnection;
 
 /*  */
 public class Address {
@@ -20,7 +20,7 @@ public class Address {
         this.city = city;
         this.country = country;
         if (addressID==-1){
-            GUI.addressRepo.findAddressID(this);
+            DBConnection.addressRepo.findAddressID(this);
         } else {
             this.addressID = addressID;
         }

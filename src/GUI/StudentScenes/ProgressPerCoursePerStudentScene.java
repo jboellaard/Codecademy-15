@@ -1,91 +1,93 @@
-// package GUI.StudentScenes;
+package GUI.StudentScenes;
 
-// import DB.EnrollmentRepo;
-// import Domain.*;
-// import GUI.*;
+import DB.DBConnection;
+import DB.EnrollmentRepo;
+import Domain.*;
+import GUI.*;
 
-// import javafx.collections.ObservableList;
-// import javafx.geometry.Insets;
-// import javafx.geometry.Pos;
-// import javafx.scene.Scene;
-// import javafx.scene.control.*;
-// import javafx.scene.control.cell.PropertyValueFactory;
-// import javafx.scene.layout.HBox;
-// import javafx.scene.layout.VBox;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-// public class ProgressPerCoursePerStudentScene {
+public class ProgressPerCoursePerStudentScene {
 
-//     public Scene getScene(Student student, Course course){
-//         Label studentName = new Label("Progress of modules " + course.getCourseName() +"; " + student.getName());
+    public Scene getScene(Student student, Course course){
+        Label studentName = new Label("Progress of modules " + course.getCourseName() +"; " + student.getName());
 
-//         TableView<CourseModule> table = new TableView<>();
-//         ObservableList<CourseModule> ModulesPerCourse = GUI.courseRepo.getAllCourses();
-//         table.setItems(allCourses);
+        TableView<CourseModule> table = new TableView<>();
+        table.setItems(course.getModules());
  
-//         TableColumn<Course,String> nameCol = new TableColumn<>("Name");
-//         nameCol.setCellValueFactory(new PropertyValueFactory<>("CourseName"));
-//         TableColumn<Course,String> subjectCol = new TableColumn<>("Subject");
-//         subjectCol.setCellValueFactory(new PropertyValueFactory<>("Subject"));
-//         TableColumn<Course,String> introCol = new TableColumn<>("Introduction");
-//         introCol.setCellValueFactory(new PropertyValueFactory<>("IntroductionText"));
-//         TableColumn<Course,LevelIndication> levelCol = new TableColumn<>("Level");
-//         levelCol.setCellValueFactory(new PropertyValueFactory<>("LevelIndication"));
+        TableColumn<CourseModule,String> titleCol = new TableColumn<>("Title");
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        TableColumn<CourseModule,String> versionCol = new TableColumn<>("Version");
+        versionCol.setCellValueFactory(new PropertyValueFactory<>("Version"));
+        TableColumn<CourseModule,String> desCol = new TableColumn<>("Description");
+        desCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        TableColumn<CourseModule,LevelIndication> folCol = new TableColumn<>("FollowNumber");
+        folCol.setCellValueFactory(new PropertyValueFactory<>("FollowNumber"));
 
-//         table.getColumns().add(nameCol);
-//         table.getColumns().add(subjectCol);
-//         table.getColumns().add(introCol);
-//         table.getColumns().add(levelCol);
-//         table.sort();
+        table.getColumns().add(titleCol);
+        table.getColumns().add(versionCol);
+        table.getColumns().add(desCol);
+        table.getColumns().add(folCol);
+        table.sort();
     
-//         VBox vBox = new VBox();
-//         vBox.getChildren().add(studentName);
-//         vBox.getChildren().add(table);
+        VBox vBox = new VBox();
+        vBox.getChildren().add(studentName);
+        vBox.getChildren().add(table);
 
-//         Label noCourseSelected = new Label("");
+        Label noCourseSelected = new Label("");
 
-//         HBox buttons = new HBox(15);
-//         buttons.setPadding(new Insets(15,15,5,15));
-//         buttons.setAlignment(Pos.CENTER);
-//         vBox.getChildren().add(buttons);
-//         Button createEnrollment = new Button("Add new enrollment");
-//         createEnrollment.setOnAction((event -> {
-//             Course selectedCourse = table.getSelectionModel().getSelectedItem();
-//             if (selectedCourse!=null){
-//                 if (EnrollmentRepo.create(student, selectedCourse, String.valueOf(java.time.LocalDate.now()))){
-//                     noCourseSelected.setText("Succesfully enrolled!");
-//                 } else {
-//                     noCourseSelected.setText("Unfortunately the enrollment was not succesful"); 
-//                 }
-//             } else {
-//                 noCourseSelected.setText("Please select a student first");
-//             }
-//         }));
-//         buttons.getChildren().add(createEnrollment);
+        //add button getcontactperson for module!
 
-//         Button certificates = new Button("Show progress");
-//         certificates.setOnAction((event) -> {
-//             //new scene tableview with certificates selected student
-//         });
-//         buttons.getChildren().add(certificates);
+        HBox buttons = new HBox(15);
+        buttons.setPadding(new Insets(15,15,5,15));
+        buttons.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(buttons);
+        Button createEnrollment = new Button("Add new enrollment");
+        createEnrollment.setOnAction((event -> {
+            // CourseModule selectedCourse = table.getSelectionModel().getSelectedItem();
+            // if (selectedCourse!=null){
+            //     if (EnrollmentRepo.create(student, selectedCourse, String.valueOf(java.time.LocalDate.now()))){
+            //         noCourseSelected.setText("Succesfully enrolled!");
+            //     } else {
+            //         noCourseSelected.setText("Unfortunately the enrollment was not succesful"); 
+            //     }
+            // } else {
+            //     noCourseSelected.setText("Please select a student first");
+            // }
+        }));
+        buttons.getChildren().add(createEnrollment);
+
+        Button certificates = new Button("Show progress");
+        certificates.setOnAction((event) -> {
+            //new scene tableview with certificates selected student
+        });
+        buttons.getChildren().add(certificates);
 
 
-//         Button back = new Button("Go back");
-//         back.setOnAction((event -> {
-//             EnrollmentOverviewStudentScene overview = new EnrollmentOverviewStudentScene();
-//             GUI.getStage().setScene(overview.getScene(student));
-//         }));
-//         buttons.getChildren().add(back);
+        Button back = new Button("Go back");
+        back.setOnAction((event -> {
+            EnrollmentOverviewStudentScene overview = new EnrollmentOverviewStudentScene();
+            GUI.getStage().setScene(overview.getScene(student));
+        }));
+        buttons.getChildren().add(back);
 
-//         HBox error = new HBox(15);
-//         error.setPadding(new Insets(5,25,15,25));
-//         error.setAlignment(Pos.CENTER);
-//         error.getChildren().add(noCourseSelected);
-//         vBox.getChildren().add(error);
+        HBox error = new HBox(15);
+        error.setPadding(new Insets(5,25,15,25));
+        error.setAlignment(Pos.CENTER);
+        error.getChildren().add(noCourseSelected);
+        vBox.getChildren().add(error);
 
-//         //java.time.LocalDate.now()
+        //java.time.LocalDate.now()
 
-//         Scene newEnrollment = new Scene(vBox, 600, 400);
-//         return newEnrollment;
-//     }
+        Scene newEnrollment = new Scene(vBox, 600, 400);
+        return newEnrollment;
+    }
     
-// }
+}

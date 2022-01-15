@@ -1,6 +1,6 @@
 package GUI.CourseScenes;
 
-// import DB.StudentRepo;
+import DB.DBConnection;
 import Domain.*;
 import GUI.*;
 import javafx.collections.ObservableList;
@@ -14,7 +14,7 @@ public class CourseOverview {
     public Scene getScene(){
         TableView<Course> table = new TableView<>();
         // StudentRepo repo = new StudentRepo();
-        ObservableList<Course> allCourses = GUI.courseRepo.getAllCourses();
+        ObservableList<Course> allCourses = DBConnection.courseRepo.getAllCourses();
         table.setItems(allCourses);
  
         TableColumn<Course,String> nameCol = new TableColumn<>("Name");

@@ -1,7 +1,6 @@
 package DB;
 
 import Domain.*;
-import GUI.*;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -68,7 +67,7 @@ public class StudentRepo {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                for (Address address : GUI.addressRepo.getAllAddresses()){
+                for (Address address : DBConnection.addressRepo.getAllAddresses()){
                     if (rs.getInt("AddressID") == address.getAddressID()){
                         allStudents.add(new Student(rs.getString("Name"),rs.getString("EmailAddress"),rs.getString("DateOfBirth"),Gender.valueOf(rs.getString("Gender")),address));
                         break;

@@ -1,5 +1,6 @@
 package GUI.StudentScenes;
 
+import DB.DBConnection;
 // import DB.StudentRepo;
 import Domain.*;
 import GUI.*;
@@ -16,7 +17,7 @@ public class StudentOverview {
 
     public Scene getScene(){
         TableView<Student> table = new TableView<>();
-        ObservableList<Student> allStudents = GUI.studentRepo.getAllStudents();
+        ObservableList<Student> allStudents = DBConnection.studentRepo.getAllStudents();
         table.setItems(allStudents);
  
         TableColumn<Student,String> nameCol = new TableColumn<>("Name");
@@ -71,7 +72,7 @@ public class StudentOverview {
         delete.setOnAction((event -> {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
             if (selectedStudent!=null){
-                if (GUI.studentRepo.delete(selectedStudent)){
+                if (DBConnection.studentRepo.delete(selectedStudent)){
                     noStudentSelected.setText("Student succesfully deleted");
                 } else {
                     noStudentSelected.setText("Unfortunately the student has not been deleted");

@@ -79,38 +79,48 @@ CREATE TABLE Enrollment (
 	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
 	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
 	SignUpDate varchar(64) NOT NULL,
-	CertificateID int NULL FOREIGN KEY REFERENCES Certificate(CertificateID),
+	Certificate BIT DEFAULT 'FALSE',
 	CONSTRAINT UK_Enrollment UNIQUE (StudentEmail, CourseName, SignUpDate)
 );
 
 INSERT INTO Enrollment
-VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15'),
-('marc0tjevp@gmail.com', 'Computer science', '2021-01-20'),
-('marc0tjevp@gmail.com', 'Data science', '2021-01-23'),
-('lisatyem@gmail.com', 'Web development', '2021-01-07'),
-('renzoremmers@gmail.com', 'Web development', '2021-01-10'),
-('renzoremmers@gmail.com', 'Machine learning', '2021-01-01'),
-('rubenstrik@kpn.com', 'Data science', '2021-01-19'),
-('joeyletens@hotmail.com', 'Data science', '2021-01-03'),
-('joeyletens@hotmail.com', 'Computer science', '2021-01-18'),
-('danirohder@kpn.com', 'Web development', '2021-01-09'),
-('danirohder@kpn.com', 'Machine learning', '2021-01-16'),
-('johanneshoefman@hotmail.com', 'Data science', '2021-01-06'),
-('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14'),
-('johanneshoefman@hotmail.com', 'Web development', '2021-01-18'),
-('joy.boe@gmail.com', 'Computer science', '2021-10-15'),
-('joy.boe@gmail.com', 'Machine learning', '2021-12-01'),
-('joy.boe@gmail.com', 'Data science', '2022-01-06');
+VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', 'FALSE'),
+('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', 'FALSE'),
+('marc0tjevp@gmail.com', 'Data science', '2021-01-23', 'TRUE'),
+('lisatyem@gmail.com', 'Web development', '2021-01-07', 'FALSE'),
+('renzoremmers@gmail.com', 'Web development', '2021-01-10', 'TRUE'),
+('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', 'FALSE'),
+('rubenstrik@kpn.com', 'Data science', '2021-01-19', 'TRUE'),
+('joeyletens@hotmail.com', 'Data science', '2021-01-03', 'FALSE'),
+('joeyletens@hotmail.com', 'Computer science', '2021-01-18', 'FALSE'),
+('danirohder@kpn.com', 'Web development', '2021-01-09', 'TRUE'),
+('danirohder@kpn.com', 'Machine learning', '2021-01-16', 'FALSE'),
+('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', 'FALSE'),
+('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14', 'TRUE'),
+('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', 'TRUE'),
+('joy.boe@gmail.com', 'Computer science', '2021-10-15', 'FALSE'),
+('joy.boe@gmail.com', 'Machine learning', '2021-12-01', 'FALSE'),
+('joy.boe@gmail.com', 'Data science', '2022-01-06', 'TRUE');
 
 DROP TABLE IF EXISTS ContentItem;
 CREATE TABLE ContentItem (
 	ContentItemID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	PublicatieDatum varchar(64) NOT NULL,
+	PublicationDate varchar(64) NOT NULL,
 	Status varchar(10) NOT NULL
 );
 
 INSERT INTO ContentItem
-VALUES ('2019-10-15', 'Concept'),
+VALUES ('2019-10-15', 'Archived'),
+ ('2019-10-20', 'Active'),
+ ('2019-10-29', 'Active'),
+ ('2019-11-07', 'Active'),
+ ('2020-01-13', 'Archived'),
+ ('2019-10-15', 'Archived'),
+ ('2019-10-20', 'Active'),
+ ('2019-10-29', 'Active'),
+ ('2019-11-07', 'Active'),
+ ('2020-01-13', 'Archived'),
+ ('2019-10-15', 'Archived'),
  ('2019-10-20', 'Active'),
  ('2019-10-29', 'Active'),
  ('2019-11-07', 'Active'),
@@ -120,29 +130,26 @@ VALUES ('2019-10-15', 'Concept'),
 DROP TABLE IF EXISTS Module;
 CREATE TABLE Module (
 	ContentItemID int NOT NULL PRIMARY KEY FOREIGN KEY REFERENCES ContentItem(ContentItemID),
+	Title varchar(64) NOT NULL,
+	Version varchar(10) NOT NULL,
+	Description varchar(64) NULL,
 	NameContactPerson varchar(64) NOT NULL,
 	EmailContactPerson varchar(64) NOT NULL,
 	FollowNumber int NOT NULL,
 	CourseName varchar(64) NULL FOREIGN KEY REFERENCES Course(CourseName),
-	Title varchar(64) NOT NULL,
-	Version varchar(10) NOT NULL,
-	Description varchar(64) NULL,
 	CONSTRAINT CU_Module UNIQUE (Title, Version)
 );
 
-
-
-/*
 INSERT INTO Module
-VALUES ('Leer HTML', 'v11', 'HTML is de basis van alle web paginas', 'Sauter de Vis', 'sauterdevis@outlook.com', 1.1, 'Web development'),
- ('Leer JavaScript', 'v12', 'JavaScript is een van de meest krachtige programmeer talen', 'Sauter de Vis', 'sauterdevis@outlook.com', 1.2, 'Web development'),
- ('Leer R', 'v21', 'R is een veelgebruikt statistische programmeertaal', 'Mark de Rond', 'markderond@outlook.com', 2.1, 'Data science'),
- ('Leer python 2', 'v22', 'Python is een veelzijdige en populaire programmeertaal', 'Mark de Rond', 'markderond@outlook.com', 2.2, 'Data science'),
- ('Leer C++', 'v31', 'C++ wordt geprezen voor zijn laagdrempelige functionaliteit', 'Ralph van Venrooij', 'ralphvanvenrooij@outlook.com', 3.1, 'Computer science' ),
- ('Leer C#', 'v32', 'C# opent veel deuren voor je als programmeur', 'Ralph van Venrooij', 'ralphvanvenrooij@outlook.com', 3.2, 'Computer science'),
- ('Leer Alexa programmeren', 'v41', 'Leer zo je eigen voice user interface te bouwen', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 4.1, 'Machine learning'),
- ('Leer de Watson API', 'v42', 'IBM Watson is een van de meest sterke APIs ter wereld', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 4.2, 'Machine learning' );
-*/
+VALUES (1,'Leer HTML', 'v11', 'HTML is de basis van alle web paginas', 'Sauter de Vis', 'sauterdevis@outlook.com', 1, 'Web development'),
+ (2,'Leer JavaScript', 'v12', 'JavaScript is een van de meest krachtige programmeer talen', 'Sauter de Vis', 'sauterdevis@outlook.com', 12, 'Web development'),
+ (3,'Leer R', 'v21', 'R is een veelgebruikt statistische programmeertaal', 'Mark de Rond', 'markderond@outlook.com', 21, 'Data science'),
+ (4,'Leer python 2', 'v22', 'Python is een veelzijdige en populaire programmeertaal', 'Mark de Rond', 'markderond@outlook.com', 2, 'Data science'),
+ (5,'Leer C++', 'v31', 'C++ wordt geprezen voor zijn laagdrempelige functionaliteit', 'Ralph van Venrooij', 'ralphvanvenrooij@outlook.com', 1, 'Computer science' ),
+ (6,'Leer C#', 'v32', 'C# opent veel deuren voor je als programmeur', 'Ralph van Venrooij', 'ralphvanvenrooij@outlook.com', 32, 'Computer science'),
+ (7,'Leer Alexa programmeren', 'v41', 'Leer zo je eigen voice user interface te bouwen', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 4, 'Machine learning'),
+ (8,'Leer de Watson API', 'v42', 'IBM Watson is een van de meest sterke APIs ter wereld', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 42, 'Machine learning' );
+
 
 DROP TABLE IF EXISTS Webcast;
 CREATE TABLE Webcast (
@@ -230,4 +237,4 @@ VALUES (3, 8, 'Harrie van Tilburg'),
 (10, 10, 'Karel Hasselt'),
 (13, 6, 'Felix Martens'),
 (14, 9, 'Karel Hasselt'),
-(17, 8.5, 'Harrie van Tilburg');
+(17, 8.5, 'Harrie van Tilburg'); 

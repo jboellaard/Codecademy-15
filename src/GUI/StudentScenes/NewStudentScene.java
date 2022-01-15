@@ -1,11 +1,12 @@
 package GUI.StudentScenes;
 
+import DB.DBConnection;
 // import DB.*;
 import Domain.*;
 import Domain.Tools.*;
 import GUI.*;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+// import javafx.geometry.Pos;
 // import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -177,14 +178,14 @@ public class NewStudentScene {
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
                 if (!create){
                     Student alteredStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
-                    if (GUI.studentRepo.update(alteredStudent,exiStudent)) {
+                    if (DBConnection.studentRepo.update(alteredStudent,exiStudent)) {
                         studentAdded.setText("Student succefully updated");
                     } else {
                         studentAdded.setText("Unfortunately the student could not be updated");
                     }
                 } else {
                     Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
-                    if (GUI.studentRepo.create(newStudent)){
+                    if (DBConnection.studentRepo.create(newStudent)){
                         studentAdded.setText("Student succefully created");
                     } else {
                         studentAdded.setText("Unfortunately the student could not be created");

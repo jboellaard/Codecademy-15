@@ -1,5 +1,6 @@
 package GUI.StudentScenes;
 
+import DB.DBConnection;
 import DB.EnrollmentRepo;
 import Domain.*;
 import GUI.*;
@@ -19,7 +20,7 @@ public class NewEnrollmentStudentScene {
         Label studentName = new Label("What course would you like to enroll "+ student.getName()+ " in?");
 
         TableView<Course> table = new TableView<>();
-        ObservableList<Course> allCourses = GUI.courseRepo.getAllCourses();
+        ObservableList<Course> allCourses = DBConnection.courseRepo.getAllCourses();
         table.setItems(allCourses);
  
         TableColumn<Course,String> nameCol = new TableColumn<>("Name");
@@ -61,12 +62,6 @@ public class NewEnrollmentStudentScene {
             }
         }));
         buttons.getChildren().add(createEnrollment);
-
-        Button certificates = new Button("Show progress");
-        certificates.setOnAction((event) -> {
-            //new scene tableview with certificates selected student
-        });
-        buttons.getChildren().add(certificates);
 
 
         Button back = new Button("Go back");

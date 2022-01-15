@@ -1,7 +1,6 @@
 package DB;
 
 import Domain.*;
-import GUI.*;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +25,7 @@ public class EnrollmentRepo {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                for (Course course : GUI.courseRepo.allCourses){
+                for (Course course : DBConnection.courseRepo.allCourses){
                     if (rs.getString("CourseName").equals(course.getCourseName())){
                         allStudentEnrollments.add(new Enrollment(student, course, rs.getString("SignUpDate")));
                         break;
