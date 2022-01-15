@@ -16,7 +16,6 @@ public class StudentOverview {
 
     public Scene getScene(){
         TableView<Student> table = new TableView<>();
-        // StudentRepo repo = new StudentRepo();
         ObservableList<Student> allStudents = GUI.studentRepo.getAllStudents();
         table.setItems(allStudents);
  
@@ -31,8 +30,6 @@ public class StudentOverview {
         TableColumn<Student,Integer> addressIDCol = new TableColumn<>("Address ID");
         addressIDCol.setCellValueFactory(new PropertyValueFactory<>("addressID"));
 
-        // nameCol.setSortType(TableColumn.SortType.DESCENDING);
-        // table.getColumns().setAll(nameCol,emailCol,dobCol,genderCol,addressIDCol);
         table.getColumns().add(nameCol);
         table.getColumns().add(emailCol);
         table.getColumns().add(dobCol);
@@ -44,40 +41,57 @@ public class StudentOverview {
         vBox.getChildren().add(table);
 
         HBox buttons = new HBox(15);
-        buttons.setPadding(new Insets(40,40,40,40));
+        buttons.setPadding(new Insets(15,15,5,15));
         buttons.setAlignment(Pos.CENTER);
         vBox.getChildren().add(buttons);
         Button createStudent = new Button("Add new student");
         createStudent.setOnAction((event -> {
             NewStudentScene newStudent = new NewStudentScene();
             GUI.getStage().setScene(newStudent.getCreateScene());
-            GUI.getStage().setTitle("Add student");
         }));
-        Button back = new Button("Go back");
-        back.setOnAction((event -> {
-            // HomeScene home = new HomeScene();
-            GUI.GUIStage.setScene(GUI.getHomeScene());
-            GUI.GUIStage.setTitle("Home");
-        }));
-        buttons.getChildren().add(back);
         buttons.getChildren().add(createStudent);
 
         Label noStudentSelected = new Label("");
-        vBox.getChildren().add(noStudentSelected);
 
-        Button updateStudent = new Button("Change info student");
+        Button updateStudent = new Button("Update information");
         updateStudent.setOnAction((event -> {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
             if (selectedStudent!=null){
                 NewStudentScene changeInfoStudent = new NewStudentScene();
                 GUI.getStage().setScene(changeInfoStudent.getUpdateScene(selectedStudent));
-                GUI.getStage().setTitle("Add student");
             } else {
-                noStudentSelected.setText("Please select a student");
+                noStudentSelected.setText("Please select a student first");
             }
             
         }));
         buttons.getChildren().add(updateStudent);
+
+        //delete button
+        Button delete = new Button("Delete student");
+        delete.setOnAction((event -> {
+            Student selectedStudent = table.getSelectionModel().getSelectedItem();
+            if (selectedStudent!=null){
+                if (GUI.studentRepo.delete(selectedStudent)){
+                    noStudentSelected.setText("Student succesfully deleted");
+                } else {
+                    noStudentSelected.setText("Unfortunately the student has not been deleted");
+                }
+            } else {
+                noStudentSelected.setText("Please select a student first");
+            }
+        }));
+        buttons.getChildren().add(delete);
+
+        Button back = new Button("Go back");
+        back.setOnAction((event -> {
+            GUI.GUIStage.setScene(GUI.getHomeScene());
+        }));
+        buttons.getChildren().add(back);
+
+        HBox buttonsSecondRow = new HBox(15);
+        buttonsSecondRow.setPadding(new Insets(5,15,5,15));
+        buttonsSecondRow.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(buttonsSecondRow);
 
         Button enrollments = new Button("Show enrollments");
         enrollments.setOnAction((event) -> {
@@ -86,20 +100,24 @@ public class StudentOverview {
                 EnrollmentOverviewStudentScene showEnrollments = new EnrollmentOverviewStudentScene();
                 GUI.getStage().setScene(showEnrollments.getScene(selectedStudent));
             } else {
-                noStudentSelected.setText("Please select a student");
+                noStudentSelected.setText("Please select a student first");
             }
             //new scene tableview with courses selected student
             //in that scene a button to enroll to a new course
         });
-        buttons.getChildren().add(enrollments);
+        buttonsSecondRow.getChildren().add(enrollments);
 
-        Button certificates = new Button("Show certificates for this student");
+        Button certificates = new Button("Show certificates");
         certificates.setOnAction((event) -> {
             //new scene tableview with certificates selected student
         });
+        buttonsSecondRow.getChildren().add(certificates);
 
-        //delete button
-
+        HBox error = new HBox(15);
+        error.setPadding(new Insets(5,25,15,25));
+        error.setAlignment(Pos.CENTER);
+        error.getChildren().add(noStudentSelected);
+        vBox.getChildren().add(error);
 
         Scene scene = new Scene(vBox, 600, 400);
         return scene;

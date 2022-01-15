@@ -4,7 +4,8 @@ package GUI.StudentScenes;
 import Domain.*;
 import Domain.Tools.*;
 import GUI.*;
-
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 // import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -28,7 +29,10 @@ public class NewStudentScene {
 
     private Scene getScene(boolean create, Student exiStudent, String[] txtValues){
         BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(10,10,10,10));
         GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(5);
 
         Label name = new Label("Full name:");
         TextField nameInput = new TextField(txtValues[0]);
@@ -107,6 +111,8 @@ public class NewStudentScene {
 
         Label studentAdded = new Label();
 
+        HBox buttons = new HBox(15);
+        buttons.setPadding(new Insets(5,5,5,5));
         Button submit = new Button("Submit");
         submit.setOnAction((event) -> {
             boolean validInput = true;
@@ -170,25 +176,31 @@ public class NewStudentScene {
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
                 if (!create){
-                    studentAdded.setText("Student succefully updated");
                     Student alteredStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
-                    GUI.studentRepo.update(alteredStudent,exiStudent);
+                    if (GUI.studentRepo.update(alteredStudent,exiStudent)) {
+                        studentAdded.setText("Student succefully updated");
+                    } else {
+                        studentAdded.setText("Unfortunately the student could not be updated");
+                    }
                 } else {
-                    studentAdded.setText("Student succefully created");
                     Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
-                    GUI.studentRepo.create(newStudent);
+                    if (GUI.studentRepo.create(newStudent)){
+                        studentAdded.setText("Student succefully created");
+                    } else {
+                        studentAdded.setText("Unfortunately the student could not be created");
+                    }
                 }
-                gridPane.add(studentAdded,0,11);
             }
 
         });
+        buttons.getChildren().add(submit);
 
         Button back = new Button("Go back");
         back.setOnAction((event -> {
             StudentOverview overview = new StudentOverview();
             GUI.getStage().setScene(overview.getScene());
-            GUI.getStage().setTitle("overview");
         }));
+        buttons.getChildren().add(back);
 
         gridPane.add(name,0,1);
         gridPane.add(nameInput,1,1);
@@ -200,8 +212,8 @@ public class NewStudentScene {
         gridPane.add(genderInput,1,4);
         gridPane.add(address,0,6);
         gridPane.add(addressInput,1,6,1,4);
-        gridPane.add(submit,0,10);
-        gridPane.add(back,1,10);
+        gridPane.add(buttons,0,10,2,1);
+        gridPane.add(studentAdded,0,11,2,1);
 
         layout.setCenter(gridPane);
         Scene newStudentView = new Scene(layout, 600, 400);

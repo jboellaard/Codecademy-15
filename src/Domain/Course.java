@@ -7,7 +7,7 @@ public class Course {
     private String subject;
     private String introductionText;
     private LevelIndication levelIndication;
-    private ArrayList<Module> modules;
+    private ArrayList<CourseModule> modules;
     private ArrayList<Course> recommendedCourses;
 
     public Course(String courseName, String subject, String introductionText, LevelIndication level){
@@ -33,7 +33,7 @@ public class Course {
         return this.levelIndication;
     }
 
-    public void addModule(Module module){
+    public void addModule(CourseModule module){
         this.modules.add(module);
     }
 

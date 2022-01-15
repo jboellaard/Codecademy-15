@@ -38,13 +38,11 @@ public class CourseOverview {
         createCourse.setOnAction((event -> {
             // NewCourseScene newStudent = new NewCourseScene();
             // GUI.getStage().setScene(newStudent.getCreateScene());
-            // GUI.getStage().setTitle("Add student");
         }));
         Button back = new Button("Go back");
         back.setOnAction((event -> {
             // HomeScene home = new HomeScene();
             GUI.GUIStage.setScene(GUI.getHomeScene());
-            GUI.GUIStage.setTitle("Home");
         }));
         vBox.getChildren().add(back);
         vBox.getChildren().add(createCourse);
@@ -56,7 +54,6 @@ public class CourseOverview {
             if (selectedCourse!=null){
                 // NewCourseScene changeInfoCourse = new NewCourseScene();
                 // GUI.getStage().setScene(changeInfoCourse.getUpdateScene(selectedCourse));
-                // GUI.getStage().setTitle("Add student");
             } else {
                 //message no student selected
             }

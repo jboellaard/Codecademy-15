@@ -1,9 +1,11 @@
 package Domain;
 
-public class Progress {
+public class ProgressModule {
     private Student student;
     private ContentItem item;
     private int percentage;
+
+    
     
     
 }

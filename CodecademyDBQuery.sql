@@ -23,7 +23,8 @@ VALUES ('4813 HV', 28, NULL, 'Liesbospark', 'Breda', 'Nederland'),
  ('4611 JL', 38, NULL, 'Lievevrouwenstraat', 'Bergen op Zoom', 'Nederland'),
  ('4834 AT', 111, NULL, 'De blauwe kei', 'Breda', 'Nederland'),
  ('4611 GH', 7, 'b', 'Dubbelstraat', 'Bergen op Zoom', 'Nederland'),
- ('3701 JL', 23, NULL, 'Costerlaan', 'Zeist', 'Nederland');
+ ('3701 JL', 23, NULL, 'Costerlaan', 'Zeist', 'Nederland'),
+ ('3354 AJ', 4, NULL, 'J.G. Suurhoffstraat', 'Papendrecht', 'Nederland');
 
 
 
@@ -33,7 +34,7 @@ CREATE TABLE Student (
 	Name varchar(64) NOT NULL,
 	DateOfBirth varchar(64) NOT NULL,
 	Gender char(1) NOT NULL,
-	AddressID int NOT NULL FOREIGN KEY REFERENCES Address(AddressId),
+	AddressID int NOT NULL FOREIGN KEY REFERENCES Address(AddressId)
 );
 
 INSERT INTO Student
@@ -43,14 +44,15 @@ VALUES ('marc0tjevp@gmail.com', 'Marco van Poortvliet', '1998-05-05', 'M',1),
  ('rubenstrik@kpn.com', 'Ruben Strik', '2004-11-15', 'M',4),
  ('joeyletens@hotmail.com', 'Joey Letens', '2002-02-18', 'M',5),
  ('danirohder@kpn.com', 'Dani Rohder', '2001-08-09', 'M',6),
- ('johanneshoefman@hotmail.com', 'Johannes Hoefman', '1999-06-12', 'M',7);
+ ('johanneshoefman@hotmail.com', 'Johannes Hoefman', '1999-06-12', 'M',7),
+ ('joy.boe@gmail.com', 'Joy Boellaard', '1998-11-11', 'F',8);
 
  DROP TABLE IF EXISTS Course;
 CREATE TABLE Course (
 	CourseName varchar(64) NOT NULL PRIMARY KEY,
 	Subject varchar(64) NOT NULL,
 	IntroductionText varchar(64) NOT NULL,
-	LevelIndication varchar(10) NOT NULL,
+	LevelIndication varchar(10) NOT NULL
 );
 
 INSERT INTO Course
@@ -73,10 +75,12 @@ CREATE TABLE RecommendedCourse (
 
 DROP TABLE IF EXISTS Enrollment;
 CREATE TABLE Enrollment (
+	EnrollmentID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
 	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
 	SignUpDate varchar(64) NOT NULL,
-	CONSTRAINT PK_Enrollment PRIMARY KEY (StudentEmail, CourseName, SignUpDate)
+	CertificateID int NULL FOREIGN KEY REFERENCES Certificate(CertificateID),
+	CONSTRAINT UK_Enrollment UNIQUE (StudentEmail, CourseName, SignUpDate)
 );
 
 INSERT INTO Enrollment
@@ -93,22 +97,42 @@ VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15'),
 ('danirohder@kpn.com', 'Machine learning', '2021-01-16'),
 ('johanneshoefman@hotmail.com', 'Data science', '2021-01-06'),
 ('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14'),
-('johanneshoefman@hotmail.com', 'Web development', '2021-01-18');
+('johanneshoefman@hotmail.com', 'Web development', '2021-01-18'),
+('joy.boe@gmail.com', 'Computer science', '2021-10-15'),
+('joy.boe@gmail.com', 'Machine learning', '2021-12-01'),
+('joy.boe@gmail.com', 'Data science', '2022-01-06');
 
-/*
-DROP TABLE IF EXISTS Module;
-CREATE TABLE Module (
-	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY ,
-	Titel varchar(64) NOT NULL,
-	Versie varchar(32) NOT NULL,
-	Beschrijving varchar(128) NOT NULL,
-	ContactPersoon varchar(64) NOT NULL,
-	EmailContactPersoon varchar(64) NOT NULL,
-	Volgnummer int NOT NULL,
-	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
-	CONSTRAINT UC_Module UNIQUE (Titel, Versie)
+DROP TABLE IF EXISTS ContentItem;
+CREATE TABLE ContentItem (
+	ContentItemID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	PublicatieDatum varchar(64) NOT NULL,
+	Status varchar(10) NOT NULL
 );
 
+INSERT INTO ContentItem
+VALUES ('2019-10-15', 'Concept'),
+ ('2019-10-20', 'Active'),
+ ('2019-10-29', 'Active'),
+ ('2019-11-07', 'Active'),
+ ('2020-01-13', 'Archived');
+
+
+DROP TABLE IF EXISTS Module;
+CREATE TABLE Module (
+	ContentItemID int NOT NULL PRIMARY KEY FOREIGN KEY REFERENCES ContentItem(ContentItemID),
+	NameContactPerson varchar(64) NOT NULL,
+	EmailContactPerson varchar(64) NOT NULL,
+	FollowNumber int NOT NULL,
+	CourseName varchar(64) NULL FOREIGN KEY REFERENCES Course(CourseName),
+	Title varchar(64) NOT NULL,
+	Version varchar(10) NOT NULL,
+	Description varchar(64) NULL,
+	CONSTRAINT CU_Module UNIQUE (Title, Version)
+);
+
+
+
+/*
 INSERT INTO Module
 VALUES ('Leer HTML', 'v11', 'HTML is de basis van alle web paginas', 'Sauter de Vis', 'sauterdevis@outlook.com', 1.1, 'Web development'),
  ('Leer JavaScript', 'v12', 'JavaScript is een van de meest krachtige programmeer talen', 'Sauter de Vis', 'sauterdevis@outlook.com', 1.2, 'Web development'),
@@ -118,45 +142,48 @@ VALUES ('Leer HTML', 'v11', 'HTML is de basis van alle web paginas', 'Sauter de 
  ('Leer C#', 'v32', 'C# opent veel deuren voor je als programmeur', 'Ralph van Venrooij', 'ralphvanvenrooij@outlook.com', 3.2, 'Computer science'),
  ('Leer Alexa programmeren', 'v41', 'Leer zo je eigen voice user interface te bouwen', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 4.1, 'Machine learning'),
  ('Leer de Watson API', 'v42', 'IBM Watson is een van de meest sterke APIs ter wereld', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 4.2, 'Machine learning' );
-
-
+*/
 
 DROP TABLE IF EXISTS Webcast;
 CREATE TABLE Webcast (
-	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	Titel varchar(64) NOT NULL UNIQUE,
-	Beschrijving varchar(128) NOT NULL,
-	Tijdsduur int NOT NULL,
-	Url varchar(128) NOT NULL,
-	NaamSpreker varchar(64),
-	OrganisatieSpreker varchar(64)
+	ContentItemID int NOT NULL PRIMARY KEY FOREIGN KEY REFERENCES ContentItem(ContentItemID),
+	Title varchar(64) NOT NULL UNIQUE,
+	Description varchar(64) NULL,
+	DurationInSeconds int NULL,
+	URL varchar(128) NULL
 );
+
+
+/*
 
 INSERT INTO Webcast
 VALUES ('Maak je eerste HTML/CSS/JS project', 'Leer de basis voor websites bouwen met JavaScript.', 21, 'https://www.youtube.com/watch?v=iwNUJU5D3aI&t=18s', 'Brandon Nazgull', 'Codecademy'),
- ('Wat is data sciences', 'Wil je weten wat data sciences is? Kiujk dan dit interview.', 4, 'https://news.codecademy.com/what-is-data-science/', 'Sophie van Laarhoven', 'Codecademy'),
+ ('Wat is data sciences', 'Wil je weten wat data sciences is? Kijk dan dit interview.', 4, 'https://news.codecademy.com/what-is-data-science/', 'Sophie van Laarhoven', 'Codecademy'),
  ('Introductie in computer sciences', 'Neem een kijkje in het computer science pad van Codecademy', 1, 'https://www.codecademy.com/paths/computer-science/tracks/cspath-intro/modules/cspath-python-syntax', 'Nick Grayham', 'Codecademy'),
  ('Wat zijn neural networks?', 'Hoe kan een computer problemen oplossen zoals ons brein dat doet?', 15, 'https://news.codecademy.com/what-are-neural-networks/', 'Finnick Odair', 'Codecademy');
+*/
 
-
-
-DROP TABLE IF EXISTS ContentItem;
-CREATE TABLE ContentItem (
-	ContentId int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	PublicatieDatum date NOT NULL,
-	Status char(1) NOT NULL,
-	ModuleID int FOREIGN KEY REFERENCES Module(ID),
-	WebcastID int FOREIGN KEY REFERENCES Webcast(ID)
+DROP TABLE IF EXISTS ProgressWebcast;
+CREATE TABLE ProgressWebcast (
+	ContentItemID int NOT NULL FOREIGN KEY REFERENCES ContentItem(ContentItemID),
+	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
+	Progress int NOT NULL DEFAULT 0,
+	CONSTRAINT PK_ProgressWebcast PRIMARY KEY (ContentItemID,StudentEmail)
 );
 
-INSERT INTO ContentItem
-VALUES ('2019-10-15', '0', null, 1),
- ('2019-10-20', '1', null, 1),
- ('2019-10-29', '2', 1, null),
- ('2019-11-07', '2', 2, null),
- ('2020-01-13', '1', null, 3);
 
 
+DROP TABLE IF EXISTS ProgressModule;
+CREATE TABLE ProgressModule (
+	ContentItemID int NOT NULL FOREIGN KEY REFERENCES ContentItem(ContentItemID),
+	EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
+	Progress int NOT NULL DEFAULT 0,
+	CONSTRAINT PK_ProgressModule PRIMARY KEY (ContentItemID,EnrollmentID)
+);
+
+
+
+/*
 
 DROP TABLE IF EXISTS Bekeken;
 CREATE TABLE Bekeken (
@@ -181,23 +208,26 @@ VALUES ('4', 'marc0tjevp@gmail.com', 0),
  ('4', 'danirohder@kpn.com', 18),
  ('2', 'johanneshoefman@hotmail.com', 100),
  ('3', 'johanneshoefman@hotmail.com', 60),
- ('1', 'johanneshoefman@hotmail.com', 75);
+ ('1', 'johanneshoefman@hotmail.com', 75),
+ ('2', 'joy.boe@gmail.com', 45),
+ ('4', 'joy.boe@gmail.com', 99);
+*/
 
 
-
-DROP TABLE IF EXISTS Certificaat;
-CREATE TABLE Certificaat (
-	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
---	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursist(Email) ON DELETE CASCADE,
---	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursus(Naam),
-	Beoordeling int NOT NULL,
-	BaanMedewerker varchar(32)
+DROP TABLE IF EXISTS Certificate;
+CREATE TABLE Certificate (
+	CertificateID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
+	Grade decimal NOT NULL,
+	NameStaffCodecademy varchar(64) NOT NULL
 );
 
-INSERT INTO Certificaat
-VALUES ('marc0tjevp@gmail.com', 'Data science', 8, 'Harrie van Tilburg'),
-('renzoremmers@gmail.com', 'Data science', 7, 'Sam van der Flaas'),
-('rubenstrik@kpn.com', 'Machine learning', 5, 'Sam van der Flaas'),
-('danirohder@kpn.com', 'Web design', 10, 'Karel Hasselt'),
-('johanneshoefman@hotmail.com', 'Web design', 6, 'Felix Martens'),
-('johanneshoefman@hotmail.com', 'Web development', 9, 'Karel Hasselt'); */
+
+INSERT INTO Certificate
+VALUES (3, 8, 'Harrie van Tilburg'),
+(5, 7, 'Sam van der Flaas'),
+(7, 5, 'Sam van der Flaas'),
+(10, 10, 'Karel Hasselt'),
+(13, 6, 'Felix Martens'),
+(14, 9, 'Karel Hasselt'),
+(17, 8.5, 'Harrie van Tilburg');

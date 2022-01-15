@@ -53,24 +53,22 @@ public class EnrollmentOverviewStudentScene {
         back.setOnAction((event -> {
             StudentOverview overview = new StudentOverview();
             GUI.GUIStage.setScene(overview.getScene());
-            GUI.GUIStage.setTitle("Student overview");
         }));
         vBox.getChildren().add(back);
         
 
-        Label noStudentSelected = new Label("Please select a student");
+        Label noEnrollmentSelected = new Label("Please select an enrollment");
         //if all modules of a course are at 100%, add a button to add a certificate for the enrollment
 
-        Button updateStudent = new Button("Change info student");
-        updateStudent.setOnAction((event -> {
-            Enrollment selectedStudent = table.getSelectionModel().getSelectedItem();
-            if (selectedStudent!=null){
+        Button addCertificate = new Button("Add certificate");
+        addCertificate.setOnAction((event -> {
+            Enrollment selectedEnrollment = table.getSelectionModel().getSelectedItem();
+            if (selectedEnrollment!=null){
                 // NewStudentScene changeInfoStudent = new NewStudentScene();
                 // GUI.getStage().setScene(changeInfoStudent.getUpdateScene(selectedStudent));
-                // GUI.getStage().setTitle("Add student");
             } else {
                 //message no student selected
-                vBox.getChildren().add(noStudentSelected);
+                vBox.getChildren().add(noEnrollmentSelected);
             }
             
         }));
@@ -81,7 +79,6 @@ public class EnrollmentOverviewStudentScene {
             if (selectedStudent!=null){
                 // EnrollmentOverviewStudent showEnrollments = new EnrollmentOverviewStudent();
                 // GUI.getStage().setScene(showEnrollments.getScene(selectedStudent));
-                // GUI.getStage().setTitle("Add student");
             } else {
                 //message no student selected
                 vBox.getChildren().add(noStudentSelected);
