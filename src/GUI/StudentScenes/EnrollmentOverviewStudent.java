@@ -56,7 +56,7 @@ public class EnrollmentOverviewStudent {
         // vBox.getChildren().add(createStudent);
 
         Label noStudentSelected = new Label("Please select a student");
-        
+        //if all modules of a course are at 100%, add a button to add a certificate for the enrollment
 
         Button updateStudent = new Button("Change info student");
         updateStudent.setOnAction((event -> {
@@ -86,6 +86,7 @@ public class EnrollmentOverviewStudent {
             //new scene tableview with courses selected student
             //in that scene a button to enroll to a new course
         });
+
         Button certificates = new Button("Show certificates for this student");
         certificates.setOnAction((event) -> {
             //new scene tableview with certificates selected student

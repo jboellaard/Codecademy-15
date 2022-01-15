@@ -1,25 +1,89 @@
 USE master;
-DROP DATABASE IF EXISTS CodecademyStatistics;
-CREATE DATABASE CodecademyStatistics;
+DROP DATABASE IF EXISTS CodecademyData;
+CREATE DATABASE CodecademyData;
 GO
-USE CodecademyStatistics;
+USE StudentTemp;
 
-DROP TABLE IF EXISTS Cursus;
-CREATE TABLE Cursus (
-	Naam varchar(64) NOT NULL PRIMARY KEY,
-	Onderwerp varchar(64) NOT NULL,
-	IntroductieTekst varchar(128) NOT NULL,
-	NiveauAanduiding char(1) NOT NULL,
-	CursusAanbeveling varchar(128) NOT NULL
+ DROP TABLE IF EXISTS Address;
+CREATE TABLE Address (
+	AddressID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	ZipCode varchar(64) NOT NULL,
+	HouseNumber int NOT NULL, 
+	Suffix char(1) NULL,
+	Street varchar(64) NOT NULL,
+	City varchar(64) NOT NULL,
+	Country varchar(64) NOT NULL,
+	CONSTRAINT UA_Address UNIQUE (ZipCode, HouseNumber, Suffix)
 );
 
-INSERT INTO Cursus
-VALUES ('Web development', 'De basics', 'Bouw websites en web apps', 1, 'Computer science'),
- ('Data science', 'Annalyseren', 'Vind logica in data', 2, 'Machine learning'),
- ('Computer Science', 'Annalyseren', 'Computer sciences, ook wel cs, is een breed bregrip', 3, 'Data science'),
- ('Machine learning', 'Data science', 'Machine learning is een opkomend onderdeel van data science', 4, 'Web development'),
- ('Web design', 'Opmaak en layout', 'Web design is verslavend als je eraan begint', 5, 'Web development');
+INSERT INTO Address
+VALUES ('4813 HV', 28, NULL, 'Liesbospark', 'Breda', 'Nederland'),
+ ('4611 GV', 66, NULL, 'Noordzijde haven', 'Bergen op Zoom', 'Nederland'),
+ ('5045 DS', 51, NULL, 'Munnekeburenstraat', 'Tilburg', 'Nederland'),
+ ('4611 JL', 38, NULL, 'Lievevrouwenstraat', 'Bergen op Zoom', 'Nederland'),
+ ('4834 AT', 111, NULL, 'De blauwe kei', 'Breda', 'Nederland'),
+ ('4611 GH', 7, 'b', 'Dubbelstraat', 'Bergen op Zoom', 'Nederland'),
+ ('3701 JL', 23, NULL, 'Costerlaan', 'Zeist', 'Nederland');
 
+
+
+DROP TABLE IF EXISTS Student;
+CREATE TABLE Student (
+	EmailAddress varchar(64) NOT NULL PRIMARY KEY,
+	Name varchar(64) NOT NULL,
+	DateOfBirth varchar(64) NOT NULL,
+	Gender char(1) NOT NULL,
+	AddressID int NOT NULL FOREIGN KEY REFERENCES Address(AddressId),
+);
+
+INSERT INTO Student
+VALUES ('marc0tjevp@gmail.com', 'Marco van Poortvliet', '1998-05-05', 'M',1),
+ ('lisatyem@gmail.com', 'Lisa Tyem', '1998-10-18', 'F',2),
+ ('renzoremmers@gmail.com', 'Renzo Remmers', '2000-07-21', 'M',3),
+ ('rubenstrik@kpn.com', 'Ruben Strik', '2004-11-15', 'M',4),
+ ('joeyletens@hotmail.com', 'Joey Letens', '2002-02-18', 'M',5),
+ ('danirohder@kpn.com', 'Dani Rohder', '2001-08-09', 'M',6),
+ ('johanneshoefman@hotmail.com', 'Johannes Hoefman', '1999-06-12', 'M',7);
+
+ DROP TABLE IF EXISTS Course;
+CREATE TABLE Course (
+	CourseName varchar(64) NOT NULL PRIMARY KEY,
+	Subject varchar(64) NOT NULL,
+	IntroductionText varchar(64) NOT NULL,
+	LevelIndication varchar(10) NOT NULL,
+);
+
+INSERT INTO Course
+VALUES ('Web development', 'De basics', 'Bouw websites en web apps', 'Beginner'),
+ ('Data science', 'Analyseren', 'Vind logica in data', 'Beginner'),
+ ('Computer Science', 'Analyseren', 'Computer sciences, ook wel cs, is een breed bregrip', 'Advanced'),
+ ('Machine learning', 'Data science', 'Machine learning is een opkomend onderdeel van data science', 'Advanced'),
+ ('Web design', 'Opmaak en layout', 'Web design is verslavend als je eraan begint', 'Expert');
+
+
+DROP TABLE IF EXISTS Enrollment;
+CREATE TABLE Enrollment (
+	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
+	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
+	SignUpDate varchar(64) NOT NULL,
+	CONSTRAINT PK_Enrollment PRIMARY KEY (StudentEmail, CourseName, SignUpDate)
+);
+
+INSERT INTO Enrollment
+VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15'),
+('marc0tjevp@gmail.com', 'Computer science', '2021-01-20'),
+('marc0tjevp@gmail.com', 'Data science', '2021-01-23'),
+('lisatyem@gmail.com', 'Web development', '2021-01-07'),
+('renzoremmers@gmail.com', 'Web development', '2021-01-10'),
+('renzoremmers@gmail.com', 'Machine learning', '2021-01-01'),
+('rubenstrik@kpn.com', 'Data science', '2021-01-19'),
+('joeyletens@hotmail.com', 'Data science', '2021-01-03'),
+('joeyletens@hotmail.com', 'Computer science', '2021-01-18'),
+('danirohder@kpn.com', 'Web development', '2021-01-09'),
+('danirohder@kpn.com', 'Machine learning', '2021-01-16'),
+('johanneshoefman@hotmail.com', 'Data science', '2021-01-06'),
+('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14'),
+('johanneshoefman@hotmail.com', 'Web development', '2021-01-18');
 
 
 DROP TABLE IF EXISTS Module;
@@ -31,7 +95,7 @@ CREATE TABLE Module (
 	ContactPersoon varchar(64) NOT NULL,
 	EmailContactPersoon varchar(64) NOT NULL,
 	Volgnummer int NOT NULL,
-	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursus(Naam),
+	CursusNaam varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(Name),
 	CONSTRAINT UC_Module UNIQUE (Titel, Versie)
 );
 
@@ -84,28 +148,6 @@ VALUES ('2019-10-15', '0', null, 1),
 
 
 
-DROP TABLE IF EXISTS Cursist;
-CREATE TABLE Cursist (
-	Email varchar(64) NOT NULL PRIMARY KEY,
-	Naam varchar(64) NOT NULL,
-	GeboorteDatum date NOT NULL,
-	Geslacht char(1) NOT NULL,
-	Adres varchar(64) NOT NULL,
-	Woonplaats varchar(32) NOT NULL,
-	Land varchar(32) NOT NULL
-);
-
-INSERT INTO Cursist
-VALUES ('marc0tjevp@gmail.com', 'Marco van Poortvliet', '1998-05-05', '0', 'Liesbospark 28', 'Breda', 'Nederland'),
- ('lisatyem@gmail.com', 'Lisa Tyem', '1998-10-18', '1', 'Noordzijde haven 66', 'Bergen op Zoom', 'Nederland'),
- ('renzoremmers@gmail.com', 'Renzo Remmers', '2000-07-21', '1', 'Munnekeburenstraat 51', 'Tilburg', 'Nederland'),
- ('rubenstrik@kpn.com', 'Ruben Strik', '2004-11-15', '1', 'Lievevrouwenstraat 38', 'Rijen', 'Nederland'),
- ('joeyletens@hotmail.com', 'Joey Letens', '2002-02-18', '1', 'De blauwe kei 111', 'Breda', 'Nederland'),
- ('danirohder@kpn.com', 'Dani Rohder', '2001-08-09', '1', 'Dubbelstraat 7b', 'Oosterhout', 'Nederland'),
- ('johanneshoefman@hotmail.com', 'Johannes Hoefman', '1999-06-12', '0', 'Costerlaan 23', 'Zeist', 'Nederland');
-
-
-
 DROP TABLE IF EXISTS Bekeken;
 CREATE TABLE Bekeken (
 	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
@@ -149,32 +191,3 @@ VALUES ('marc0tjevp@gmail.com', 'Data science', 8, 'Harrie van Tilburg'),
 ('danirohder@kpn.com', 'Web design', 10, 'Karel Hasselt'),
 ('johanneshoefman@hotmail.com', 'Web design', 6, 'Felix Martens'),
 ('johanneshoefman@hotmail.com', 'Web development', 9, 'Karel Hasselt');
-
-
-
-DROP TABLE IF EXISTS Inschrijving;
-CREATE TABLE Inschrijving (
-	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Cursist(Email) ON DELETE CASCADE,
-	CursusNaam varchar(64) NOT NULL,
-	InschrijfDatum date NOT NULL,
-	CertificaatId int FOREIGN KEY REFERENCES Certificaat(ID),
-	Voortgang int NOT NULL DEFAULT '0',
-	CONSTRAINT CU_Inschrijving UNIQUE (CursistEmail, CursusNaam, InschrijfDatum)
-);
-
-INSERT INTO Inschrijving
-VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', NULL, 50),
-('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', 2, 100),
-('marc0tjevp@gmail.com', 'Data science', '2021-01-23', NULL, 66),
-('lisatyem@gmail.com', 'Web development', '2021-01-07', NULL, 15),
-('renzoremmers@gmail.com', 'Web development', '2021-01-10', NULL, 75),
-('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', 3, 100),
-('rubenstrik@kpn.com', 'Data science', '2021-01-19', 4, 100),
-('joeyletens@hotmail.com', 'Data science', '2021-01-03', NULL, 37),
-('joeyletens@hotmail.com', 'Computer science', '2021-01-18', NULL, 5),
-('danirohder@kpn.com', 'Web development', '2021-01-09', 5, 100),
-('danirohder@kpn.com', 'Machine learning', '2021-01-16', NULL, 99),
-('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', 6, 100),
-('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14', 5, 100),
-('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', NULL, 25);

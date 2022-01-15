@@ -8,6 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EnrollmentRepo {
+    private static String connectionUrl = DBConnection.getConnectionUrl();
+    private static String driverUrl = DBConnection.getDriverUrl();
 
     public static ObservableList<Enrollment> getEnrollmentsFromDB(Student student){
         final ObservableList<Enrollment> allStudentEnrollments = FXCollections.observableArrayList();
@@ -16,8 +18,8 @@ public class EnrollmentRepo {
         ResultSet rs = null;
 
         try {
-            Class.forName(DBConnection.getDriverUrl());
-            con = DriverManager.getConnection(DBConnection.getConnectionUrl());
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("SELECT * FROM Enrollment WHERE StudentEmail=?;");
             pstmt.setString(1, student.getEmailAddress());
             rs = pstmt.executeQuery();
