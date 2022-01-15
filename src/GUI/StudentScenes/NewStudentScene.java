@@ -170,10 +170,9 @@ public class NewStudentScene {
             if (validInput){
                 Address studentAddress = new Address(studentZipCode,studentHouseNo,studentSuffix,studentStreet,studentCity,studentCountry);
                 if (!create){
-                    String previousEmail = exiStudent.getEmailAddress();
                     studentAdded.setText("Student succefully updated");
-                    exiStudent.adjustAllValues(studentName,studentEmail,studentDOB,studentGender,studentAddress);
-                    GUI.studentRepo.update(exiStudent,previousEmail);
+                    Student alteredStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);
+                    GUI.studentRepo.update(alteredStudent,exiStudent);
                 } else {
                     studentAdded.setText("Student succefully created");
                     Student newStudent = new Student(studentName,studentEmail,studentDOB,studentGender,studentAddress);

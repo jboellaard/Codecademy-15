@@ -3,10 +3,10 @@ package Domain;
 public class Certificate {
     private int certificateID;
     private double grade;
-    private nameOfStaffMember nameOfStaffMember;
+    private String nameOfStaffMember;
 
 
-    public Certificate(int certificateID, double grade, nameOfStaffMember nameOfStaffMember){
+    public Certificate(int certificateID, double grade, String nameOfStaffMember){
         this.certificateID = certificateID;
         this.grade = grade;
         this.nameOfStaffMember = nameOfStaffMember;
@@ -20,7 +20,7 @@ public class Certificate {
         return this.grade;
     }
 
-    public nameOfStaffMember getNameOfStaffMember(){
+    public String getNameOfStaffMember(){
         return this.nameOfStaffMember;
     }
 }

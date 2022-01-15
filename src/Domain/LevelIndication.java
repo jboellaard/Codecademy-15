@@ -4,5 +4,4 @@ public enum LevelIndication {
     Beginner,
     Advanced,
     Expert
-    
 }

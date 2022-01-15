@@ -25,7 +25,7 @@ public class GUI extends Application {
     public void start(Stage stage) throws Exception {
         GUIStage = stage;
         Scene homePage = GUI.getHomeScene();
-        stage.setTitle("Home");
+        stage.setTitle("Joy Boellaard (2354217), Joey van Kuijk (), Tim van Vliet () & Lisa Tyem ()");
         stage.setScene(homePage);
         stage.show();
     }

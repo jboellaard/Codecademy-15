@@ -7,6 +7,14 @@ public abstract class ContentItem {
     private String description;
     private Status status; 
 
+    public ContentItem(int contentItemID, String publicationDate, String title, String description, Status status){
+        this.contentItemID = contentItemID;
+        this.publicationDate = publicationDate;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
     public int getContentItemID(){
         return this.contentItemID;
     }

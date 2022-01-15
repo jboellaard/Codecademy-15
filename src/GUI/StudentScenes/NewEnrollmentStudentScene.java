@@ -42,6 +42,8 @@ public class NewEnrollmentStudentScene {
         vBox.getChildren().add(studentName);
         vBox.getChildren().add(table);
 
+        //java.time.LocalDate.now()
+
         Scene newEnrollment = new Scene(vBox, 600, 400);
         return newEnrollment;
     }

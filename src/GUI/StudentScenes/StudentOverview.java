@@ -76,7 +76,7 @@ public class StudentOverview {
         enrollments.setOnAction((event) -> {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
             if (selectedStudent!=null){
-                EnrollmentOverviewStudent showEnrollments = new EnrollmentOverviewStudent();
+                EnrollmentOverviewStudentScene showEnrollments = new EnrollmentOverviewStudentScene();
                 GUI.getStage().setScene(showEnrollments.getScene(selectedStudent));
                 GUI.getStage().setTitle("Add student");
             } else {
@@ -87,7 +87,7 @@ public class StudentOverview {
             //in that scene a button to enroll to a new course
         });
         vBox.getChildren().add(enrollments);
-        
+
         Button certificates = new Button("Show certificates for this student");
         certificates.setOnAction((event) -> {
             //new scene tableview with certificates selected student

@@ -1,10 +1,9 @@
 package Domain;
 
-// import DB.AddressRepo;
 import GUI.*;
 
+/*  */
 public class Address {
-
     private int addressID;
     private String zipCode;
     private int houseNo;

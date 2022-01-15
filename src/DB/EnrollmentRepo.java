@@ -1,16 +1,17 @@
 package DB;
 
-import java.sql.*;
-
 import Domain.*;
 import GUI.*;
+import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/* This class retrieves and creates enrollments for selected students */
 public class EnrollmentRepo {
     private static String connectionUrl = DBConnection.getConnectionUrl();
     private static String driverUrl = DBConnection.getDriverUrl();
 
+    /* This method retrieves all enrollments from the database connected to the given student */
     public static ObservableList<Enrollment> getEnrollmentsFromDB(Student student){
         final ObservableList<Enrollment> allStudentEnrollments = FXCollections.observableArrayList();
         Connection con = null;
@@ -34,7 +35,6 @@ public class EnrollmentRepo {
             }
             return allStudentEnrollments;
         }
-        // Handle any errors that may have occurred.
         catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,6 +44,11 @@ public class EnrollmentRepo {
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
         return null;
+    }
+
+    /* This method adds an enrollment to the database. If it was succesfully added, the method returns true, if not the method returns false. */
+    public static boolean create(Student student, Course course, String date){
+        return false;
     }
     
 }
