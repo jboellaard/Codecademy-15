@@ -1,9 +1,5 @@
 package Domain;
 
-import DB.EnrollmentRepo;
-import GUI.*;
-import javafx.collections.ObservableList;
-
 public class Student {
     private String emailAddress;
     private String name;
@@ -12,14 +8,6 @@ public class Student {
     private Address address;
 
     public Student(String name, String emailAddress, String dateOfBirth, Gender gender, Address address){
-        this.name = name;
-        this.emailAddress = emailAddress;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-        this.address = address;
-    }
-
-    public void adjustAllValues(String name, String emailAddress, String dateOfBirth, Gender gender, Address address){
         this.name = name;
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;

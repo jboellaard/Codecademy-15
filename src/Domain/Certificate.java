@@ -5,7 +5,6 @@ public class Certificate {
     private double grade;
     private String nameOfStaffMember;
 
-
     public Certificate(int certificateID, double grade, String nameOfStaffMember){
         this.certificateID = certificateID;
         this.grade = grade;

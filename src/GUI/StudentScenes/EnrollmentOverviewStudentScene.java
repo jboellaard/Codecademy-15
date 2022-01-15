@@ -45,17 +45,7 @@ public class EnrollmentOverviewStudentScene {
         Button createEnrollment = new Button("Enroll in new course");
         createEnrollment.setOnAction((event -> {
             NewEnrollmentStudentScene newEnrollment = new NewEnrollmentStudentScene();
-            // ObservableList<Course> coursesAlreadyEnrolled = FXCollections.observableArrayList();
-            List<Course> coursesAlreadyEnrolled = new ArrayList<>();
-            for (Enrollment enrollment : allEnrollmentsStudent){
-                coursesAlreadyEnrolled.add(enrollment.getCourse());
-            }
-            ObservableList<Course> coursesToEnroll = FXCollections.observableArrayList();
-            for (Course course : GUI.courseRepo.getAllCourses()){
-                if (!coursesAlreadyEnrolled.contains(course)) coursesToEnroll.add(course) ;
-            }
-            GUI.getStage().setScene(newEnrollment.getScene(student, coursesToEnroll));
-            GUI.getStage().setTitle("Add enrollment");
+            GUI.getStage().setScene(newEnrollment.getScene(student));
         }));
         vBox.getChildren().add(createEnrollment);
 

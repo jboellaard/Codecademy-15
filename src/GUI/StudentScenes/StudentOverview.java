@@ -4,9 +4,12 @@ package GUI.StudentScenes;
 import Domain.*;
 import GUI.*;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class StudentOverview {
@@ -37,8 +40,13 @@ public class StudentOverview {
         table.getColumns().add(addressIDCol);
         table.sort();
         
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(10);
         vBox.getChildren().add(table);
+
+        HBox buttons = new HBox(15);
+        buttons.setPadding(new Insets(40,40,40,40));
+        buttons.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(buttons);
         Button createStudent = new Button("Add new student");
         createStudent.setOnAction((event -> {
             NewStudentScene newStudent = new NewStudentScene();
@@ -51,11 +59,11 @@ public class StudentOverview {
             GUI.GUIStage.setScene(GUI.getHomeScene());
             GUI.GUIStage.setTitle("Home");
         }));
-        vBox.getChildren().add(back);
-        vBox.getChildren().add(createStudent);
+        buttons.getChildren().add(back);
+        buttons.getChildren().add(createStudent);
 
-        Label noStudentSelected = new Label("Please select a student");
-        
+        Label noStudentSelected = new Label("");
+        vBox.getChildren().add(noStudentSelected);
 
         Button updateStudent = new Button("Change info student");
         updateStudent.setOnAction((event -> {
@@ -65,12 +73,11 @@ public class StudentOverview {
                 GUI.getStage().setScene(changeInfoStudent.getUpdateScene(selectedStudent));
                 GUI.getStage().setTitle("Add student");
             } else {
-                //message no student selected
-                vBox.getChildren().add(noStudentSelected);
+                noStudentSelected.setText("Please select a student");
             }
             
         }));
-        vBox.getChildren().add(updateStudent);
+        buttons.getChildren().add(updateStudent);
 
         Button enrollments = new Button("Show enrollments");
         enrollments.setOnAction((event) -> {
@@ -78,15 +85,13 @@ public class StudentOverview {
             if (selectedStudent!=null){
                 EnrollmentOverviewStudentScene showEnrollments = new EnrollmentOverviewStudentScene();
                 GUI.getStage().setScene(showEnrollments.getScene(selectedStudent));
-                GUI.getStage().setTitle("Add student");
             } else {
-                //message no student selected
-                vBox.getChildren().add(noStudentSelected);
+                noStudentSelected.setText("Please select a student");
             }
             //new scene tableview with courses selected student
             //in that scene a button to enroll to a new course
         });
-        vBox.getChildren().add(enrollments);
+        buttons.getChildren().add(enrollments);
 
         Button certificates = new Button("Show certificates for this student");
         certificates.setOnAction((event) -> {

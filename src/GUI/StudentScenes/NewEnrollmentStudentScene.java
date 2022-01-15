@@ -1,9 +1,7 @@
 package GUI.StudentScenes;
 
 import DB.EnrollmentRepo;
-// import DB.*;
 import Domain.*;
-// import Domain.Tools.*;
 import GUI.*;
 
 import javafx.collections.ObservableList;
@@ -14,13 +12,13 @@ import javafx.scene.layout.VBox;
 
 public class NewEnrollmentStudentScene {
 
-    public Scene getScene(Student student, ObservableList<Course> coursesToEnroll){
+    public Scene getScene(Student student){
         Label studentName = new Label(student.getName()+" courses left to enroll");
 
         TableView<Course> table = new TableView<>();
         // StudentRepo repo = new StudentRepo();
-        // ObservableList<Enrollment> allEnrollmentsStudent = EnrollmentRepo.getEnrollmentsFromDB(student);
-        table.setItems(coursesToEnroll);
+        ObservableList<Course> allCourses = GUI.courseRepo.getAllCourses();
+        table.setItems(allCourses);
  
         TableColumn<Course,String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("CourseName"));
