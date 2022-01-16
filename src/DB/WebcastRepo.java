@@ -5,8 +5,10 @@ import javafx.collections.*;
 
 import java.sql.*;
 
+/* This class connects with the database using the links in the class DBConnection to retrieve webcasts */
 public class WebcastRepo {
 
+    /* This method retrieves the webcasts that a given student has any progress with */
     public static ObservableList<ProgressWebcast> getWebcastsViewed(Student student){
         final ObservableList<ProgressWebcast> allStudentWebcasts = FXCollections.observableArrayList();
         Connection con = null;
@@ -36,6 +38,7 @@ public class WebcastRepo {
         return allStudentWebcasts;
     }
 
+    /* This method gets the top 3 most viewed webcasts from the database */
     public static String[][] getTopThreeMostViewedWebcasts(){
         String[][] top3Webcasts = new String[3][2];
         Connection con = null;

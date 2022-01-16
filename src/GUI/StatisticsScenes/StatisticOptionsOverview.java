@@ -12,7 +12,7 @@ import javafx.scene.layout.*;
 import javafx.collections.*;
 import javafx.beans.value.*;
 
-//This scene show an overview for the options of the available statistics
+//This scene shows an overview for the options of the available statistics
 
 public class StatisticOptionsOverview {
 
