@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+//This scene is used to add a new student into the database.
+
 public class NewStudentScene {
 
     public Scene getCreateScene(){

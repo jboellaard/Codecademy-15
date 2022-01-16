@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene shows the ammount of Certificates per student
 public class CertificatesPerStudentScene {
 
     public Scene getScene(Student student){

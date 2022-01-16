@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene shows an overview of the available courses.
+
 public class CourseOverview {
 
     public Scene getScene(){

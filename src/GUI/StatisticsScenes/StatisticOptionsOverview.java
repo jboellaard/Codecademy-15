@@ -12,13 +12,15 @@ import javafx.scene.layout.*;
 import javafx.collections.*;
 import javafx.beans.value.*;
 
+//This scene show an overview for the options of the available statistics
+
 public class StatisticOptionsOverview {
 
-    public Scene getScene(){
+    public Scene getScene() {
         VBox vBox = new VBox(20);
         vBox.setPrefWidth(250);
 
-        Button perGender = new Button("Percentage of certificates per gender"); 
+        Button perGender = new Button("Percentage of certificates per gender");
         vBox.getChildren().add(perGender);
 
         GridPane genderGrid = new GridPane();
@@ -30,27 +32,29 @@ public class StatisticOptionsOverview {
         Label choice = new Label("Choose a gender: ");
         Label gender = new Label();
         Label result = new Label();
-        
-        Gender[] genderList = new Gender[]{Gender.M,  Gender.F, Gender.O};
+
+        Gender[] genderList = new Gender[] { Gender.M, Gender.F, Gender.O };
         ChoiceBox<Gender> genderDropDown = new ChoiceBox<>(FXCollections.observableArrayList(genderList));
-        
-        
+
         genderDropDown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
-                gender.setText(String.valueOf("Percentage enrollments with a certificate "+genderList[new_value.intValue()])+": ");
-                result.setText(String.valueOf(EnrollmentRepo.certificatesPerGender(genderList[new_value.intValue()])) +"%"); 
+                gender.setText(
+                        String.valueOf("Percentage enrollments with a certificate " + genderList[new_value.intValue()])
+                                + ": ");
+                result.setText(
+                        String.valueOf(EnrollmentRepo.certificatesPerGender(genderList[new_value.intValue()])) + "%");
             }
         });
 
         perGender.setOnAction((event -> {
-            genderGrid.add(choice,0,0);
-            genderGrid.add(genderDropDown,1,0);
-            genderGrid.add(gender,0,1);
-            genderGrid.add(result,1,1);
+            genderGrid.add(choice, 0, 0);
+            genderGrid.add(genderDropDown, 1, 0);
+            genderGrid.add(gender, 0, 1);
+            genderGrid.add(result, 1, 1);
         }));
 
         HBox topThreeWebcasts = new HBox(15);
-        topThreeWebcasts.setPadding(new Insets(5,25,15,25));
+        topThreeWebcasts.setPadding(new Insets(5, 25, 15, 25));
         topThreeWebcasts.setAlignment(Pos.CENTER);
         topThreeWebcasts.getChildren().add(new Label());
 
@@ -58,17 +62,17 @@ public class StatisticOptionsOverview {
         mostViewedWebcasts.setOnAction((event -> {
             GridPane topThree = new GridPane();
             String[][] webCasts = WebcastRepo.getTopThreeMostViewedWebcasts();
-            for (int i = 0; i<3; i++){
-                topThree.add(new Label(webCasts[i][0] +": "),0,i);
-                topThree.add(new Label(webCasts[i][1]),1,i);
+            for (int i = 0; i < 3; i++) {
+                topThree.add(new Label(webCasts[i][0] + ": "), 0, i);
+                topThree.add(new Label(webCasts[i][1]), 1, i);
             }
-            topThreeWebcasts.getChildren().set(0,topThree);
+            topThreeWebcasts.getChildren().set(0, topThree);
         }));
         vBox.getChildren().add(mostViewedWebcasts);
         vBox.getChildren().add(topThreeWebcasts);
 
         HBox topThreeCourses = new HBox(15);
-        topThreeCourses.setPadding(new Insets(5,25,15,25));
+        topThreeCourses.setPadding(new Insets(5, 25, 15, 25));
         topThreeCourses.setAlignment(Pos.CENTER);
         topThreeCourses.getChildren().add(new Label());
 
@@ -76,11 +80,11 @@ public class StatisticOptionsOverview {
         mostCertificates.setOnAction((event -> {
             GridPane topThree = new GridPane();
             String[][] courses = DBConnection.courseRepo.getTop3CoursesWithMostCertificates();
-            for (int i = 0; i<3; i++){
-                topThree.add(new Label(courses[i][0] +": "),0,i);
-                topThree.add(new Label(courses[i][1]),1,i);
+            for (int i = 0; i < 3; i++) {
+                topThree.add(new Label(courses[i][0] + ": "), 0, i);
+                topThree.add(new Label(courses[i][1]), 1, i);
             }
-            topThreeCourses.getChildren().set(0,topThree);
+            topThreeCourses.getChildren().set(0, topThree);
 
         }));
         vBox.getChildren().add(mostCertificates);
@@ -101,5 +105,4 @@ public class StatisticOptionsOverview {
         return scene;
     }
 
-    
 }

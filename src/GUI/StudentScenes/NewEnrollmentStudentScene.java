@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene is used to enroll a student in a new course
 public class NewEnrollmentStudentScene {
 
     public Scene getScene(Student student){

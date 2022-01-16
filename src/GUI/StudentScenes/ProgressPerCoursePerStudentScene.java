@@ -14,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene show the progress students have in specific courses
+
 public class ProgressPerCoursePerStudentScene {
 
     public Scene getScene(Student student, Enrollment enrollment){

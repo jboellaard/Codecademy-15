@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+//This class builds the Graphical User Interface and its scenes
 public class GUI extends Application {
     public static Stage GUIStage;
     public static DBConnection dBConnection = new DBConnection();
