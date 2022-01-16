@@ -38,11 +38,9 @@ public class StatisticOptionsOverview {
         
         
         genderDropDown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue ov, Number value, Number new_value)
-            {
+            public void changed(ObservableValue ov, Number value, Number new_value) {
                 gender.setText(String.valueOf("Percentage enrollments with a certificate "+genderList[new_value.intValue()])+": ");
-                result.setText(String.valueOf(EnrollmentRepo.certificatesPerGender(genderList[new_value.intValue()])) +"%");
-                
+                result.setText(String.valueOf(EnrollmentRepo.certificatesPerGender(genderList[new_value.intValue()])) +"%"); 
             }
         });
 
@@ -53,7 +51,10 @@ public class StatisticOptionsOverview {
             genderGrid.add(result,1,1);
         }));
 
-        
+        HBox topThreeWebcasts = new HBox(15);
+        topThreeWebcasts.setPadding(new Insets(5,25,15,25));
+        topThreeWebcasts.setAlignment(Pos.CENTER);
+        topThreeWebcasts.getChildren().add(new Label());
 
         Button mostViewedWebcasts = new Button("Top 3 viewed webcasts");
         mostViewedWebcasts.setOnAction((event -> {
@@ -65,11 +66,15 @@ public class StatisticOptionsOverview {
                 topThree.add(new Label(String.valueOf(en.getValue())),1,i);
                 i++;
             }
-            vBox.getChildren().add(topThree);
-
+            topThreeWebcasts.getChildren().set(0,topThree);
         }));
         vBox.getChildren().add(mostViewedWebcasts);
+        vBox.getChildren().add(topThreeWebcasts);
 
+        HBox topThreeCourses = new HBox(15);
+        topThreeCourses.setPadding(new Insets(5,25,15,25));
+        topThreeCourses.setAlignment(Pos.CENTER);
+        topThreeCourses.getChildren().add(new Label());
 
         Button mostCertificates = new Button("Top 3 courses with most certificates");
         mostCertificates.setOnAction((event -> {
@@ -81,10 +86,11 @@ public class StatisticOptionsOverview {
                 topThree.add(new Label(String.valueOf(en.getValue())),1,i);
                 i++;
             }
-            vBox.getChildren().add(topThree);
+            topThreeCourses.getChildren().set(0,topThree);
 
         }));
         vBox.getChildren().add(mostCertificates);
+        vBox.getChildren().add(topThreeCourses);
 
         Button back = new Button("Go back");
         back.setOnAction((event -> {

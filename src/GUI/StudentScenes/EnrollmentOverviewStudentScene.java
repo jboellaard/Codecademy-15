@@ -1,9 +1,7 @@
 package GUI.StudentScenes;
 
 import DB.EnrollmentRepo;
-// import DB.*;
 import Domain.*;
-// import Domain.Tools.*;
 import GUI.*;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

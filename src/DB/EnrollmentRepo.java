@@ -123,7 +123,7 @@ public class EnrollmentRepo {
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("INSERT INTO Certificate VALUES (?,?);");
             pstmt.setDouble(1, certificate.getGrade());
-            pstmt.setString(2, certificate.getNameOfStaffMember());
+            pstmt.setString(2, certificate.getNameStaffCodecademy());
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0){
@@ -167,5 +167,31 @@ public class EnrollmentRepo {
         }
         return 0;
     }
-    
+
+    public static ObservableList<Certificate> getAllCertificatesStudent(Student student){
+        ObservableList<Certificate> certificates = FXCollections.observableArrayList();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT * FROM Certificate WHERE EnrollmentID IN (SELECT EnrollmentID FROM Enrollment WHERE StudentEmail = ?);");
+            pstmt.setString(1, student.getEmailAddress());
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                certificates.add(new Certificate(rs.getInt("EnrollmentID"),rs.getDouble("Grade"),rs.getString("NameStaffCodecademy")));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return certificates;
+    }
+
 }

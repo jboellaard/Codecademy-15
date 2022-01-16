@@ -62,7 +62,7 @@ public class ProgressPerCoursePerStudentScene {
             double givenGrade = Double.valueOf(gradeInput.getText());
             String staff = nameStaffInput.getText();
             if (GradeTools.isValidGrade(givenGrade)){
-                Certificate cert = new Certificate(givenGrade,staff);
+                Certificate cert = new Certificate(enrollment.getEnrollmentID(),givenGrade,staff);
                 if (EnrollmentRepo.addCertificate(enrollment,cert)){
                     noCourseSelected.setText("Certificate added succesfully");
                 } else {
