@@ -15,9 +15,8 @@ import javafx.scene.layout.VBox;
 public class NewModuleScene {
 
     public Scene getScene(Course course){
-
         TableView<CourseModule> table = new TableView<>();
-        ObservableList<CourseModule> modules = course.getModules();
+        ObservableList<CourseModule> modules = DBConnection.courseModuleRepo.getUnusedModules();
         table.setItems(modules);
  
         TableColumn<CourseModule,String> titleCol = new TableColumn<>("Title");

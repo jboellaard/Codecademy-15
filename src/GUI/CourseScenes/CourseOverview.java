@@ -63,20 +63,6 @@ public class CourseOverview {
         }));
         buttons.getChildren().add(addModule);
 
-        Button back = new Button("Go back");
-        back.setOnAction((event -> {
-            GUI.GUIStage.setScene(GUI.getHomeScene());
-        }));
-        
-        buttons.getChildren().add(back);
-
-        HBox buttonsSecondRow = new HBox(15);
-        buttonsSecondRow.setPadding(new Insets(5,15,5,15));
-        buttonsSecondRow.setAlignment(Pos.CENTER);
-        vBox.getChildren().add(buttonsSecondRow);
-
-        //delete button
-
         Button delete = new Button("Delete course");
         delete.setOnAction((event -> {
             Course selectedCourse = table.getSelectionModel().getSelectedItem();
@@ -90,7 +76,31 @@ public class CourseOverview {
                 noCourseSelected.setText("Please select a course first");
             }
         }));
-        buttonsSecondRow.getChildren().add(delete);
+        buttons.getChildren().add(delete);
+
+        Button back = new Button("Go back");
+        back.setOnAction((event -> {
+            GUI.GUIStage.setScene(GUI.getHomeScene());
+        }));
+        
+        buttons.getChildren().add(back);
+
+        HBox buttonsSecondRow = new HBox(15);
+        buttonsSecondRow.setPadding(new Insets(5,15,5,15));
+        buttonsSecondRow.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(buttonsSecondRow);
+
+        Button recs = new Button("Show recommended courses");
+        recs.setOnAction((event -> {
+            Course selectedCourse = table.getSelectionModel().getSelectedItem();
+            if (selectedCourse!=null){
+                RecommendedCourses recCourses = new RecommendedCourses();
+                GUI.getStage().setScene(recCourses.getScene(selectedCourse));
+            } else {
+                noCourseSelected.setText("Please select a course first");
+            }
+        }));
+        buttonsSecondRow.getChildren().add(recs);
 
         
         Button showProgress = new Button("Show modules course and progress all students");

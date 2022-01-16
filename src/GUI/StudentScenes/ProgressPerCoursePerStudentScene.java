@@ -73,13 +73,14 @@ public class ProgressPerCoursePerStudentScene {
             }
 
         }));
+
+        HBox certificate = new HBox(15);
+        certificate.setPadding(new Insets(5,25,15,25));
+        certificate.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(certificate);
+
+
         addCertificate.setOnAction((event -> {
-            HBox certificate = new HBox(15);
-            certificate.setPadding(new Insets(5,25,15,25));
-            certificate.setAlignment(Pos.CENTER);
-            certificate.getChildren().add(noCourseSelected);
-            vBox.getChildren().add(certificate);
-                
             certificate.getChildren().add(grade);
             certificate.getChildren().add(gradeInput);
             certificate.getChildren().add(nameStaff);

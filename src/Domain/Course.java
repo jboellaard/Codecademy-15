@@ -1,7 +1,5 @@
 package Domain;
 
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,7 +9,6 @@ public class Course {
     private String introductionText;
     private LevelIndication levelIndication;
     final ObservableList<CourseModule> modules = FXCollections.observableArrayList();
-    private ArrayList<Course> recommendedCourses;
 
     public Course(String courseName, String subject, String introductionText, LevelIndication level){
         this.courseName = courseName;
@@ -46,10 +43,6 @@ public class Course {
 
     public ObservableList<CourseModule> getModulesAndProgress(Student student){
         return this.modules;
-    }
-
-    public void addRecommendedCourse(Course course){
-        this.recommendedCourses.add(course);
     }
     
 }
