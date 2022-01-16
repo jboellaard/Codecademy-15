@@ -124,7 +124,7 @@ public class StudentOverview {
         error.getChildren().add(noStudentSelected);
         vBox.getChildren().add(error);
 
-        Scene scene = new Scene(vBox, 600, 400);
+        Scene scene = new Scene(vBox, 700, 400);
         return scene;
     }
     

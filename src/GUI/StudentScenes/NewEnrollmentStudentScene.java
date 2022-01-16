@@ -79,7 +79,7 @@ public class NewEnrollmentStudentScene {
 
         //java.time.LocalDate.now()
 
-        Scene newEnrollment = new Scene(vBox, 600, 400);
+        Scene newEnrollment = new Scene(vBox, 700, 400);
         return newEnrollment;
     }
     

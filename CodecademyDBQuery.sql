@@ -172,20 +172,20 @@ DROP TABLE IF EXISTS Webcast;
 CREATE TABLE Webcast (
 	ContentItemID int NOT NULL PRIMARY KEY FOREIGN KEY REFERENCES ContentItem(ContentItemID),
 	Title varchar(64) NOT NULL UNIQUE,
-	Description varchar(64) NULL,
+	Description varchar(128) NULL,
 	DurationInSeconds int NULL,
-	URL varchar(128) NULL
+	URL varchar(128) NULL,
+	NameSpeaker varchar(64) NULL,
+	NameOrganisation varchar(64) NULL
 );
 
 
-/*
-
 INSERT INTO Webcast
-VALUES ('Maak je eerste HTML/CSS/JS project', 'Leer de basis voor websites bouwen met JavaScript.', 21, 'https://www.youtube.com/watch?v=iwNUJU5D3aI&t=18s', 'Brandon Nazgull', 'Codecademy'),
- ('Wat is data sciences', 'Wil je weten wat data sciences is? Kijk dan dit interview.', 4, 'https://news.codecademy.com/what-is-data-science/', 'Sophie van Laarhoven', 'Codecademy'),
- ('Introductie in computer sciences', 'Neem een kijkje in het computer science pad van Codecademy', 1, 'https://www.codecademy.com/paths/computer-science/tracks/cspath-intro/modules/cspath-python-syntax', 'Nick Grayham', 'Codecademy'),
- ('Wat zijn neural networks?', 'Hoe kan een computer problemen oplossen zoals ons brein dat doet?', 15, 'https://news.codecademy.com/what-are-neural-networks/', 'Finnick Odair', 'Codecademy');
-*/
+VALUES (9,'Maak je eerste HTML/CSS/JS project', 'Leer de basis voor websites bouwen met JavaScript.', 21, 'https://www.youtube.com/watch?v=iwNUJU5D3aI&t=18s', 'Brandon Nazgull', 'Codecademy'),
+ (10,'Wat is data sciences', 'Wil je weten wat data sciences is? Kijk dan dit interview.', 4, 'https://news.codecademy.com/what-is-data-science/', 'Sophie van Laarhoven', 'Codecademy'),
+ (11,'Introductie in computer sciences', 'Neem een kijkje in het computer science pad van Codecademy', 1, 'https://www.codecademy.com/paths/computer-science/tracks/cspath-intro/modules/cspath-python-syntax', 'Nick Grayham', 'Codecademy'),
+ (12,'Wat zijn neural networks?', 'Hoe kan een computer problemen oplossen zoals ons brein dat doet?', 15, 'https://news.codecademy.com/what-are-neural-networks/', 'Finnick Odair', 'Codecademy');
+
 
 DROP TABLE IF EXISTS ProgressWebcast;
 CREATE TABLE ProgressWebcast (
@@ -207,6 +207,12 @@ CREATE TABLE ProgressModule (
 
 INSERT INTO ProgressModule
 VALUES (2,4,50);
+
+INSERT INTO ProgressWebcast
+VALUES (9,'renzoremmers@gmail.com',5),
+(9,'marc0tjevp@gmail.com',95),
+(10,'renzoremmers@gmail.com',5),
+(11,'marc0tjevp@gmail.com',5);
 
 
 

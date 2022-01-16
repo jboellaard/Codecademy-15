@@ -153,7 +153,7 @@ public class CourseRepo {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                top3Courses.put(rs.getString("Course.CourseName"),rs.getInt("NumberOfCertificates"));
+                top3Courses.put(rs.getString("CourseName"),rs.getInt("NumberOfCertificates"));
             }
         }
         catch (Exception e) {

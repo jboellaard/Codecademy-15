@@ -5,14 +5,11 @@ import GUI.StudentScenes.*;
 import GUI.CourseScenes.*;
 import GUI.StatisticsScenes.StatisticOptionsOverview;
 import javafx.application.Application;
-// import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-// import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-// import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class GUI extends Application {

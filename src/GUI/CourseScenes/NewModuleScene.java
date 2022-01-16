@@ -72,7 +72,7 @@ public class NewModuleScene {
         vBox.getChildren().add(error);
 
 
-        Scene scene = new Scene(vBox, 600, 400);
+        Scene scene = new Scene(vBox, 700, 400);
         return scene;
 
     }

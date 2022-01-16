@@ -1,7 +1,10 @@
 package GUI.StatisticsScenes;
 
+import java.util.Map;
+
 import DB.DBConnection;
 import DB.EnrollmentRepo;
+import DB.WebcastRepo;
 import Domain.Certificate;
 import Domain.Gender;
 import GUI.*;
@@ -42,7 +45,7 @@ public class StatisticOptionsOverview {
         genderDropDown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value)
             {
-                gender.setText(String.valueOf(genderList[new_value.intValue()])+": ");
+                gender.setText(String.valueOf("Percentage enrollments with a certificate "+genderList[new_value.intValue()])+": ");
                 result.setText(String.valueOf(EnrollmentRepo.certificatesPerGender(genderList[new_value.intValue()])) +"%");
                 
             }
@@ -54,45 +57,38 @@ public class StatisticOptionsOverview {
             genderGrid.add(gender,0,1);
             genderGrid.add(result,1,1);
         }));
+
+        GridPane topThree = new GridPane();
         
 
         Button mostViewedWebcasts = new Button("Top 3 viewed webcasts");
         mostViewedWebcasts.setOnAction((event -> {
-            //tableview or not most viewed webcasts
+            Map<String, Integer> webCasts = WebcastRepo.getTopThreeMostViewedWebcasts();
+            int i=0;
+            for (Map.Entry<String, Integer> en : webCasts.entrySet()){
+                topThree.add(new Label(en.getKey() +": "),0,i);
+                topThree.add(new Label(String.valueOf(en.getValue())),1,i);
+                i++;
+            }
+
         }));
-        // buttons.getChildren().add(updateStudent);
         vBox.getChildren().add(mostViewedWebcasts);
+
+        
 
         Button mostCertificates = new Button("Top 3 courses with most certificates");
         mostCertificates.setOnAction((event -> {
-            
-            // TableView<Certificate> table = new TableView<>();
-            // ObservableList<Certificate> allStudents = DBConnection.studentRepo.getAllStudents();
-            // table.setItems(allStudents);
-    
-            // TableColumn<Certificate,String> nameCol = new TableColumn<>("Name");
-            // nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-            // TableColumn<Student,String> emailCol = new TableColumn<>("Email Address");
-            // emailCol.setCellValueFactory(new PropertyValueFactory<>("EmailAddress"));
-            // TableColumn<Student,String> dobCol = new TableColumn<>("Date of birth");
-            // dobCol.setCellValueFactory(new PropertyValueFactory<>("DateOfBirth"));
-            // TableColumn<Student,Gender> genderCol = new TableColumn<>("Gender");
-            // genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
-            // TableColumn<Student,Integer> addressIDCol = new TableColumn<>("Address ID");
-            // addressIDCol.setCellValueFactory(new PropertyValueFactory<>("addressID"));
-
-            // table.getColumns().add(nameCol);
-            // table.getColumns().add(emailCol);
-            // table.getColumns().add(dobCol);
-            // table.getColumns().add(genderCol);
-            // table.getColumns().add(addressIDCol);
-            // table.sort();
-            
-            // VBox vBox = new VBox(10);
-            // vBox.getChildren().add(table);
+            Map<String, Integer> courses = DBConnection.courseRepo.getTop3CoursesWithMostCertificates();
+            int i=0;
+            for (Map.Entry<String, Integer> en : courses.entrySet()){
+                topThree.add(new Label(en.getKey() +": "),0,i);
+                topThree.add(new Label(String.valueOf(en.getValue())),1,i);
+                i++;
+            }
 
         }));
         vBox.getChildren().add(mostCertificates);
+        vBox.getChildren().add(topThree);
 
         Button back = new Button("Go back");
         back.setOnAction((event -> {
@@ -105,7 +101,7 @@ public class StatisticOptionsOverview {
         mostViewedWebcasts.setMinWidth(vBox.getPrefWidth());
         mostCertificates.setMinWidth(vBox.getPrefWidth());
 
-        Scene scene = new Scene(vBox, 600, 400);
+        Scene scene = new Scene(vBox, 700, 400);
         return scene;
     }
 

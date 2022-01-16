@@ -90,7 +90,7 @@ public class NewCourseScene {
         gridPane.add(courseAdded,0,7,2,1);
 
         layout.setCenter(gridPane);
-        Scene newCourseView = new Scene(layout, 600, 400);
+        Scene newCourseView = new Scene(layout, 700, 400);
         return newCourseView;
     }
     

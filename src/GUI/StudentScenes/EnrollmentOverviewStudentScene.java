@@ -82,7 +82,7 @@ public class EnrollmentOverviewStudentScene {
         error.getChildren().add(noEnrollmentSelected);
         vBox.getChildren().add(error);
 
-        Scene enrollments = new Scene(vBox, 600, 400);
+        Scene enrollments = new Scene(vBox, 700, 400);
         return enrollments;
     }
     
