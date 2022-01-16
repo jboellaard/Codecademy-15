@@ -1,7 +1,5 @@
 package GUI.StatisticsScenes;
 
-import java.util.Map;
-
 import DB.DBConnection;
 import DB.EnrollmentRepo;
 import DB.WebcastRepo;

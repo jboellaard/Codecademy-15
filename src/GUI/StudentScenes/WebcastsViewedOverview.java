@@ -1,6 +1,5 @@
 package GUI.StudentScenes;
 
-import DB.EnrollmentRepo;
 import DB.WebcastRepo;
 import Domain.*;
 import GUI.*;

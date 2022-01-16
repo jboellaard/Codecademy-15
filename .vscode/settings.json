@@ -1,25 +1,16 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Code\\junit-platform-console-standalone-1.7.0-all.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.base.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.controls.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.fxml.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.graphics.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.media.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.swing.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx.web.jar",
-        "c:\\Code\\javafx-sdk-17.0.1\\lib\\javafx-swt.jar",
-        "c:\\Code\\sqljdbc_9.4.1.0_enu\\enu\\mssql-jdbc-9.4.1.jre11.jar",
-        "c:\\Users\\lisat\\Downloads\\mssql-jdbc-9.4.1.jre11.jar",
-        "c:\\Users\\lisat\\Downloads\\junit-platform-console-standalone-1.7.0-all.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx.base.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx.controls.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx.fxml.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx.graphics.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx.media.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx.swing.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx.web.jar",
-        "c:\\Users\\lisat\\Documents\\Projects\\codecademy-statistics\\Lib\\javafx-sdk-13.0.1\\lib\\javafx-swt.jar"
+        "lib/javafx-swt.jar",
+        "lib/javafx.base.jar",
+        "lib/javafx.controls.jar",
+        "lib/javafx.fxml.jar",
+        "lib/javafx.graphics.jar",
+        "lib/javafx.media.jar",
+        "lib/javafx.properties",
+        "lib/javafx.swing.jar",
+        "lib/javafx.web.jar",
+        "lib/junit-platform-console-standalone-1.7.0-all",
+        "lib/mssql-jdbc-9.4.1.jre11"
     ]
 }
