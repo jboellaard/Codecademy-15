@@ -77,17 +77,31 @@ public class CourseOverview {
 
         //delete button
 
-        Button showModules = new Button("Show modules");
-        showModules.setOnAction((event -> {
-            // NewCourseScene newStudent = new NewCourseScene();
-            // GUI.getStage().setScene(newStudent.getCreateScene());
+        Button delete = new Button("Delete course");
+        delete.setOnAction((event -> {
+            Course selectedCourse = table.getSelectionModel().getSelectedItem();
+            if (selectedCourse!=null){
+                if (DBConnection.courseRepo.delete(selectedCourse)){
+                    noCourseSelected.setText("Course succesfully deleted");
+                } else {
+                    noCourseSelected.setText("Course could not be deleted");
+                }
+            } else {
+                noCourseSelected.setText("Please select a course first");
+            }
         }));
-        buttonsSecondRow.getChildren().add(showModules);
+        buttonsSecondRow.getChildren().add(addModule);
+
         
-        Button showProgress = new Button("Show progress all students");
+        Button showProgress = new Button("Show modules course and progress all students");
         showProgress.setOnAction((event -> {
-            // NewCourseScene newStudent = new NewCourseScene();
-            // GUI.getStage().setScene(newStudent.getCreateScene());
+            Course selectedCourse = table.getSelectionModel().getSelectedItem();
+            if (selectedCourse!=null){
+                ModuleOverview modules = new ModuleOverview();
+                GUI.getStage().setScene(modules.getScene(selectedCourse));
+            } else {
+                noCourseSelected.setText("Please select a course first");
+            }
         }));
         buttonsSecondRow.getChildren().add(showProgress);
 

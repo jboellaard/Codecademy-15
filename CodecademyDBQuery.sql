@@ -207,7 +207,11 @@ CREATE TABLE ProgressModule (
 );
 
 INSERT INTO ProgressModule
-VALUES (2,4,50);
+VALUES (2,5,50),
+(1,4,5),
+(1,2,10),
+(1,6,55),
+(2,4,90);
 
 INSERT INTO ProgressWebcast
 VALUES (9,'renzoremmers@gmail.com',5),

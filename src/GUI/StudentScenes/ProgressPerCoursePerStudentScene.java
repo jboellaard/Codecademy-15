@@ -43,8 +43,6 @@ public class ProgressPerCoursePerStudentScene {
 
         Label noCourseSelected = new Label("");
 
-        //add button getcontactperson for module!
-
         HBox buttons = new HBox(15);
         buttons.setPadding(new Insets(15,15,5,15));
         buttons.setAlignment(Pos.CENTER);

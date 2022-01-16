@@ -12,13 +12,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class NewModuleScene {
+
+public class ModuleOverview {
 
     public Scene getScene(Course course){
-
         TableView<CourseModule> table = new TableView<>();
-        ObservableList<CourseModule> modules = course.getModules();
-        table.setItems(modules);
+        table.setItems(course.getModules());
  
         TableColumn<CourseModule,String> titleCol = new TableColumn<>("Title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -26,10 +25,13 @@ public class NewModuleScene {
         versionCol.setCellValueFactory(new PropertyValueFactory<>("Version"));
         TableColumn<CourseModule,LevelIndication> folCol = new TableColumn<>("FollowNumber");
         folCol.setCellValueFactory(new PropertyValueFactory<>("FollowNumber"));
+        TableColumn<CourseModule,Integer> progCol = new TableColumn<>("Average progress");
+        progCol.setCellValueFactory(new PropertyValueFactory<>("AverageProgress"));
 
         table.getColumns().add(titleCol);
         table.getColumns().add(versionCol);
         table.getColumns().add(folCol);
+        table.getColumns().add(progCol);
         table.sort();
         
         VBox vBox = new VBox();
@@ -40,24 +42,6 @@ public class NewModuleScene {
         buttons.setAlignment(Pos.CENTER);
         vBox.getChildren().add(buttons);
 
-        Label noCourseSelected = new Label("");
-        
-        Button addModule = new Button("Add module");
-        addModule.setOnAction((event -> {
-            CourseModule selectedModule = table.getSelectionModel().getSelectedItem();
-            if (selectedModule!=null){
-                if (DBConnection.courseModuleRepo.updateModuleUsed(course, selectedModule)){
-                    noCourseSelected.setText("Module succesfully added");
-                } else {
-                    noCourseSelected.setText("Unfortunately the module could not be added");
-                }
-            } else {
-                noCourseSelected.setText("Please select a module first");
-            }
-        }));
-        buttons.getChildren().add(addModule);
-
-
         Button back = new Button("Go back");
         back.setOnAction((event -> {
             CourseOverview overview = new CourseOverview();
@@ -66,11 +50,11 @@ public class NewModuleScene {
         
         buttons.getChildren().add(back);
 
-        HBox error = new HBox(15);
-        error.setPadding(new Insets(5,25,15,25));
-        error.setAlignment(Pos.CENTER);
-        error.getChildren().add(noCourseSelected);
-        vBox.getChildren().add(error);
+        // HBox error = new HBox(15);
+        // error.setPadding(new Insets(5,25,15,25));
+        // error.setAlignment(Pos.CENTER);
+        // error.getChildren().add(noCourseSelected);
+        // vBox.getChildren().add(error);
 
 
         Scene scene = new Scene(vBox, 700, 400);

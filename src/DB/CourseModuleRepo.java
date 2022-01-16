@@ -38,7 +38,7 @@ public class CourseModuleRepo {
                 rsID.next();
                 CourseModule module = new CourseModule(rs.getInt("ContentItemID"), rsID.getString("PublicationDate"), Status.valueOf(rsID.getString("Status")), rs.getString("Title"),
                 rs.getString("Description"), rs.getString("Version"), rs.getString("NameContactPerson"), rs.getString("EmailContactPerson"), rs.getInt("FollowNumber"));
-                if (!rsID.getString("Status").equals("Concept") && !(rs.getString("CourseName")==null)){
+                if (!(rs.getString("CourseName")==null)){
                     for (Course course : DBConnection.courseRepo.allCourses){
                         if (rs.getString("CourseName").equals(course.getCourseName())){
                             course.addModule(module);
@@ -48,7 +48,6 @@ public class CourseModuleRepo {
                 } else {
                     unusedModules.add(module);
                 }
-                
             }
         }
         catch (Exception e) {
@@ -126,6 +125,36 @@ public class CourseModuleRepo {
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
         return false;
+    }
+
+    public int getAverageProgress(CourseModule module){
+        int avgProgress = 0;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT AVG(Progress) AS Average FROM ProgressModule WHERE ContentItemID=?;");
+            pstmt.setInt(1, module.getContentItemID());
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                avgProgress=rs.getInt("Average");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (rs != null) try { rs.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return avgProgress;
+
+
     }
 
 }

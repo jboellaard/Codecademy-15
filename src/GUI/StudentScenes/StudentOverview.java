@@ -109,12 +109,13 @@ public class StudentOverview {
         Button certificates = new Button("Show certificates");
         certificates.setOnAction((event) -> {
             //new scene tableview with certificates selected student
+
         });
         buttonsSecondRow.getChildren().add(certificates);
 
         Button progressWebcasts = new Button("Show progress webcasts");
         progressWebcasts.setOnAction((event) -> {
-            //new scene tableview with certificates selected student
+            //new scene tableview with progress webcasts
         });
         buttonsSecondRow.getChildren().add(progressWebcasts);
 
