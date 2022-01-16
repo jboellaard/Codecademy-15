@@ -63,11 +63,9 @@ public class StudentOverview {
             } else {
                 noStudentSelected.setText("Please select a student first");
             }
-            
         }));
         buttons.getChildren().add(updateStudent);
 
-        //delete button
         Button delete = new Button("Delete student");
         delete.setOnAction((event -> {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
