@@ -62,25 +62,12 @@ public class EnrollmentOverviewStudentScene {
             Enrollment selectedEnrollment = table.getSelectionModel().getSelectedItem();
             if (selectedEnrollment!=null){
                 ProgressPerCoursePerStudentScene showProgress = new ProgressPerCoursePerStudentScene();
-                GUI.getStage().setScene(showProgress.getScene(student, selectedEnrollment.getCourse()));
+                GUI.getStage().setScene(showProgress.getScene(student, selectedEnrollment));
             } else {
                 noEnrollmentSelected.setText("Please select an enrollment");
             }
         });
         buttons.getChildren().add(progress);
-
-        Button addCertificate = new Button("Add certificate");
-        addCertificate.setOnAction((event -> {
-            Enrollment selectedEnrollment = table.getSelectionModel().getSelectedItem();
-            if (selectedEnrollment!=null){
-                // NewStudentScene changeInfoStudent = new NewStudentScene();
-                // GUI.getStage().setScene(changeInfoStudent.getUpdateScene(selectedStudent));
-            } else {
-                noEnrollmentSelected.setText("Please select an enrollment");
-            }
-            
-        }));
-        buttons.getChildren().add(addCertificate);
 
         Button back = new Button("Go back");
         back.setOnAction((event -> {
@@ -88,19 +75,6 @@ public class EnrollmentOverviewStudentScene {
             GUI.GUIStage.setScene(overview.getScene());
         }));
         buttons.getChildren().add(back);
-        
-        //if all modules of a course are at 100%, add a button to add a certificate for the enrollment
-
-        Button progressModules = new Button("Show progress modules");
-        progressModules.setOnAction((event) -> {
-            Enrollment selectedStudent = table.getSelectionModel().getSelectedItem();
-            if (selectedStudent!=null){
-                // EnrollmentOverviewStudent showEnrollments = new EnrollmentOverviewStudent();
-                // GUI.getStage().setScene(showEnrollments.getScene(selectedStudent));
-            } else {
-                noEnrollmentSelected.setText("Please select an enrollment");
-            }
-        });
         
         HBox error = new HBox(15);
         error.setPadding(new Insets(5,25,15,25));

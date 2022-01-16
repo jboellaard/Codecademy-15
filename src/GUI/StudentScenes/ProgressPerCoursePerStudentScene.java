@@ -14,11 +14,11 @@ import javafx.scene.layout.VBox;
 
 public class ProgressPerCoursePerStudentScene {
 
-    public Scene getScene(Student student, Course course){
-        Label studentName = new Label("Progress of modules " + course.getCourseName() +"; " + student.getName());
+    public Scene getScene(Student student, Enrollment enrollment){
+        Label studentName = new Label("Progress of modules " + enrollment.getCourse().getCourseName() +"; " + student.getName());
 
         TableView<ProgressModule> table = new TableView<>();
-        table.setItems(DBConnection.courseModuleRepo.getModulesAndProgressFromDB(course));
+        table.setItems(DBConnection.courseModuleRepo.getModulesAndProgressFromDB(enrollment.getCourse()));
  
         TableColumn<ProgressModule,String> titleCol = new TableColumn<>("Title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -47,26 +47,14 @@ public class ProgressPerCoursePerStudentScene {
         buttons.setPadding(new Insets(15,15,5,15));
         buttons.setAlignment(Pos.CENTER);
         vBox.getChildren().add(buttons);
-        Button createEnrollment = new Button("Add new enrollment");
-        createEnrollment.setOnAction((event -> {
-            // CourseModule selectedCourse = table.getSelectionModel().getSelectedItem();
-            // if (selectedCourse!=null){
-            //     if (EnrollmentRepo.create(student, selectedCourse, String.valueOf(java.time.LocalDate.now()))){
-            //         noCourseSelected.setText("Succesfully enrolled!");
-            //     } else {
-            //         noCourseSelected.setText("Unfortunately the enrollment was not succesful"); 
-            //     }
-            // } else {
-            //     noCourseSelected.setText("Please select a student first");
-            // }
-        }));
-        buttons.getChildren().add(createEnrollment);
+        
 
-        Button certificates = new Button("Show progress");
-        certificates.setOnAction((event) -> {
-            //new scene tableview with certificates selected student
-        });
-        buttons.getChildren().add(certificates);
+        Button addCertificate = new Button("Add certificate for this course");
+        addCertificate.setOnAction((event -> {
+            //creates field with grade and name staff member and submit button
+            
+        }));
+        buttons.getChildren().add(addCertificate);
 
 
         Button back = new Button("Go back");

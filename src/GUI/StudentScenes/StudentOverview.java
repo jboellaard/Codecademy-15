@@ -114,6 +114,12 @@ public class StudentOverview {
         });
         buttonsSecondRow.getChildren().add(certificates);
 
+        Button progressWebcasts = new Button("Show progress webcasts");
+        progressWebcasts.setOnAction((event) -> {
+            //new scene tableview with certificates selected student
+        });
+        buttonsSecondRow.getChildren().add(progressWebcasts);
+
         HBox error = new HBox(15);
         error.setPadding(new Insets(5,25,15,25));
         error.setAlignment(Pos.CENTER);
