@@ -101,20 +101,30 @@ public class StudentOverview {
             } else {
                 noStudentSelected.setText("Please select a student first");
             }
-            //new scene tableview with courses selected student
-            //in that scene a button to enroll to a new course
         });
         buttonsSecondRow.getChildren().add(enrollments);
 
         Button certificates = new Button("Show certificates");
         certificates.setOnAction((event) -> {
-            //new scene tableview with certificates selected student
+            Student selectedStudent = table.getSelectionModel().getSelectedItem();
+            if (selectedStudent!=null){
+                CertificatesPerStudentScene showCertificates = new CertificatesPerStudentScene();
+                GUI.getStage().setScene(showCertificates.getScene(selectedStudent));
+            } else {
+                noStudentSelected.setText("Please select a student first");
+            }
         });
         buttonsSecondRow.getChildren().add(certificates);
 
         Button progressWebcasts = new Button("Show progress webcasts");
         progressWebcasts.setOnAction((event) -> {
-            //new scene tableview with certificates selected student
+            Student selectedStudent = table.getSelectionModel().getSelectedItem();
+            if (selectedStudent!=null){
+                WebcastsViewedOverview showWebcasts = new WebcastsViewedOverview();
+                GUI.getStage().setScene(showWebcasts.getScene(selectedStudent));
+            } else {
+                noStudentSelected.setText("Please select a student first");
+            }
         });
         buttonsSecondRow.getChildren().add(progressWebcasts);
 
@@ -124,7 +134,7 @@ public class StudentOverview {
         error.getChildren().add(noStudentSelected);
         vBox.getChildren().add(error);
 
-        Scene scene = new Scene(vBox, 600, 400);
+        Scene scene = new Scene(vBox, 700, 400);
         return scene;
     }
     

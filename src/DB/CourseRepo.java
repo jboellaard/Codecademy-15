@@ -2,6 +2,9 @@ package DB;
 
 import Domain.*;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.collections.*;
 
 /* This class connects with the database using the links in the class DBConnection to retrieve courses, 
@@ -134,6 +137,66 @@ public class CourseRepo {
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
         return false;
+    }
+
+    public String[][] getTop3CoursesWithMostCertificates(){
+        String[][] top3Courses = new String[3][2];
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement(
+            "SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.Certificate=1 GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;");
+            rs = pstmt.executeQuery();
+            int i = 0;
+            while (rs.next()) {
+                if (i<3) {
+                    top3Courses[i][0] = rs.getString("CourseName");
+                    top3Courses[i][1] = String.valueOf(rs.getInt("NumberOfCertificates"));
+                }
+                i++;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (rs != null) try { rs.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return top3Courses;
+    }
+
+    public ObservableList<Course> getRecommendedCourses(Course course){
+        ObservableList<Course> recs = FXCollections.observableArrayList();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT * FROM RecommendedCourse LEFT JOIN Course ON Course.CourseName=RecommendedCourse.CourseName WHERE Course.CourseName=?;");
+            pstmt.setString(1,course.getCourseName());
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                recs.add(new Course(rs.getString("CourseName"),rs.getString("Subject"),rs.getString("IntroductionText"),LevelIndication.valueOf(rs.getString("LevelIndication"))));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (rs != null) try { rs.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return recs;
     }
     
 }

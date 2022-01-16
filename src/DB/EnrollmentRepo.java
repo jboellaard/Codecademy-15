@@ -27,7 +27,7 @@ public class EnrollmentRepo {
             while (rs.next()) {
                 for (Course course : DBConnection.courseRepo.allCourses){
                     if (rs.getString("CourseName").equals(course.getCourseName())){
-                        allStudentEnrollments.add(new Enrollment(rs.getInt("EnrollmentID"),student, course, rs.getString("SignUpDate")));
+                        allStudentEnrollments.add(new Enrollment(rs.getInt("EnrollmentID"),student, course, rs.getString("SignUpDate"),0));
                         break;
                     }
                 }
@@ -73,7 +73,7 @@ public class EnrollmentRepo {
         return false;
     }
 
-    // public static ObservableList<Enrollment>
+    /* This method returns the percentage of enrollments that has a certificate by gender */
     public static int certificatesPerGender(Gender gender){
         int percentage = 0;
         Connection con = null;
@@ -85,22 +85,17 @@ public class EnrollmentRepo {
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            byGender = con.prepareStatement("SELECT COUNT(*) AS Certificates FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=? AND Enrollment.CertificateID IS NOT NULL");
+            byGender = con.prepareStatement("SELECT COUNT(*) AS Certificates FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=? AND Enrollment.Certificate=1");
             byGender.setString(1,String.valueOf(gender));
             rsByGender = byGender.executeQuery();
 
-
             while (rsByGender.next()) {
-                System.out.println(rsByGender.getInt("Certificates"));
                 total = con.prepareStatement("SELECT COUNT(*) AS Total FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=? ");
                 total.setString(1,String.valueOf(gender));
                 rsTotal = total.executeQuery();
 
                 while (rsTotal.next()){
-                    System.out.println(rsTotal.getInt("Total"));
-                    int numberOfCertificates = rsByGender.getInt("Certificates");
-                    int numberOfEnrollments = rsTotal.getInt("Total");
-                    percentage = (int) (100*(1.0 * numberOfCertificates) / (1.0 * numberOfEnrollments));
+                    percentage = (int) (100*(1.0 * rsByGender.getInt("Certificates")) / (1.0 * rsTotal.getInt("Total")));
                     return percentage;
                 }
             }
@@ -117,5 +112,89 @@ public class EnrollmentRepo {
         }
         return percentage;
     }
-    
+
+    public static boolean addCertificate(Enrollment enrollment, Certificate certificate){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        PreparedStatement changeEnroll = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("INSERT INTO Certificate VALUES (?,?,?);");
+            pstmt.setInt(1,enrollment.getEnrollmentID());
+            pstmt.setDouble(2, certificate.getGrade());
+            pstmt.setString(3, certificate.getNameOfStaffCodecademy());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0){
+                changeEnroll = con.prepareStatement("UPDATE Enrollment SET Certificate=1 WHERE EnrollmentID=?");
+                changeEnroll.setInt(1, enrollment.getEnrollmentID());
+                changeEnroll.executeUpdate();
+                return true;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return false;
+    }
+
+    public static int getTotalCertificatesPerCourse(Course course){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT COUNT(*) AS Amount FROM Enrollment WHERE CourseName=? AND Certificate=1;");
+            pstmt.setString(1, course.getCourseName());
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                return rs.getInt("Amount");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return 0;
+    }
+
+    public static ObservableList<Certificate> getAllCertificatesStudent(Student student){
+        ObservableList<Certificate> certificates = FXCollections.observableArrayList();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT * FROM Certificate LEFT JOIN Enrollment ON Enrollment.EnrollmentID=Certificate.EnrollmentID WHERE StudentEmail = ?;");
+            pstmt.setString(1, student.getEmailAddress());
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                Certificate certificate = new Certificate(rs.getInt("EnrollmentID"),rs.getDouble("Grade"),rs.getString("NameStaffCodecademy"));
+                certificate.addCourseName(rs.getString("CourseName"));
+                certificates.add(certificate);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return certificates;
+    }
+
 }

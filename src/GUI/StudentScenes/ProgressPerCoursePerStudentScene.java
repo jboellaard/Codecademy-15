@@ -1,7 +1,9 @@
 package GUI.StudentScenes;
 
 import DB.DBConnection;
+import DB.EnrollmentRepo;
 import Domain.*;
+import Domain.Tools.GradeTools;
 import GUI.*;
 
 import javafx.geometry.Insets;
@@ -41,17 +43,49 @@ public class ProgressPerCoursePerStudentScene {
 
         Label noCourseSelected = new Label("");
 
-        //add button getcontactperson for module!
-
         HBox buttons = new HBox(15);
         buttons.setPadding(new Insets(15,15,5,15));
         buttons.setAlignment(Pos.CENTER);
         vBox.getChildren().add(buttons);
+
+        Label grade = new Label("Grade: ");
+        TextField gradeInput = new TextField();
+
+        Label nameStaff = new Label("Name staff: ");
+        TextField nameStaffInput = new TextField();
         
 
         Button addCertificate = new Button("Add certificate for this course");
+
+        Button submitCertificate = new Button("Submit certificate");
+        submitCertificate.setOnAction((event -> {
+            double givenGrade = Double.valueOf(gradeInput.getText());
+            String staff = nameStaffInput.getText();
+            if (GradeTools.isValidGrade(givenGrade)){
+                Certificate cert = new Certificate(enrollment.getEnrollmentID(),givenGrade,staff);
+                if (EnrollmentRepo.addCertificate(enrollment,cert)){
+                    noCourseSelected.setText("Certificate added succesfully");
+                } else {
+                    noCourseSelected.setText("The certificate could not be added");
+                }
+            } else {
+                noCourseSelected.setText("This is not a valid grade");
+            }
+
+        }));
+
+        HBox certificate = new HBox(15);
+        certificate.setPadding(new Insets(5,25,15,25));
+        certificate.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(certificate);
+
+
         addCertificate.setOnAction((event -> {
-            //creates field with grade and name staff member and submit button
+            certificate.getChildren().add(grade);
+            certificate.getChildren().add(gradeInput);
+            certificate.getChildren().add(nameStaff);
+            certificate.getChildren().add(nameStaffInput);
+            certificate.getChildren().add(submitCertificate);
             
         }));
         buttons.getChildren().add(addCertificate);
@@ -72,7 +106,7 @@ public class ProgressPerCoursePerStudentScene {
 
         //java.time.LocalDate.now()
 
-        Scene newEnrollment = new Scene(vBox, 600, 400);
+        Scene newEnrollment = new Scene(vBox, 700, 400);
         return newEnrollment;
     }
     

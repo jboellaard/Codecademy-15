@@ -1,9 +1,7 @@
 package GUI.StudentScenes;
 
 import DB.EnrollmentRepo;
-// import DB.*;
 import Domain.*;
-// import Domain.Tools.*;
 import GUI.*;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -32,11 +30,14 @@ public class EnrollmentOverviewStudentScene {
         courseCol.setCellValueFactory(new PropertyValueFactory<>("CourseName"));
         TableColumn<Enrollment,String> dateCol = new TableColumn<>("Sign up date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("SignUpDate"));
+        TableColumn<Enrollment,String> certCol = new TableColumn<>("Certificate");
+        certCol.setCellValueFactory(new PropertyValueFactory<>("Completed"));
 
         table.getColumns().add(nameCol);
         table.getColumns().add(emailCol);
         table.getColumns().add(courseCol);
         table.getColumns().add(dateCol);
+        table.getColumns().add(certCol);
         table.sort();
         
         VBox vBox = new VBox();
@@ -82,7 +83,7 @@ public class EnrollmentOverviewStudentScene {
         error.getChildren().add(noEnrollmentSelected);
         vBox.getChildren().add(error);
 
-        Scene enrollments = new Scene(vBox, 600, 400);
+        Scene enrollments = new Scene(vBox, 700, 400);
         return enrollments;
     }
     

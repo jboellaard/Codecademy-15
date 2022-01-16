@@ -15,10 +15,9 @@ import javafx.scene.layout.VBox;
 public class NewModuleScene {
 
     public Scene getScene(Course course){
-
         TableView<CourseModule> table = new TableView<>();
-        ObservableList<CourseModule> unusedModules = DBConnection.courseModuleRepo.getUnusedModules();
-        table.setItems(unusedModules);
+        ObservableList<CourseModule> modules = DBConnection.courseModuleRepo.getUnusedModules();
+        table.setItems(modules);
  
         TableColumn<CourseModule,String> titleCol = new TableColumn<>("Title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -60,7 +59,8 @@ public class NewModuleScene {
 
         Button back = new Button("Go back");
         back.setOnAction((event -> {
-            GUI.GUIStage.setScene(GUI.getHomeScene());
+            CourseOverview overview = new CourseOverview();
+            GUI.GUIStage.setScene(overview.getScene());
         }));
         
         buttons.getChildren().add(back);
@@ -72,7 +72,7 @@ public class NewModuleScene {
         vBox.getChildren().add(error);
 
 
-        Scene scene = new Scene(vBox, 600, 400);
+        Scene scene = new Scene(vBox, 700, 400);
         return scene;
 
     }

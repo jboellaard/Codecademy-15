@@ -1,9 +1,9 @@
 package Domain;
 
 public abstract class ContentItem {
-    private int contentItemID;
-    private String publicationDate;
-    private Status status; 
+    protected int contentItemID;
+    protected String publicationDate;
+    protected Status status; 
 
     public ContentItem(int contentItemID, String publicationDate, Status status){
         this.contentItemID = contentItemID;
@@ -26,7 +26,7 @@ public abstract class ContentItem {
     public void setPublicationDate(String publicationDate){
         this.publicationDate = publicationDate;
     }
-    
+
     public Status getStatus(){
         return this.status;
     }

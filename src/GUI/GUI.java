@@ -5,14 +5,11 @@ import GUI.StudentScenes.*;
 import GUI.CourseScenes.*;
 import GUI.StatisticsScenes.StatisticOptionsOverview;
 import javafx.application.Application;
-// import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-// import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-// import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class GUI extends Application {
@@ -27,7 +24,7 @@ public class GUI extends Application {
     public void start(Stage stage) throws Exception {
         GUIStage = stage;
         Scene homePage = GUI.getHomeScene();
-        stage.setTitle("Joy Boellaard (2354217), Joey van Kuijk (), Lisa Tyem () & Tim van Vliet ()");
+        stage.setTitle("Joy Boellaard (2354217), Joey van Kuijk (2136862), Lisa Tyem (2116056) & Tim van Vliet (2155294)");
         stage.setScene(homePage);
         stage.show();
     }
@@ -69,7 +66,7 @@ public class GUI extends Application {
         allStudents.setMinWidth(vBox.getPrefWidth());
         allCourses.setMinWidth(vBox.getPrefWidth());
         statistics.setMinWidth(vBox.getPrefWidth());
-        Scene home = new Scene(vBox, 600, 400);
+        Scene home = new Scene(vBox, 700, 400);
         return home;
     }
 

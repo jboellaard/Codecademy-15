@@ -63,6 +63,21 @@ public class CourseOverview {
         }));
         buttons.getChildren().add(addModule);
 
+        Button delete = new Button("Delete course");
+        delete.setOnAction((event -> {
+            Course selectedCourse = table.getSelectionModel().getSelectedItem();
+            if (selectedCourse!=null){
+                if (DBConnection.courseRepo.delete(selectedCourse)){
+                    noCourseSelected.setText("Course succesfully deleted");
+                } else {
+                    noCourseSelected.setText("Course could not be deleted");
+                }
+            } else {
+                noCourseSelected.setText("Please select a course first");
+            }
+        }));
+        buttons.getChildren().add(delete);
+
         Button back = new Button("Go back");
         back.setOnAction((event -> {
             GUI.GUIStage.setScene(GUI.getHomeScene());
@@ -75,19 +90,28 @@ public class CourseOverview {
         buttonsSecondRow.setAlignment(Pos.CENTER);
         vBox.getChildren().add(buttonsSecondRow);
 
-        //delete button
-
-        Button showModules = new Button("Show modules");
-        showModules.setOnAction((event -> {
-            // NewCourseScene newStudent = new NewCourseScene();
-            // GUI.getStage().setScene(newStudent.getCreateScene());
+        Button recs = new Button("Show recommended courses");
+        recs.setOnAction((event -> {
+            Course selectedCourse = table.getSelectionModel().getSelectedItem();
+            if (selectedCourse!=null){
+                RecommendedCourses recCourses = new RecommendedCourses();
+                GUI.getStage().setScene(recCourses.getScene(selectedCourse));
+            } else {
+                noCourseSelected.setText("Please select a course first");
+            }
         }));
-        buttonsSecondRow.getChildren().add(showModules);
+        buttonsSecondRow.getChildren().add(recs);
+
         
-        Button showProgress = new Button("Show progress all students");
+        Button showProgress = new Button("Show modules course and progress all students");
         showProgress.setOnAction((event -> {
-            // NewCourseScene newStudent = new NewCourseScene();
-            // GUI.getStage().setScene(newStudent.getCreateScene());
+            Course selectedCourse = table.getSelectionModel().getSelectedItem();
+            if (selectedCourse!=null){
+                ModuleOverview modules = new ModuleOverview();
+                GUI.getStage().setScene(modules.getScene(selectedCourse));
+            } else {
+                noCourseSelected.setText("Please select a course first");
+            }
         }));
         buttonsSecondRow.getChildren().add(showProgress);
 
@@ -98,7 +122,7 @@ public class CourseOverview {
         vBox.getChildren().add(error);
 
 
-        Scene scene = new Scene(vBox, 600, 400);
+        Scene scene = new Scene(vBox, 700, 400);
         return scene;
     }
     

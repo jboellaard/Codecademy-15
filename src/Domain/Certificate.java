@@ -2,13 +2,19 @@ package Domain;
 
 public class Certificate {
     private int certificateID;
+    private int enrollmentID;
     private double grade;
     private String nameOfStaffMember;
+    private String courseName;
 
-    public Certificate(int certificateID, double grade, String nameOfStaffMember){
-        this.certificateID = certificateID;
+    public Certificate(int enrollmentID, double grade, String nameOfStaffMember){
+        this.enrollmentID = enrollmentID;
         this.grade = grade;
         this.nameOfStaffMember = nameOfStaffMember;
+    }
+
+    public void addCertificateID(int certificateID){
+        this.certificateID=certificateID;
     }
 
     public int certificateID(){
@@ -19,7 +25,15 @@ public class Certificate {
         return this.grade;
     }
 
-    public String getNameOfStaffMember(){
+    public String getNameOfStaffCodecademy(){
         return this.nameOfStaffMember;
+    }
+
+    public void addCourseName(String name){
+        this.courseName = name;
+    }
+
+    public String getCourseName(){
+        return this.courseName;
     }
 }

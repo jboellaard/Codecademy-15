@@ -213,7 +213,7 @@ public class NewStudentScene {
         gridPane.add(studentAdded,0,11,2,1);
 
         layout.setCenter(gridPane);
-        Scene newStudentView = new Scene(layout, 600, 400);
+        Scene newStudentView = new Scene(layout, 700, 400);
         return newStudentView;
     }
     

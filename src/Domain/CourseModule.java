@@ -1,5 +1,7 @@
 package Domain;
 
+import DB.DBConnection;
+
 public class CourseModule extends ContentItem {
     private String title;
     private String description;
@@ -32,6 +34,10 @@ public class CourseModule extends ContentItem {
 
     public int getFollowNumber(){
         return this.followNumber;
+    }
+
+    public int getAverageProgress(){
+        return DBConnection.courseModuleRepo.getAverageProgress(this);
     }
 
     @Override
