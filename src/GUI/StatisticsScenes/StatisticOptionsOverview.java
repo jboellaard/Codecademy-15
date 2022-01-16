@@ -59,12 +59,10 @@ public class StatisticOptionsOverview {
         Button mostViewedWebcasts = new Button("Top 3 viewed webcasts");
         mostViewedWebcasts.setOnAction((event -> {
             GridPane topThree = new GridPane();
-            Map<String, Integer> webCasts = WebcastRepo.getTopThreeMostViewedWebcasts();
-            int i=0;
-            for (Map.Entry<String, Integer> en : webCasts.entrySet()){
-                topThree.add(new Label(en.getKey() +": "),0,i);
-                topThree.add(new Label(String.valueOf(en.getValue())),1,i);
-                i++;
+            String[][] webCasts = WebcastRepo.getTopThreeMostViewedWebcasts();
+            for (int i = 0; i<3; i++){
+                topThree.add(new Label(webCasts[i][0] +": "),0,i);
+                topThree.add(new Label(webCasts[i][1]),1,i);
             }
             topThreeWebcasts.getChildren().set(0,topThree);
         }));
@@ -79,12 +77,10 @@ public class StatisticOptionsOverview {
         Button mostCertificates = new Button("Top 3 courses with most certificates");
         mostCertificates.setOnAction((event -> {
             GridPane topThree = new GridPane();
-            Map<String, Integer> courses = DBConnection.courseRepo.getTop3CoursesWithMostCertificates();
-            int i=0;
-            for (Map.Entry<String, Integer> en : courses.entrySet()){
-                topThree.add(new Label(en.getKey() +": "),0,i);
-                topThree.add(new Label(String.valueOf(en.getValue())),1,i);
-                i++;
+            String[][] courses = DBConnection.courseRepo.getTop3CoursesWithMostCertificates();
+            for (int i = 0; i<3; i++){
+                topThree.add(new Label(courses[i][0] +": "),0,i);
+                topThree.add(new Label(courses[i][1]),1,i);
             }
             topThreeCourses.getChildren().set(0,topThree);
 

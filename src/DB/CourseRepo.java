@@ -139,8 +139,8 @@ public class CourseRepo {
         return false;
     }
 
-    public Map<String,Integer> getTop3CoursesWithMostCertificates(){
-        Map<String,Integer> top3Courses = new HashMap<>();
+    public String[][] getTop3CoursesWithMostCertificates(){
+        String[][] top3Courses = new String[3][2];
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -151,9 +151,12 @@ public class CourseRepo {
             pstmt = con.prepareStatement(
             "SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.Certificate=1 GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;");
             rs = pstmt.executeQuery();
-
+            int i = 0;
             while (rs.next()) {
-                top3Courses.put(rs.getString("CourseName"),rs.getInt("NumberOfCertificates"));
+                if (i<3) {
+                    top3Courses[i][0] = rs.getString("CourseName");
+                    top3Courses[i][1] = String.valueOf(rs.getInt("NumberOfCertificates"));
+                }
             }
         }
         catch (Exception e) {

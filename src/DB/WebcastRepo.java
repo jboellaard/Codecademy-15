@@ -6,8 +6,8 @@ import java.sql.*;
 
 public class WebcastRepo {
 
-    public static Map<String, Integer> getTopThreeMostViewedWebcasts(){
-        Map<String,Integer> top3Webcasts = new HashMap<>();
+    public static String[][] getTopThreeMostViewedWebcasts(){
+        String[][] top3Webcasts = new String[3][2];
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -19,8 +19,12 @@ public class WebcastRepo {
             "SELECT Title, Count(*) AS Views FROM ProgressWebcast LEFT JOIN Webcast ON Webcast.ContentItemID=ProgressWebcast.ContentItemID GROUP BY Title;");
             rs = pstmt.executeQuery();
 
+            int i = 0;
             while (rs.next()) {
-                top3Webcasts.put(rs.getString("Title"),rs.getInt("Views"));
+                if (i<3) {
+                    top3Webcasts[i][0] = rs.getString("Title");
+                    top3Webcasts[i][1] = String.valueOf(rs.getInt("Views"));
+                }
             }
         }
         catch (Exception e) {
