@@ -69,8 +69,8 @@ CREATE TABLE RecommendedCourse (
 	CONSTRAINT PK_RecommendedCourse PRIMARY KEY (CourseName, RecommendedCourseName)
 );
 
---INSERT INTO RecommendedCourse
---VALUES ();
+INSERT INTO RecommendedCourse
+VALUES ('Machine learning','Data science');
 
 
 DROP TABLE IF EXISTS Enrollment;

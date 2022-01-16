@@ -27,7 +27,7 @@ public class EnrollmentRepo {
             while (rs.next()) {
                 for (Course course : DBConnection.courseRepo.allCourses){
                     if (rs.getString("CourseName").equals(course.getCourseName())){
-                        allStudentEnrollments.add(new Enrollment(rs.getInt("EnrollmentID"),student, course, rs.getString("SignUpDate")));
+                        allStudentEnrollments.add(new Enrollment(rs.getInt("EnrollmentID"),student, course, rs.getString("SignUpDate"),0));
                         break;
                     }
                 }
@@ -121,9 +121,10 @@ public class EnrollmentRepo {
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            pstmt = con.prepareStatement("INSERT INTO Certificate VALUES (?,?);");
-            pstmt.setDouble(1, certificate.getGrade());
-            pstmt.setString(2, certificate.getNameOfStaffCodecademy());
+            pstmt = con.prepareStatement("INSERT INTO Certificate VALUES (?,?,?);");
+            pstmt.setInt(1,enrollment.getEnrollmentID());
+            pstmt.setDouble(2, certificate.getGrade());
+            pstmt.setString(3, certificate.getNameOfStaffCodecademy());
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0){

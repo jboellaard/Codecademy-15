@@ -114,6 +114,7 @@ public class CourseModuleRepo {
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0){
                 DBConnection.courseModuleRepo.unusedModules.remove(module);
+                course.addModule(module);
                 return true;
             }
         }

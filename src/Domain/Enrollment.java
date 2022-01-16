@@ -5,9 +5,11 @@ public class Enrollment {
     private Student student;
     private Course course;
     private String signUpDate;
+    private int finishedCourse;
     private Certificate certificate;
 
-    public Enrollment(int ID, Student student, Course course, String signUpDate){
+    public Enrollment(int ID, Student student, Course course, String signUpDate, int finishedCourse){
+        this.finishedCourse = finishedCourse;
         this.enrollmentID = ID;
         this.student = student;
         this.course = course;
@@ -16,6 +18,11 @@ public class Enrollment {
     
     public void addCertificate(Certificate certificate){
         this.certificate = certificate;
+    }
+
+    public String getCompleted(){
+        if (finishedCourse==1) return "Certificate received";
+        return "No certificate";
     }
 
     public int getEnrollmentID(){

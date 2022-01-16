@@ -166,5 +166,33 @@ public class CourseRepo {
         }
         return top3Courses;
     }
+
+    public ObservableList<Course> getRecommendedCourses(Course course){
+        ObservableList<Course> recs = FXCollections.observableArrayList();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT * FROM RecommendedCourse LEFT JOIN Course ON Course.CourseName=RecommendedCourse.CourseName WHERE Course.CourseName=?;");
+            pstmt.setString(1,course.getCourseName());
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                recs.add(new Course(rs.getString("CourseName"),rs.getString("Subject"),rs.getString("IntroductionText"),LevelIndication.valueOf(rs.getString("LevelIndication"))));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (rs != null) try { rs.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return recs;
+    }
     
 }
