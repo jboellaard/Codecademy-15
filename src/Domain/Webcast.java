@@ -1,5 +1,5 @@
 package Domain;
-
+/*Ads data to webcast class */
 public class Webcast extends ContentItem {
     private String nameSpeaker;
     private String nameOrganisation;
@@ -15,7 +15,7 @@ public class Webcast extends ContentItem {
         this.nameOrganisation = nameOrganisation;
         this.url = url;
     }
-
+    /*Returns requested data */
     public String getPublicationDate(){
         return this.publicationDate;
     }

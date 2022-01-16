@@ -1,5 +1,5 @@
 package Domain;
-
+/*Ads data to student class */
 public class Student {
     private String emailAddress;
     private String name;
@@ -14,7 +14,7 @@ public class Student {
         this.gender = gender;
         this.address = address;
     }
-
+    /*Returns requested data */
     public String getEmailAddress(){
         return this.emailAddress;
     }

@@ -1,7 +1,7 @@
 package Domain;
 
 import DB.DBConnection;
-
+ /*Adds data to CourseModule class */ 
 public class CourseModule extends ContentItem {
     private String title;
     private String description;
@@ -20,7 +20,7 @@ public class CourseModule extends ContentItem {
         this.emailAddressContactPerson = emailAddressContactPerson;
         this.followNumber = followNumber;
     }
-
+     /*Returns requested data */ 
     public String getTitle() {
         return this.title;
     }

@@ -1,7 +1,8 @@
 package Domain.Tools;
 
 public class ZipCodeTools {
-
+    /*Checks if zipcode has the correct format, meaning it has 4 digit numbers first with the first digit not being allowed to be 0, 
+    followed by one space, followed by two capital letters  */
     public static String formatZipCode(String zipCode){
         if (zipCode == null){
             throw new NullPointerException("The input cannot be null");

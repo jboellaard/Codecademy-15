@@ -5,7 +5,7 @@ public class EmailTools {
     public EmailTools(){
 
     }
-
+    /*Makes sure emails start with at least one letter, then have the @ sign followed by at least one letter before accepting the email address */
     public static boolean isValidEmail(String mailAddress){
         mailAddress = mailAddress.trim();
         if (!mailAddress.contains("@")) {

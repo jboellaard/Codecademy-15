@@ -2,7 +2,7 @@ package Domain;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/*Ads data to the course class */ 
 public class Course {
     private String courseName;
     private String subject;
@@ -16,7 +16,7 @@ public class Course {
         this.introductionText = introductionText;
         this.levelIndication = level;
     }
-
+    /*Returns requested data */ 
     public String getCourseName(){
         return this.courseName;
     }

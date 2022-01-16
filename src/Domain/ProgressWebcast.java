@@ -1,5 +1,5 @@
 package Domain;
-
+/*Ads data to ProgressWebcast class */ 
 public class ProgressWebcast {
     private Webcast webcast;
     private int progress;
@@ -8,7 +8,7 @@ public class ProgressWebcast {
         this.webcast=webcast;
         this.progress=progress;
     }
-
+    /*Returns requested data */
     public String getTitle(){
         return this.webcast.getTitle();
     }
