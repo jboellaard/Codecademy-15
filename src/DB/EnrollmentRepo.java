@@ -27,7 +27,7 @@ public class EnrollmentRepo {
             while (rs.next()) {
                 for (Course course : DBConnection.courseRepo.allCourses){
                     if (rs.getString("CourseName").equals(course.getCourseName())){
-                        allStudentEnrollments.add(new Enrollment(student, course, rs.getString("SignUpDate")));
+                        allStudentEnrollments.add(new Enrollment(rs.getInt("EnrollmentID"),student, course, rs.getString("SignUpDate")));
                         break;
                     }
                 }

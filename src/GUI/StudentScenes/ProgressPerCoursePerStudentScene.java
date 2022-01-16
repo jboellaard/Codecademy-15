@@ -1,11 +1,9 @@
 package GUI.StudentScenes;
 
 import DB.DBConnection;
-import DB.EnrollmentRepo;
 import Domain.*;
 import GUI.*;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,22 +17,22 @@ public class ProgressPerCoursePerStudentScene {
     public Scene getScene(Student student, Course course){
         Label studentName = new Label("Progress of modules " + course.getCourseName() +"; " + student.getName());
 
-        TableView<CourseModule> table = new TableView<>();
-        table.setItems(course.getModules());
+        TableView<ProgressModule> table = new TableView<>();
+        table.setItems(DBConnection.courseModuleRepo.getModulesAndProgressFromDB(course));
  
-        TableColumn<CourseModule,String> titleCol = new TableColumn<>("Title");
+        TableColumn<ProgressModule,String> titleCol = new TableColumn<>("Title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        TableColumn<CourseModule,String> versionCol = new TableColumn<>("Version");
+        TableColumn<ProgressModule,String> versionCol = new TableColumn<>("Version");
         versionCol.setCellValueFactory(new PropertyValueFactory<>("Version"));
-        TableColumn<CourseModule,String> desCol = new TableColumn<>("Description");
-        desCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
-        TableColumn<CourseModule,LevelIndication> folCol = new TableColumn<>("FollowNumber");
+        TableColumn<ProgressModule,LevelIndication> folCol = new TableColumn<>("FollowNumber");
         folCol.setCellValueFactory(new PropertyValueFactory<>("FollowNumber"));
+        TableColumn<ProgressModule,Integer> progCol = new TableColumn<>("Progress");
+        progCol.setCellValueFactory(new PropertyValueFactory<>("Progress"));
 
         table.getColumns().add(titleCol);
         table.getColumns().add(versionCol);
-        table.getColumns().add(desCol);
         table.getColumns().add(folCol);
+        table.getColumns().add(progCol);
         table.sort();
     
         VBox vBox = new VBox();

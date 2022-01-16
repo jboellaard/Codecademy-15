@@ -188,6 +188,9 @@ CREATE TABLE ProgressModule (
 	CONSTRAINT PK_ProgressModule PRIMARY KEY (ContentItemID,EnrollmentID)
 );
 
+INSERT INTO ProgressModule
+VALUES (2,4,50);
+
 
 
 /*

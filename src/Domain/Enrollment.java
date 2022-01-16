@@ -1,20 +1,25 @@
 package Domain;
 
 public class Enrollment {
+    private int enrollmentID;
     private Student student;
     private Course course;
     private String signUpDate;
     private Certificate certificate;
 
-    public Enrollment(Student student, Course course, String signUpDate){
+    public Enrollment(int ID, Student student, Course course, String signUpDate){
+        this.enrollmentID = ID;
         this.student = student;
         this.course = course;
         this.signUpDate = signUpDate;
-        //add enrollment to db
     }
     
     public void addCertificate(Certificate certificate){
         this.certificate = certificate;
+    }
+
+    public int getEnrollmentID(){
+        return this.enrollmentID;
     }
 
     public Student getStudent(){
@@ -40,4 +45,5 @@ public class Enrollment {
     public String getSignUpDate(){
         return this.signUpDate;
     }
+    
 }

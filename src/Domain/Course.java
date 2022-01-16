@@ -44,6 +44,10 @@ public class Course {
         return this.modules;
     }
 
+    public ObservableList<CourseModule> getModulesAndProgress(Student student){
+        return this.modules;
+    }
+
     public void addRecommendedCourse(Course course){
         this.recommendedCourses.add(course);
     }

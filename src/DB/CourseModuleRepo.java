@@ -1,6 +1,9 @@
 package DB;
 
 import Domain.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -55,6 +58,8 @@ public class CourseModuleRepo {
         finally {
             if (rs != null) try { rs.close(); } catch(Exception e) {}
             if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (rsID != null) try { rs.close(); } catch(Exception e) {}
+            if (getID != null) try { pstmt.close(); } catch(Exception e) {}
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
     }
@@ -63,4 +68,38 @@ public class CourseModuleRepo {
         return this.unusedModules;
     }
     
+    public ObservableList<ProgressModule> getModulesAndProgressFromDB(Course course){
+        ObservableList<ProgressModule> progress = FXCollections.observableArrayList();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT * FROM Module LEFT JOIN ProgressModule ON ProgressModule.ContentItemID=Module.ContentItemID WHERE CourseName=?;");
+            pstmt.setString(1, course.getCourseName());
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ProgressModule progressModule;
+                if (rs.getInt("Progress")==0){
+                    progressModule = new ProgressModule(rs.getString("Title"),rs.getString("Version"),rs.getString("Description"),rs.getInt("FollowNumber"),0);
+                } else {
+                    progressModule = new ProgressModule(rs.getString("Title"),rs.getString("Version"),rs.getString("Description"),rs.getInt("FollowNumber"),rs.getInt("Progress"));
+                }
+                progress.add(progressModule);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (rs != null) try { rs.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return progress;
+    }
+
 }
