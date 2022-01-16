@@ -5,38 +5,56 @@ import DB.EnrollmentRepo;
 import Domain.Certificate;
 import Domain.Gender;
 import GUI.*;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.application.Application;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.collections.*;
+import javafx.beans.value.*;
+import javafx.stage.Stage;
 
 public class StatisticOptionsOverview {
 
     public Scene getScene(){
-        VBox vBox = new VBox(30);
+        VBox vBox = new VBox(20);
         vBox.setPrefWidth(250);
 
-        Button perGender = new Button("Percentage of certificates per gender");
-        perGender.setOnAction((event -> {
-            HBox hBox = new HBox();
-            Label m = new Label("Male: ");
-            Label resultM = new Label(String.valueOf(EnrollmentRepo.certificatesPerGender(Gender.M)));
-            hBox.getChildren().add(m);
-            hBox.getChildren().add(resultM);
-            vBox.getChildren().add(hBox);
-            // NewStudentScene newStudent = new NewStudentScene();
-            // GUI.getStage().setScene(newStudent.getCreateScene());
-        }));
-        // buttons.getChildren().add(createStudent);
+        Button perGender = new Button("Percentage of certificates per gender"); 
         vBox.getChildren().add(perGender);
+
+        GridPane genderGrid = new GridPane();
+        genderGrid.setAlignment(Pos.CENTER);
+        genderGrid.setHgap(10);
+        genderGrid.setVgap(5);
+        vBox.getChildren().add(genderGrid);
+
+        Label choice = new Label("Choose a gender: ");
+        Label gender = new Label();
+        Label result = new Label();
+        
+        Gender[] genderList = new Gender[]{Gender.M,  Gender.F, Gender.O};
+        ChoiceBox<Gender> genderDropDown = new ChoiceBox<>(FXCollections.observableArrayList(genderList));
+        
+        
+        genderDropDown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue ov, Number value, Number new_value)
+            {
+                gender.setText(String.valueOf(genderList[new_value.intValue()])+": ");
+                result.setText(String.valueOf(EnrollmentRepo.certificatesPerGender(genderList[new_value.intValue()])) +"%");
+                
+            }
+        });
+
+        perGender.setOnAction((event -> {
+            genderGrid.add(choice,0,0);
+            genderGrid.add(genderDropDown,1,0);
+            genderGrid.add(gender,0,1);
+            genderGrid.add(result,1,1);
+        }));
+        
 
         Button mostViewedWebcasts = new Button("Top 3 viewed webcasts");
         mostViewedWebcasts.setOnAction((event -> {

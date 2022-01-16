@@ -2,6 +2,9 @@ package DB;
 
 import Domain.*;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.collections.*;
 
 /* This class connects with the database using the links in the class DBConnection to retrieve courses, 
@@ -134,6 +137,34 @@ public class CourseRepo {
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
         return false;
+    }
+
+    public Map<String,Integer> getTop3CoursesWithMostCertificates(){
+        Map<String,Integer> top3Courses = new HashMap<>();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement(
+            "SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.CertificateID IS NOT NULL GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                top3Courses.put(rs.getString("Course.CourseName"),rs.getInt("NumberOfCertificates"));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (rs != null) try { rs.close(); } catch(Exception e) {}
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return top3Courses;
     }
     
 }

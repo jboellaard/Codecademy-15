@@ -73,7 +73,7 @@ public class EnrollmentRepo {
         return false;
     }
 
-    // public static ObservableList<Enrollment>
+    /* This method returns the percentage of enrollments that has a certificate by gender */
     public static int certificatesPerGender(Gender gender){
         int percentage = 0;
         Connection con = null;
@@ -89,18 +89,13 @@ public class EnrollmentRepo {
             byGender.setString(1,String.valueOf(gender));
             rsByGender = byGender.executeQuery();
 
-
             while (rsByGender.next()) {
-                System.out.println(rsByGender.getInt("Certificates"));
                 total = con.prepareStatement("SELECT COUNT(*) AS Total FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=? ");
                 total.setString(1,String.valueOf(gender));
                 rsTotal = total.executeQuery();
 
                 while (rsTotal.next()){
-                    System.out.println(rsTotal.getInt("Total"));
-                    int numberOfCertificates = rsByGender.getInt("Certificates");
-                    int numberOfEnrollments = rsTotal.getInt("Total");
-                    percentage = (int) (100*(1.0 * numberOfCertificates) / (1.0 * numberOfEnrollments));
+                    percentage = (int) (100*(1.0 * rsByGender.getInt("Certificates")) / (1.0 * rsTotal.getInt("Total")));
                     return percentage;
                 }
             }
