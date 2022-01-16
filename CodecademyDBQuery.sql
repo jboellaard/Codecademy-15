@@ -35,6 +35,7 @@ CREATE TABLE Student (
 	DateOfBirth varchar(64) NOT NULL,
 	Gender char(1) NOT NULL,
 	AddressID int NOT NULL FOREIGN KEY REFERENCES Address(AddressId)
+	ON DELETE CASCADE
 );
 
 INSERT INTO Student
@@ -52,7 +53,9 @@ CREATE TABLE Course (
 	CourseName varchar(64) NOT NULL PRIMARY KEY,
 	Subject varchar(64) NOT NULL,
 	IntroductionText varchar(64) NOT NULL,
-	LevelIndication varchar(10) NOT NULL
+	LevelIndication varchar(10) NOT NULL,
+	EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID)
+	ON DELETE NO ACTION
 );
 
 INSERT INTO Course
@@ -69,26 +72,9 @@ CREATE TABLE RecommendedCourse (
 	CONSTRAINT PK_RecommendedCourse PRIMARY KEY (CourseName, RecommendedCourseName)
 );
 
---INSERT INTO RecommendedCourse
---VALUES ();
 
-DROP TABLE IF EXISTS Certificate;
-CREATE TABLE Certificate (
-	CertificateID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	--EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
-	Grade decimal NOT NULL,
-	NameStaffCodecademy varchar(64) NOT NULL
-);
-
-INSERT INTO Certificate
-VALUES ( 8, 'Harrie van Tilburg'),
-( 7, 'Sam van der Flaas'),
-( 5, 'Sam van der Flaas'),
-(10, 'Karel Hasselt'),
-( 6, 'Felix Martens'),
-( 9, 'Karel Hasselt'),
-( 8.5, 'Harrie van Tilburg'); 
-
+INSERT INTO RecommendedCourse
+VALUES ('Machine learning','Data science');
 
 DROP TABLE IF EXISTS Enrollment;
 CREATE TABLE Enrollment (
@@ -96,28 +82,46 @@ CREATE TABLE Enrollment (
 	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
 	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
 	SignUpDate varchar(64) NOT NULL,
-	CertificateID int NULL FOREIGN KEY REFERENCES Certificate(CertificateID),
+	--CertificateID int NULL FOREIGN KEY REFERENCES Certificate(CertificateID),
+	Certificate int NOT NULL,
 	CONSTRAINT UK_Enrollment UNIQUE (StudentEmail, CourseName, SignUpDate)
 );
 
 INSERT INTO Enrollment
-VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', NULL),
-('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', NULL),
+VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', 0),
+('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', 0),
 ('marc0tjevp@gmail.com', 'Data science', '2021-01-23', 1),
-('lisatyem@gmail.com', 'Web development', '2021-01-07', NULL),
-('renzoremmers@gmail.com', 'Web development', '2021-01-10', 2),
-('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', NULL),
-('rubenstrik@kpn.com', 'Data science', '2021-01-19', 3),
-('joeyletens@hotmail.com', 'Data science', '2021-01-03', NULL),
-('joeyletens@hotmail.com', 'Computer science', '2021-01-18', NULL),
-('danirohder@kpn.com', 'Web development', '2021-01-09', 4),
-('danirohder@kpn.com', 'Machine learning', '2021-01-16', NULL),
-('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', NULL),
-('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14',5),
-('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', 6),
-('joy.boe@gmail.com', 'Computer science', '2021-10-15', NULL),
-('joy.boe@gmail.com', 'Machine learning', '2021-12-01', NULL),
-('joy.boe@gmail.com', 'Data science', '2022-01-06', 7);
+('lisatyem@gmail.com', 'Web development', '2021-01-07', 0),
+('renzoremmers@gmail.com', 'Web development', '2021-01-10', 1),
+('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', 0),
+('rubenstrik@kpn.com', 'Data science', '2021-01-19', 1),
+('joeyletens@hotmail.com', 'Data science', '2021-01-03', 0),
+('joeyletens@hotmail.com', 'Computer science', '2021-01-18', 0),
+('danirohder@kpn.com', 'Web development', '2021-01-09', 1),
+('danirohder@kpn.com', 'Machine learning', '2021-01-16', 0),
+('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', 0),
+('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14',1),
+('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', 1),
+('joy.boe@gmail.com', 'Computer science', '2021-10-15', 0),
+('joy.boe@gmail.com', 'Machine learning', '2021-12-01', 0),
+('joy.boe@gmail.com', 'Data science', '2022-01-06', 1);
+
+DROP TABLE IF EXISTS Certificate;
+CREATE TABLE Certificate (
+	CertificateID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
+	Grade decimal NOT NULL,
+	NameStaffCodecademy varchar(64) NOT NULL
+);
+
+INSERT INTO Certificate
+VALUES (3, 8.3, 'Harrie van Tilburg'),
+(5, 7.1, 'Sam van der Flaas'),
+(7, 5.5, 'Sam van der Flaas'),
+(10, 10, 'Karel Hasselt'),
+(13, 6, 'Felix Martens'),
+(14, 9, 'Karel Hasselt'),
+(17, 8.5, 'Harrie van Tilburg'); 
 
 DROP TABLE IF EXISTS ContentItem;
 CREATE TABLE ContentItem (
@@ -172,20 +176,20 @@ DROP TABLE IF EXISTS Webcast;
 CREATE TABLE Webcast (
 	ContentItemID int NOT NULL PRIMARY KEY FOREIGN KEY REFERENCES ContentItem(ContentItemID),
 	Title varchar(64) NOT NULL UNIQUE,
-	Description varchar(64) NULL,
+	Description varchar(128) NULL,
 	DurationInSeconds int NULL,
-	URL varchar(128) NULL
+	URL varchar(128) NULL,
+	NameSpeaker varchar(64) NULL,
+	NameOrganisation varchar(64) NULL
 );
 
 
-/*
-
 INSERT INTO Webcast
-VALUES ('Maak je eerste HTML/CSS/JS project', 'Leer de basis voor websites bouwen met JavaScript.', 21, 'https://www.youtube.com/watch?v=iwNUJU5D3aI&t=18s', 'Brandon Nazgull', 'Codecademy'),
- ('Wat is data sciences', 'Wil je weten wat data sciences is? Kijk dan dit interview.', 4, 'https://news.codecademy.com/what-is-data-science/', 'Sophie van Laarhoven', 'Codecademy'),
- ('Introductie in computer sciences', 'Neem een kijkje in het computer science pad van Codecademy', 1, 'https://www.codecademy.com/paths/computer-science/tracks/cspath-intro/modules/cspath-python-syntax', 'Nick Grayham', 'Codecademy'),
- ('Wat zijn neural networks?', 'Hoe kan een computer problemen oplossen zoals ons brein dat doet?', 15, 'https://news.codecademy.com/what-are-neural-networks/', 'Finnick Odair', 'Codecademy');
-*/
+VALUES ('9', 'Maak je eerste HTML/CSS/JS project', 'Leer de basis voor websites bouwen met JavaScript.', 21, 'https://www.youtube.com/watch?v=iwNUJU5D3aI&t=18s', 'Brandon Nazgull', 'Codecademy'),
+ ('10', 'Wat is data sciences', 'Wil je weten wat data sciences is? Kijk dan dit interview.', 4, 'https://news.codecademy.com/what-is-data-science/', 'Sophie van Laarhoven', 'Codecademy'),
+ ('11', 'Introductie in computer sciences', 'Neem een kijkje in het computer science pad van Codecademy', 1, 'https://www.codecademy.com/paths/computer-science/tracks/cspath-intro/modules/cspath-python-syntax', 'Nick Grayham', 'Codecademy'),
+ ('12', 'Wat zijn neural networks?', 'Hoe kan een computer problemen oplossen zoals ons brein dat doet?', 15, 'https://news.codecademy.com/what-are-neural-networks/', 'Finnick Odair', 'Codecademy');
+
 
 DROP TABLE IF EXISTS ProgressWebcast;
 CREATE TABLE ProgressWebcast (
@@ -206,39 +210,19 @@ CREATE TABLE ProgressModule (
 );
 
 INSERT INTO ProgressModule
-VALUES (2,4,50);
+VALUES (2,5,50),
+(1,4,5),
+(1,10,10),
+(1,6,55),
+(2,14,90);
+
+INSERT INTO ProgressWebcast
+VALUES (9,'renzoremmers@gmail.com',5),
+(9,'marc0tjevp@gmail.com',95),
+(10,'renzoremmers@gmail.com',5),
+(11,'marc0tjevp@gmail.com',5);
 
 
-
-/*
-
-DROP TABLE IF EXISTS Bekeken;
-CREATE TABLE Bekeken (
-	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	ContentId int NOT NULL,
---	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(Email) ON DELETE CASCADE,
-	Voortgang int NOT NULL DEFAULT '0',
---	CONSTRAINT UC_Bekeken UNIQUE (ContentId, CursistEmail)
-);
-
-INSERT INTO Bekeken
-VALUES ('4', 'marc0tjevp@gmail.com', 0),
- ('3', 'marc0tjevp@gmail.com', 80),
- ('2', 'marc0tjevp@gmail.com', 100),
- ('1', 'lisatyem@gmail.com', 0),
- ('1', 'renzoremmers@gmail.com', 20),
- ('4', 'renzoremmers@gmail.com', 35),
- ('2', 'rubenstrik@kpn.com', 60),
- ('2', 'joeyletens@hotmail.com', 25),
- ('5', 'joeyletens@hotmail.com', 40),
- ('1', 'danirohder@kpn.com', 20),
- ('4', 'danirohder@kpn.com', 18),
- ('2', 'johanneshoefman@hotmail.com', 100),
- ('3', 'johanneshoefman@hotmail.com', 60),
- ('1', 'johanneshoefman@hotmail.com', 75),
- ('2', 'joy.boe@gmail.com', 45),
- ('4', 'joy.boe@gmail.com', 99);
-*/
 
 
 
