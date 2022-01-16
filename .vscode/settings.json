@@ -1,16 +1,21 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "lib/javafx-swt.jar",
-        "lib/javafx.base.jar",
-        "lib/javafx.controls.jar",
-        "lib/javafx.fxml.jar",
-        "lib/javafx.graphics.jar",
-        "lib/javafx.media.jar",
-        "lib/javafx.properties",
-        "lib/javafx.swing.jar",
-        "lib/javafx.web.jar",
-        "lib/junit-platform-console-standalone-1.7.0-all",
-        "lib/mssql-jdbc-9.4.1.jre11"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "lib/javafx-swt.jar",
+            "lib/javafx.base.jar",
+            "lib/javafx.controls.jar",
+            "lib/javafx.fxml.jar",
+            "lib/javafx.graphics.jar",
+            "lib/javafx.media.jar",
+            "lib/javafx.properties",
+            "lib/javafx.swing.jar",
+            "lib/javafx.web.jar",
+            "lib/junit-platform-console-standalone-1.7.0-all",
+            "lib/mssql-jdbc-9.4.1.jre11"
+        ],
+        "exclude": [
+            "lib/sqljdbc_9.4.1.0_enu/enu/mssql-jdbc-9.4.1.jre16.jar"
+        ]
+    }
 }
