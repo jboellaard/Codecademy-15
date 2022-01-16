@@ -5,10 +5,13 @@ public class Certificate {
     private double grade;
     private String nameOfStaffMember;
 
-    public Certificate(int certificateID, double grade, String nameOfStaffMember){
-        this.certificateID = certificateID;
+    public Certificate( double grade, String nameOfStaffMember){
         this.grade = grade;
         this.nameOfStaffMember = nameOfStaffMember;
+    }
+
+    public void addCertificateID(int certificateID){
+        this.certificateID=certificateID;
     }
 
     public int certificateID(){

@@ -1,7 +1,9 @@
 package GUI.StudentScenes;
 
 import DB.DBConnection;
+import DB.EnrollmentRepo;
 import Domain.*;
+import Domain.Tools.GradeTools;
 import GUI.*;
 
 import javafx.geometry.Insets;
@@ -47,11 +49,44 @@ public class ProgressPerCoursePerStudentScene {
         buttons.setPadding(new Insets(15,15,5,15));
         buttons.setAlignment(Pos.CENTER);
         vBox.getChildren().add(buttons);
+
+        Label grade = new Label("Grade: ");
+        TextField gradeInput = new TextField();
+
+        Label nameStaff = new Label("Name staff: ");
+        TextField nameStaffInput = new TextField();
         
 
         Button addCertificate = new Button("Add certificate for this course");
+
+        Button submitCertificate = new Button("Submit certificate");
+        submitCertificate.setOnAction((event -> {
+            double givenGrade = Double.valueOf(gradeInput.getText());
+            String staff = nameStaffInput.getText();
+            if (GradeTools.isValidGrade(givenGrade)){
+                Certificate cert = new Certificate(givenGrade,staff);
+                if (EnrollmentRepo.addCertificate(enrollment,cert)){
+                    noCourseSelected.setText("Certificate added succesfully");
+                } else {
+                    noCourseSelected.setText("The certificate could not be added");
+                }
+            } else {
+                noCourseSelected.setText("This is not a valid grade");
+            }
+
+        }));
         addCertificate.setOnAction((event -> {
-            //creates field with grade and name staff member and submit button
+            HBox certificate = new HBox(15);
+            certificate.setPadding(new Insets(5,25,15,25));
+            certificate.setAlignment(Pos.CENTER);
+            certificate.getChildren().add(noCourseSelected);
+            vBox.getChildren().add(certificate);
+                
+            certificate.getChildren().add(grade);
+            certificate.getChildren().add(gradeInput);
+            certificate.getChildren().add(nameStaff);
+            certificate.getChildren().add(nameStaffInput);
+            certificate.getChildren().add(submitCertificate);
             
         }));
         buttons.getChildren().add(addCertificate);

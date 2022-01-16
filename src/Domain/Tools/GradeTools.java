@@ -2,7 +2,7 @@ package Domain.Tools;
 
 public class GradeTools {
 
-    public boolean isValidGrade(){
+    public static boolean isValidGrade(double grade){
         return false;
     }
     

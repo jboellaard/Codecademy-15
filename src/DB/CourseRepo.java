@@ -149,7 +149,7 @@ public class CourseRepo {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement(
-            "SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.CertificateID IS NOT NULL GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;");
+            "SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.Certificate=1 GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

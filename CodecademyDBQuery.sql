@@ -96,28 +96,29 @@ CREATE TABLE Enrollment (
 	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
 	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
 	SignUpDate varchar(64) NOT NULL,
-	CertificateID int NULL FOREIGN KEY REFERENCES Certificate(CertificateID),
+	--CertificateID int NULL FOREIGN KEY REFERENCES Certificate(CertificateID),
+	Certificate int NOT NULL,
 	CONSTRAINT UK_Enrollment UNIQUE (StudentEmail, CourseName, SignUpDate)
 );
 
 INSERT INTO Enrollment
-VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', NULL),
-('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', NULL),
+VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', 0),
+('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', 0),
 ('marc0tjevp@gmail.com', 'Data science', '2021-01-23', 1),
-('lisatyem@gmail.com', 'Web development', '2021-01-07', NULL),
-('renzoremmers@gmail.com', 'Web development', '2021-01-10', 2),
-('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', NULL),
-('rubenstrik@kpn.com', 'Data science', '2021-01-19', 3),
-('joeyletens@hotmail.com', 'Data science', '2021-01-03', NULL),
-('joeyletens@hotmail.com', 'Computer science', '2021-01-18', NULL),
-('danirohder@kpn.com', 'Web development', '2021-01-09', 4),
-('danirohder@kpn.com', 'Machine learning', '2021-01-16', NULL),
-('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', NULL),
-('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14',5),
-('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', 6),
-('joy.boe@gmail.com', 'Computer science', '2021-10-15', NULL),
-('joy.boe@gmail.com', 'Machine learning', '2021-12-01', NULL),
-('joy.boe@gmail.com', 'Data science', '2022-01-06', 7);
+('lisatyem@gmail.com', 'Web development', '2021-01-07', 0),
+('renzoremmers@gmail.com', 'Web development', '2021-01-10', 1),
+('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', 0),
+('rubenstrik@kpn.com', 'Data science', '2021-01-19', 1),
+('joeyletens@hotmail.com', 'Data science', '2021-01-03', 0),
+('joeyletens@hotmail.com', 'Computer science', '2021-01-18', 0),
+('danirohder@kpn.com', 'Web development', '2021-01-09', 1),
+('danirohder@kpn.com', 'Machine learning', '2021-01-16', 0),
+('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', 0),
+('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14',1),
+('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', 1),
+('joy.boe@gmail.com', 'Computer science', '2021-10-15', 0),
+('joy.boe@gmail.com', 'Machine learning', '2021-12-01', 0),
+('joy.boe@gmail.com', 'Data science', '2022-01-06', 1);
 
 DROP TABLE IF EXISTS ContentItem;
 CREATE TABLE ContentItem (

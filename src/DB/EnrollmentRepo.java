@@ -112,5 +112,35 @@ public class EnrollmentRepo {
         }
         return percentage;
     }
+
+    public static boolean addCertificate(Enrollment enrollment, Certificate certificate){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        PreparedStatement changeEnroll = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("INSERT INTO Certificate VALUES (?,?);");
+            pstmt.setDouble(1, certificate.getGrade());
+            pstmt.setString(2, certificate.getNameOfStaffMember());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0){
+                changeEnroll = con.prepareStatement("UPDATE Enrollment SET Certificate=1 WHERE EnrollmentID=?");
+                changeEnroll.setInt(1, enrollment.getEnrollmentID());
+                changeEnroll.executeUpdate();
+                return true;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return false;
+    }
     
 }
