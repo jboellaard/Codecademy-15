@@ -5,19 +5,14 @@ import java.util.Map;
 import DB.DBConnection;
 import DB.EnrollmentRepo;
 import DB.WebcastRepo;
-import Domain.Certificate;
 import Domain.Gender;
 import GUI.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
-import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.collections.*;
 import javafx.beans.value.*;
-import javafx.stage.Stage;
 
 public class StatisticOptionsOverview {
 
@@ -58,11 +53,11 @@ public class StatisticOptionsOverview {
             genderGrid.add(result,1,1);
         }));
 
-        GridPane topThree = new GridPane();
         
 
         Button mostViewedWebcasts = new Button("Top 3 viewed webcasts");
         mostViewedWebcasts.setOnAction((event -> {
+            GridPane topThree = new GridPane();
             Map<String, Integer> webCasts = WebcastRepo.getTopThreeMostViewedWebcasts();
             int i=0;
             for (Map.Entry<String, Integer> en : webCasts.entrySet()){
@@ -70,14 +65,15 @@ public class StatisticOptionsOverview {
                 topThree.add(new Label(String.valueOf(en.getValue())),1,i);
                 i++;
             }
+            vBox.getChildren().add(topThree);
 
         }));
         vBox.getChildren().add(mostViewedWebcasts);
 
-        
 
         Button mostCertificates = new Button("Top 3 courses with most certificates");
         mostCertificates.setOnAction((event -> {
+            GridPane topThree = new GridPane();
             Map<String, Integer> courses = DBConnection.courseRepo.getTop3CoursesWithMostCertificates();
             int i=0;
             for (Map.Entry<String, Integer> en : courses.entrySet()){
@@ -85,10 +81,10 @@ public class StatisticOptionsOverview {
                 topThree.add(new Label(String.valueOf(en.getValue())),1,i);
                 i++;
             }
+            vBox.getChildren().add(topThree);
 
         }));
         vBox.getChildren().add(mostCertificates);
-        vBox.getChildren().add(topThree);
 
         Button back = new Button("Go back");
         back.setOnAction((event -> {

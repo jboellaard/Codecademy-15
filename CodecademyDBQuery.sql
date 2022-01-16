@@ -72,23 +72,6 @@ CREATE TABLE RecommendedCourse (
 --INSERT INTO RecommendedCourse
 --VALUES ();
 
-DROP TABLE IF EXISTS Certificate;
-CREATE TABLE Certificate (
-	CertificateID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	--EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
-	Grade decimal NOT NULL,
-	NameStaffCodecademy varchar(64) NOT NULL
-);
-
-INSERT INTO Certificate
-VALUES ( 8, 'Harrie van Tilburg'),
-( 7, 'Sam van der Flaas'),
-( 5, 'Sam van der Flaas'),
-(10, 'Karel Hasselt'),
-( 6, 'Felix Martens'),
-( 9, 'Karel Hasselt'),
-( 8.5, 'Harrie van Tilburg'); 
-
 
 DROP TABLE IF EXISTS Enrollment;
 CREATE TABLE Enrollment (
@@ -119,6 +102,23 @@ VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', 0),
 ('joy.boe@gmail.com', 'Computer science', '2021-10-15', 0),
 ('joy.boe@gmail.com', 'Machine learning', '2021-12-01', 0),
 ('joy.boe@gmail.com', 'Data science', '2022-01-06', 1);
+
+DROP TABLE IF EXISTS Certificate;
+CREATE TABLE Certificate (
+	CertificateID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
+	Grade decimal NOT NULL,
+	NameStaffCodecademy varchar(64) NOT NULL
+);
+
+INSERT INTO Certificate
+VALUES (3, 8, 'Harrie van Tilburg'),
+(5, 7, 'Sam van der Flaas'),
+(7, 5, 'Sam van der Flaas'),
+(10, 10, 'Karel Hasselt'),
+(13, 6, 'Felix Martens'),
+(14, 9, 'Karel Hasselt'),
+(17, 8.5, 'Harrie van Tilburg'); 
 
 DROP TABLE IF EXISTS ContentItem;
 CREATE TABLE ContentItem (
@@ -209,9 +209,9 @@ CREATE TABLE ProgressModule (
 INSERT INTO ProgressModule
 VALUES (2,5,50),
 (1,4,5),
-(1,2,10),
+(1,10,10),
 (1,6,55),
-(2,4,90);
+(2,14,90);
 
 INSERT INTO ProgressWebcast
 VALUES (9,'renzoremmers@gmail.com',5),

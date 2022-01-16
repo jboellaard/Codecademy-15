@@ -1,6 +1,7 @@
 package GUI.CourseScenes;
 
 import DB.DBConnection;
+import DB.EnrollmentRepo;
 import Domain.*;
 import GUI.*;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ public class ModuleOverview {
     public Scene getScene(Course course){
         TableView<CourseModule> table = new TableView<>();
         table.setItems(course.getModules());
+        // System.out.println(course.getCourseName()+ ": "+ course.getModules().get(0).getTitle());
  
         TableColumn<CourseModule,String> titleCol = new TableColumn<>("Title");
         titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -37,6 +39,16 @@ public class ModuleOverview {
         VBox vBox = new VBox();
         vBox.getChildren().add(table);
 
+        Label certificates = new Label("Amount of students that completed the course: ");
+        Label amount = new Label(String.valueOf(EnrollmentRepo.getTotalCertificatesPerCourse(course)));
+
+        HBox total = new HBox(15);
+        total.setPadding(new Insets(15,15,5,15));
+        total.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(total);
+        total.getChildren().add(certificates);
+        total.getChildren().add(amount);
+
         HBox buttons = new HBox(15);
         buttons.setPadding(new Insets(15,15,5,15));
         buttons.setAlignment(Pos.CENTER);
@@ -49,13 +61,6 @@ public class ModuleOverview {
         }));
         
         buttons.getChildren().add(back);
-
-        // HBox error = new HBox(15);
-        // error.setPadding(new Insets(5,25,15,25));
-        // error.setAlignment(Pos.CENTER);
-        // error.getChildren().add(noCourseSelected);
-        // vBox.getChildren().add(error);
-
 
         Scene scene = new Scene(vBox, 700, 400);
         return scene;

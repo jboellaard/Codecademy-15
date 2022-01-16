@@ -90,7 +90,7 @@ public class CourseOverview {
                 noCourseSelected.setText("Please select a course first");
             }
         }));
-        buttonsSecondRow.getChildren().add(addModule);
+        buttonsSecondRow.getChildren().add(delete);
 
         
         Button showProgress = new Button("Show modules course and progress all students");

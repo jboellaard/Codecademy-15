@@ -153,8 +153,6 @@ public class CourseModuleRepo {
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
         return avgProgress;
-
-
     }
 
 }

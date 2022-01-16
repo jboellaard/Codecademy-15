@@ -85,7 +85,7 @@ public class EnrollmentRepo {
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            byGender = con.prepareStatement("SELECT COUNT(*) AS Certificates FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=? AND Enrollment.CertificateID IS NOT NULL");
+            byGender = con.prepareStatement("SELECT COUNT(*) AS Certificates FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=? AND Enrollment.Certificate=1");
             byGender.setString(1,String.valueOf(gender));
             rsByGender = byGender.executeQuery();
 
@@ -141,6 +141,31 @@ public class EnrollmentRepo {
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
         return false;
+    }
+
+    public static int getTotalCertificatesPerCourse(Course course){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("SELECT COUNT(*) AS Amount FROM Enrollment WHERE CourseName=? AND Certificate=1;");
+            pstmt.setString(1, course.getCourseName());
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                return rs.getInt("Amount");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return 0;
     }
     
 }
