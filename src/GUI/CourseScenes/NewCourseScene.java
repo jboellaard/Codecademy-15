@@ -62,8 +62,6 @@ public class NewCourseScene {
             Course newCourse = new Course(courseName,courseSubject,courseIntro,courseLevel);
             if (DBConnection.courseRepo.create(newCourse, moduleInput)){
                 courseAdded.setText("Course succefully created");
-                //choose modules from courseModuleRepo.unusedModules
-                //tableview with button addmodule, you can add multiple before creating the course
             } else {
                 courseAdded.setText("Unfortunately the course could not be created");
             }

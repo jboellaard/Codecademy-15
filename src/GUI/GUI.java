@@ -3,6 +3,7 @@ package GUI;
 import DB.*;
 import GUI.StudentScenes.*;
 import GUI.CourseScenes.*;
+import GUI.StatisticsScenes.StatisticOptionsOverview;
 import javafx.application.Application;
 // import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -59,8 +60,8 @@ public class GUI extends Application {
         statistics.setStyle("-fx-font: 18 arial;");
         vBox.getChildren().add(statistics);
         statistics.setOnAction((event) -> {
-            // StatisticsOverview overview = new StatisticsOverview();
-            // GUI.getStage().setScene(overview.getScene());
+            StatisticOptionsOverview overview = new StatisticOptionsOverview();
+            GUI.getStage().setScene(overview.getScene());
         });
 
 

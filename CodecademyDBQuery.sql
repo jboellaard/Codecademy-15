@@ -72,6 +72,23 @@ CREATE TABLE RecommendedCourse (
 --INSERT INTO RecommendedCourse
 --VALUES ();
 
+DROP TABLE IF EXISTS Certificate;
+CREATE TABLE Certificate (
+	CertificateID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	--EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
+	Grade decimal NOT NULL,
+	NameStaffCodecademy varchar(64) NOT NULL
+);
+
+INSERT INTO Certificate
+VALUES ( 8, 'Harrie van Tilburg'),
+( 7, 'Sam van der Flaas'),
+( 5, 'Sam van der Flaas'),
+(10, 'Karel Hasselt'),
+( 6, 'Felix Martens'),
+( 9, 'Karel Hasselt'),
+( 8.5, 'Harrie van Tilburg'); 
+
 
 DROP TABLE IF EXISTS Enrollment;
 CREATE TABLE Enrollment (
@@ -79,28 +96,28 @@ CREATE TABLE Enrollment (
 	StudentEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(EmailAddress),
 	CourseName varchar(64) NOT NULL FOREIGN KEY REFERENCES Course(CourseName),
 	SignUpDate varchar(64) NOT NULL,
-	Certificate BIT DEFAULT 'FALSE',
+	CertificateID int NULL FOREIGN KEY REFERENCES Certificate(CertificateID),
 	CONSTRAINT UK_Enrollment UNIQUE (StudentEmail, CourseName, SignUpDate)
 );
 
 INSERT INTO Enrollment
-VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', 'FALSE'),
-('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', 'FALSE'),
-('marc0tjevp@gmail.com', 'Data science', '2021-01-23', 'TRUE'),
-('lisatyem@gmail.com', 'Web development', '2021-01-07', 'FALSE'),
-('renzoremmers@gmail.com', 'Web development', '2021-01-10', 'TRUE'),
-('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', 'FALSE'),
-('rubenstrik@kpn.com', 'Data science', '2021-01-19', 'TRUE'),
-('joeyletens@hotmail.com', 'Data science', '2021-01-03', 'FALSE'),
-('joeyletens@hotmail.com', 'Computer science', '2021-01-18', 'FALSE'),
-('danirohder@kpn.com', 'Web development', '2021-01-09', 'TRUE'),
-('danirohder@kpn.com', 'Machine learning', '2021-01-16', 'FALSE'),
-('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', 'FALSE'),
-('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14', 'TRUE'),
-('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', 'TRUE'),
-('joy.boe@gmail.com', 'Computer science', '2021-10-15', 'FALSE'),
-('joy.boe@gmail.com', 'Machine learning', '2021-12-01', 'FALSE'),
-('joy.boe@gmail.com', 'Data science', '2022-01-06', 'TRUE');
+VALUES ('marc0tjevp@gmail.com', 'Machine learning', '2021-01-15', NULL),
+('marc0tjevp@gmail.com', 'Computer science', '2021-01-20', NULL),
+('marc0tjevp@gmail.com', 'Data science', '2021-01-23', 1),
+('lisatyem@gmail.com', 'Web development', '2021-01-07', NULL),
+('renzoremmers@gmail.com', 'Web development', '2021-01-10', 2),
+('renzoremmers@gmail.com', 'Machine learning', '2021-01-01', NULL),
+('rubenstrik@kpn.com', 'Data science', '2021-01-19', 3),
+('joeyletens@hotmail.com', 'Data science', '2021-01-03', NULL),
+('joeyletens@hotmail.com', 'Computer science', '2021-01-18', NULL),
+('danirohder@kpn.com', 'Web development', '2021-01-09', 4),
+('danirohder@kpn.com', 'Machine learning', '2021-01-16', NULL),
+('johanneshoefman@hotmail.com', 'Data science', '2021-01-06', NULL),
+('johanneshoefman@hotmail.com', 'Computer science', '2021-01-14',5),
+('johanneshoefman@hotmail.com', 'Web development', '2021-01-18', 6),
+('joy.boe@gmail.com', 'Computer science', '2021-10-15', NULL),
+('joy.boe@gmail.com', 'Machine learning', '2021-12-01', NULL),
+('joy.boe@gmail.com', 'Data science', '2022-01-06', 7);
 
 DROP TABLE IF EXISTS ContentItem;
 CREATE TABLE ContentItem (
@@ -224,20 +241,7 @@ VALUES ('4', 'marc0tjevp@gmail.com', 0),
 */
 
 
-DROP TABLE IF EXISTS Certificate;
-CREATE TABLE Certificate (
-	CertificateID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	EnrollmentID int NOT NULL FOREIGN KEY REFERENCES Enrollment(EnrollmentID),
-	Grade decimal NOT NULL,
-	NameStaffCodecademy varchar(64) NOT NULL
-);
 
 
-INSERT INTO Certificate
-VALUES (3, 8, 'Harrie van Tilburg'),
-(5, 7, 'Sam van der Flaas'),
-(7, 5, 'Sam van der Flaas'),
-(10, 10, 'Karel Hasselt'),
-(13, 6, 'Felix Martens'),
-(14, 9, 'Karel Hasselt'),
-(17, 8.5, 'Harrie van Tilburg'); 
+
+
