@@ -1,12 +1,11 @@
 package Domain;
 
-import DB.DBConnection;
-
 public class Certificate {
     private int certificateID;
     private int enrollmentID;
     private double grade;
     private String nameOfStaffMember;
+    private String courseName;
 
     public Certificate(int enrollmentID, double grade, String nameOfStaffMember){
         this.enrollmentID = enrollmentID;
@@ -26,11 +25,15 @@ public class Certificate {
         return this.grade;
     }
 
-    public String getNameStaffCodecademy(){
+    public String getNameOfStaffCodecademy(){
         return this.nameOfStaffMember;
     }
 
+    public void addCourseName(String name){
+        this.courseName = name;
+    }
+
     public String getCourseName(){
-        return "";
+        return this.courseName;
     }
 }

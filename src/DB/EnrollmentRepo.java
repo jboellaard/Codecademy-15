@@ -123,7 +123,7 @@ public class EnrollmentRepo {
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement("INSERT INTO Certificate VALUES (?,?);");
             pstmt.setDouble(1, certificate.getGrade());
-            pstmt.setString(2, certificate.getNameStaffCodecademy());
+            pstmt.setString(2, certificate.getNameOfStaffCodecademy());
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0){
@@ -177,11 +177,13 @@ public class EnrollmentRepo {
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            pstmt = con.prepareStatement("SELECT * FROM Certificate WHERE EnrollmentID IN (SELECT EnrollmentID FROM Enrollment WHERE StudentEmail = ?);");
+            pstmt = con.prepareStatement("SELECT * FROM Certificate LEFT JOIN Enrollment ON Enrollment.EnrollmentID=Certificate.EnrollmentID WHERE StudentEmail = ?;");
             pstmt.setString(1, student.getEmailAddress());
             rs = pstmt.executeQuery();
             while (rs.next()){
-                certificates.add(new Certificate(rs.getInt("EnrollmentID"),rs.getDouble("Grade"),rs.getString("NameStaffCodecademy")));
+                Certificate certificate = new Certificate(rs.getInt("EnrollmentID"),rs.getDouble("Grade"),rs.getString("NameStaffCodecademy"));
+                certificate.addCourseName(rs.getString("CourseName"));
+                certificates.add(certificate);
             }
         }
         catch (Exception e) {

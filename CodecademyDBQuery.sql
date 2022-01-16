@@ -112,9 +112,9 @@ CREATE TABLE Certificate (
 );
 
 INSERT INTO Certificate
-VALUES (3, 8, 'Harrie van Tilburg'),
-(5, 7, 'Sam van der Flaas'),
-(7, 5, 'Sam van der Flaas'),
+VALUES (3, 8.3, 'Harrie van Tilburg'),
+(5, 7.1, 'Sam van der Flaas'),
+(7, 5.5, 'Sam van der Flaas'),
 (10, 10, 'Karel Hasselt'),
 (13, 6, 'Felix Martens'),
 (14, 9, 'Karel Hasselt'),
@@ -218,39 +218,6 @@ VALUES (9,'renzoremmers@gmail.com',5),
 (9,'marc0tjevp@gmail.com',95),
 (10,'renzoremmers@gmail.com',5),
 (11,'marc0tjevp@gmail.com',5);
-
-
-
-/*
-
-DROP TABLE IF EXISTS Bekeken;
-CREATE TABLE Bekeken (
-	ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	ContentId int NOT NULL,
---	CursistEmail varchar(64) NOT NULL FOREIGN KEY REFERENCES Student(Email) ON DELETE CASCADE,
-	Voortgang int NOT NULL DEFAULT '0',
---	CONSTRAINT UC_Bekeken UNIQUE (ContentId, CursistEmail)
-);
-
-INSERT INTO Bekeken
-VALUES ('4', 'marc0tjevp@gmail.com', 0),
- ('3', 'marc0tjevp@gmail.com', 80),
- ('2', 'marc0tjevp@gmail.com', 100),
- ('1', 'lisatyem@gmail.com', 0),
- ('1', 'renzoremmers@gmail.com', 20),
- ('4', 'renzoremmers@gmail.com', 35),
- ('2', 'rubenstrik@kpn.com', 60),
- ('2', 'joeyletens@hotmail.com', 25),
- ('5', 'joeyletens@hotmail.com', 40),
- ('1', 'danirohder@kpn.com', 20),
- ('4', 'danirohder@kpn.com', 18),
- ('2', 'johanneshoefman@hotmail.com', 100),
- ('3', 'johanneshoefman@hotmail.com', 60),
- ('1', 'johanneshoefman@hotmail.com', 75),
- ('2', 'joy.boe@gmail.com', 45),
- ('4', 'joy.boe@gmail.com', 99);
-*/
-
 
 
 

@@ -15,31 +15,36 @@ import javafx.scene.layout.VBox;
 public class CertificatesPerStudentScene {
 
     public Scene getScene(Student student){
-        Label studentName = new Label(student.getName()+" certificates");
 
         TableView<Certificate> table = new TableView<>();
         ObservableList<Certificate> allCertificatesStudent = EnrollmentRepo.getAllCertificatesStudent(student);
 
         table.setItems(allCertificatesStudent);
  
-        // TableColumn<Certificate,String> courseCol = new TableColumn<>("Course name");
-        // courseCol.setCellValueFactory(new PropertyValueFactory<>("CourseName"));
+        TableColumn<Certificate,String> courseCol = new TableColumn<>("Course name");
+        courseCol.setCellValueFactory(new PropertyValueFactory<>("CourseName"));
         TableColumn<Certificate,Double> gradeCol = new TableColumn<>("Grade");
         gradeCol.setCellValueFactory(new PropertyValueFactory<>("Grade"));
         TableColumn<Certificate,String> staffCol = new TableColumn<>("Name staff");
         staffCol.setCellValueFactory(new PropertyValueFactory<>("NameOfStaffCodecademy"));
         
 
-        // table.getColumns().add(courseCol);
+        table.getColumns().add(courseCol);
         table.getColumns().add(gradeCol);
         table.getColumns().add(staffCol);
         table.sort();
         
         VBox vBox = new VBox();
-        vBox.getChildren().add(studentName);
-        vBox.getChildren().add(table);
 
-        Label noEnrollmentSelected = new Label("");
+        HBox name = new HBox(15);
+        name.setPadding(new Insets(15,15,15,15));
+        name.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(name);
+
+        Label studentName = new Label("Certificates of "+student.getName());
+        name.getChildren().add(studentName);
+
+        vBox.getChildren().add(table);
 
         HBox buttons = new HBox(15);
         buttons.setPadding(new Insets(15,15,5,15));
