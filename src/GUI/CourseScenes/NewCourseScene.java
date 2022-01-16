@@ -40,12 +40,18 @@ public class NewCourseScene {
         levelInput.add(LAdvanced,1,0);
         levelInput.add(LExpert,2,0);
 
+
+        Label module = new Label("First module: \n(you can add more modules later)");
+        ChoiceBox<CourseModule> firstModule = new ChoiceBox<>(DBConnection.courseModuleRepo.getUnusedModules());
+
+
         Label courseAdded = new Label();
 
         HBox buttons = new HBox(15);
         buttons.setPadding(new Insets(5,5,5,5));
         Button submit = new Button("Submit");
         submit.setOnAction((event) -> {
+            CourseModule moduleInput = firstModule.getValue();
             String courseName = nameInput.getText().trim();
             String courseSubject = subjectInput.getText().trim();
             String courseIntro = introInput.getText().trim();
@@ -54,8 +60,10 @@ public class NewCourseScene {
             if (LExpert.isSelected()) courseLevel = LevelIndication.Expert;
 
             Course newCourse = new Course(courseName,courseSubject,courseIntro,courseLevel);
-            if (DBConnection.courseRepo.create(newCourse)){
+            if (DBConnection.courseRepo.create(newCourse, moduleInput)){
                 courseAdded.setText("Course succefully created");
+                //choose modules from courseModuleRepo.unusedModules
+                //tableview with button addmodule, you can add multiple before creating the course
             } else {
                 courseAdded.setText("Unfortunately the course could not be created");
             }
@@ -78,8 +86,10 @@ public class NewCourseScene {
         gridPane.add(introInput,1,3);
         gridPane.add(level,0,4);
         gridPane.add(levelInput,1,4);
-        gridPane.add(buttons,0,5,2,1);
-        gridPane.add(courseAdded,0,6,2,1);
+        gridPane.add(module,0,5);
+        gridPane.add(firstModule,1,5);
+        gridPane.add(buttons,0,6,2,1);
+        gridPane.add(courseAdded,0,7,2,1);
 
         layout.setCenter(gridPane);
         Scene newCourseView = new Scene(layout, 600, 400);

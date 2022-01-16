@@ -5,13 +5,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 /* This class retrieves the modules from the database and keeps track of which modules have been used and which haven't. */
 public class CourseModuleRepo {
     private String connectionUrl = DBConnection.getConnectionUrl();
     private String driverUrl = DBConnection.getDriverUrl();
-    private ArrayList<CourseModule> unusedModules = new ArrayList<>();
+    final ObservableList<CourseModule> unusedModules = FXCollections.observableArrayList();
 
     public CourseModuleRepo(){
         getModulesFromDB();
@@ -39,7 +38,7 @@ public class CourseModuleRepo {
                 rsID.next();
                 CourseModule module = new CourseModule(rs.getInt("ContentItemID"), rsID.getString("PublicationDate"), Status.valueOf(rsID.getString("Status")), rs.getString("Title"),
                 rs.getString("Description"), rs.getString("Version"), rs.getString("NameContactPerson"), rs.getString("EmailContactPerson"), rs.getInt("FollowNumber"));
-                if (!Status.valueOf(rsID.getString("Status")).equals(Status.Concept)){
+                if (!rsID.getString("Status").equals("Concept") && !(rs.getString("CourseName")==null)){
                     for (Course course : DBConnection.courseRepo.allCourses){
                         if (rs.getString("CourseName").equals(course.getCourseName())){
                             course.addModule(module);
@@ -64,7 +63,7 @@ public class CourseModuleRepo {
         }
     }
 
-    public ArrayList<CourseModule> getUnusedModules(){
+    public ObservableList<CourseModule> getUnusedModules(){
         return this.unusedModules;
     }
     
@@ -100,6 +99,33 @@ public class CourseModuleRepo {
             if (con != null) try { con.close(); } catch(Exception e) {}
         }
         return progress;
+    }
+
+    public boolean updateModuleUsed(Course course, CourseModule module){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            Class.forName(driverUrl);
+            con = DriverManager.getConnection(connectionUrl);
+            pstmt = con.prepareStatement("UPDATE Module SET CourseName=? WHERE ContentItemID=?;");
+            pstmt.setString(1, course.getCourseName());
+            pstmt.setInt(2, module.getContentItemID());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0){
+                DBConnection.courseModuleRepo.unusedModules.remove(module);
+                return true;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
+            if (con != null) try { con.close(); } catch(Exception e) {}
+        }
+        return false;
     }
 
 }

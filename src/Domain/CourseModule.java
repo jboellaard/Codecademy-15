@@ -34,4 +34,9 @@ public class CourseModule extends ContentItem {
         return this.followNumber;
     }
 
+    @Override
+    public String toString(){
+        return this.title;
+    }
+
 }

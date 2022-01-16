@@ -18,7 +18,7 @@ public class CourseRepo {
 
     /* This method adds a course to the database and then adds the course to the list allCourses so that the connection does not have to be called again to update the list 
        It returns true if the course was succesfully created and false if not */
-    public boolean create(Course course){
+    public boolean create(Course course, CourseModule module){
         Connection con = null;
         PreparedStatement pstmt = null;
 
@@ -30,10 +30,11 @@ public class CourseRepo {
             pstmt.setString(2, course.getIntroductionText());
             pstmt.setString(3, course.getSubject());
             pstmt.setString(4, course.getLevelIndication().name());
-
+            
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 allCourses.add(course);
+                if (DBConnection.courseModuleRepo.updateModuleUsed(course, module)) course.addModule(module);
                 return true;
             }
         }
@@ -66,7 +67,6 @@ public class CourseRepo {
 
             while (rs.next()) {
                 allCourses.add(new Course(rs.getString("CourseName"),rs.getString("Subject"),rs.getString("IntroductionText"),LevelIndication.valueOf(rs.getString("LevelIndication"))));
-                //add modules and add recommendedcourses?
             }
         }
         catch (Exception e) {

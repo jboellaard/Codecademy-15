@@ -113,12 +113,12 @@ INSERT INTO ContentItem
 VALUES ('2019-10-15', 'Archived'),
  ('2019-10-20', 'Active'),
  ('2019-10-29', 'Active'),
- ('2019-11-07', 'Active'),
+ ('2019-11-07', 'Concept'),
  ('2020-01-13', 'Archived'),
  ('2019-10-15', 'Archived'),
  ('2019-10-20', 'Active'),
  ('2019-10-29', 'Active'),
- ('2019-11-07', 'Active'),
+ ('2019-11-07', 'Concept'),
  ('2020-01-13', 'Archived'),
  ('2019-10-15', 'Archived'),
  ('2019-10-20', 'Active'),
@@ -144,11 +144,11 @@ INSERT INTO Module
 VALUES (1,'Leer HTML', 'v11', 'HTML is de basis van alle web paginas', 'Sauter de Vis', 'sauterdevis@outlook.com', 1, 'Web development'),
  (2,'Leer JavaScript', 'v12', 'JavaScript is een van de meest krachtige programmeer talen', 'Sauter de Vis', 'sauterdevis@outlook.com', 12, 'Web development'),
  (3,'Leer R', 'v21', 'R is een veelgebruikt statistische programmeertaal', 'Mark de Rond', 'markderond@outlook.com', 21, 'Data science'),
- (4,'Leer python 2', 'v22', 'Python is een veelzijdige en populaire programmeertaal', 'Mark de Rond', 'markderond@outlook.com', 2, 'Data science'),
+ (4,'Leer python 2', 'v22', 'Python is een veelzijdige en populaire programmeertaal', 'Mark de Rond', 'markderond@outlook.com', 2, NULL),
  (5,'Leer C++', 'v31', 'C++ wordt geprezen voor zijn laagdrempelige functionaliteit', 'Ralph van Venrooij', 'ralphvanvenrooij@outlook.com', 1, 'Computer science' ),
  (6,'Leer C#', 'v32', 'C# opent veel deuren voor je als programmeur', 'Ralph van Venrooij', 'ralphvanvenrooij@outlook.com', 32, 'Computer science'),
  (7,'Leer Alexa programmeren', 'v41', 'Leer zo je eigen voice user interface te bouwen', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 4, 'Machine learning'),
- (8,'Leer de Watson API', 'v42', 'IBM Watson is een van de meest sterke APIs ter wereld', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 42, 'Machine learning' );
+ (8,'Leer de Watson API', 'v42', 'IBM Watson is een van de meest sterke APIs ter wereld', 'Klaas van Zundert', 'klaasvanzundert@outlook.com', 42, NULL );
 
 
 DROP TABLE IF EXISTS Webcast;

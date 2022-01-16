@@ -41,6 +41,8 @@ public class CourseOverview {
         buttons.setPadding(new Insets(15,15,5,15));
         buttons.setAlignment(Pos.CENTER);
         vBox.getChildren().add(buttons);
+
+        Label noCourseSelected = new Label("");
         
         Button createCourse = new Button("Add new course");
         createCourse.setOnAction((event -> {
@@ -49,15 +51,24 @@ public class CourseOverview {
         }));
         buttons.getChildren().add(createCourse);
 
+        Button addModule = new Button("Add new module");
+        addModule.setOnAction((event -> {
+            Course selectedCourse = table.getSelectionModel().getSelectedItem();
+            if (selectedCourse!=null){
+                NewModuleScene newModule = new NewModuleScene();
+            GUI.getStage().setScene(newModule.getScene(selectedCourse));
+            } else {
+                noCourseSelected.setText("Please select a course first");
+            }
+        }));
+        buttons.getChildren().add(addModule);
+
         Button back = new Button("Go back");
         back.setOnAction((event -> {
-            // HomeScene home = new HomeScene();
             GUI.GUIStage.setScene(GUI.getHomeScene());
         }));
         
         buttons.getChildren().add(back);
-
-        Label noCourseSelected = new Label("");
 
         HBox buttonsSecondRow = new HBox(15);
         buttonsSecondRow.setPadding(new Insets(5,15,5,15));
