@@ -11,7 +11,7 @@ import javafx.scene.layout.*;
 // import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class EnrollmentScene {
+public class Enrollmentscene {
 
     public Scene getScene(){
         BorderPane layout = new BorderPane();
