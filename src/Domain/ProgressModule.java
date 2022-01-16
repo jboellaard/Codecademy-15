@@ -1,5 +1,5 @@
 package Domain;
-
+/*Ads data to the ProgressModule class */ 
 public class ProgressModule {
     private String title;
     private String version;
@@ -14,7 +14,7 @@ public class ProgressModule {
         this.followNumber = followNumber;
         this.progress = progress;
     }
-
+    /*Returns requested data */ 
     public String getTitle(){
         return this.title;
     }

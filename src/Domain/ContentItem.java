@@ -1,5 +1,6 @@
 package Domain;
 
+/*Ads data to contentitem class */
 public abstract class ContentItem {
     protected int contentItemID;
     protected String publicationDate;
@@ -10,7 +11,7 @@ public abstract class ContentItem {
         this.publicationDate = publicationDate;
         this.status = status;
     }
-
+    /*Returns requested data*/
     public int getContentItemID(){
         return this.contentItemID;
     }

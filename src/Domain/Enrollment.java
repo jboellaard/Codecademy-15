@@ -1,5 +1,5 @@
 package Domain;
-
+/*Ads data to enrollment class */ 
 public class Enrollment {
     private int enrollmentID;
     private Student student;
@@ -15,7 +15,7 @@ public class Enrollment {
         this.course = course;
         this.signUpDate = signUpDate;
     }
-    
+    /*Returns requested data*/ 
     public void addCertificate(Certificate certificate){
         this.certificate = certificate;
     }

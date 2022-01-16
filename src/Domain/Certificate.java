@@ -1,5 +1,6 @@
 package Domain;
-
+ 
+/*Ads all data to certificate class */
 public class Certificate {
     private int certificateID;
     private int enrollmentID;
@@ -12,7 +13,7 @@ public class Certificate {
         this.grade = grade;
         this.nameOfStaffMember = nameOfStaffMember;
     }
-
+/* returns requested data*/
     public void addCertificateID(int certificateID){
         this.certificateID=certificateID;
     }

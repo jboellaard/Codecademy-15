@@ -2,7 +2,7 @@ package Domain;
 
 import DB.DBConnection;
 
-/*  */
+/*Ads all entitie's data to the address class */
 public class Address {
     private int addressID;
     private String zipCode;
@@ -26,7 +26,7 @@ public class Address {
         }
         
     }
-
+    /*The lines below are to return the requested data*/
     public Address(String zipCode, int houseNo, String suffix, String street, String city, String country){
         this(-1,zipCode,houseNo,suffix,street,city,country);
     }
