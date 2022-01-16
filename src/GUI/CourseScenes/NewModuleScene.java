@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene is used to add a new module
+
 public class NewModuleScene {
 
     public Scene getScene(Course course){

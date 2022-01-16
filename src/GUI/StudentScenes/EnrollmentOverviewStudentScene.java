@@ -12,13 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene shows an overview of the enrollments of students
 public class EnrollmentOverviewStudentScene {
 
     public Scene getScene(Student student){
         Label studentName = new Label(student.getName()+" enrollments");
 
-        TableView<Enrollment> table = new TableView<>();
-        // StudentRepo repo = new StudentRepo();
+        TableView<Enrollment> table = new TableView<>();;
         ObservableList<Enrollment> allEnrollmentsStudent = EnrollmentRepo.getEnrollmentsFromDB(student);
         table.setItems(allEnrollmentsStudent);
  

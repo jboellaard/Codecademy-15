@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene shows a recommendation of coursed based on the selected course.
+
 public class RecommendedCourses {
 
     public Scene getScene(Course course){

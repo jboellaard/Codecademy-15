@@ -13,6 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+//This scene shows an overview of the webcasts that were viewd by students
+
 public class WebcastsViewedOverview {
 
     public Scene getScene(Student student){

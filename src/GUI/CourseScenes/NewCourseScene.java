@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+//This scene is used to add a new course.
+
 public class NewCourseScene {
 
     public Scene getScene(){
