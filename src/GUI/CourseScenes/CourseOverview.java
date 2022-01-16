@@ -44,8 +44,8 @@ public class CourseOverview {
         
         Button createCourse = new Button("Add new course");
         createCourse.setOnAction((event -> {
-            // NewCourseScene newStudent = new NewCourseScene();
-            // GUI.getStage().setScene(newStudent.getCreateScene());
+            NewCourseScene newCourse = new NewCourseScene();
+            GUI.getStage().setScene(newCourse.getScene());
         }));
         buttons.getChildren().add(createCourse);
 

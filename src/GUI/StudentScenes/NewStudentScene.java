@@ -1,17 +1,13 @@
 package GUI.StudentScenes;
 
 import DB.DBConnection;
-// import DB.*;
 import Domain.*;
 import Domain.Tools.*;
 import GUI.*;
 import javafx.geometry.Insets;
-// import javafx.geometry.Pos;
-// import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-// import javafx.scene.text.Font;
 
 public class NewStudentScene {
 
