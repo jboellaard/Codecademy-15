@@ -69,7 +69,7 @@ public class GUI extends Application {
         allStudents.setMinWidth(vBox.getPrefWidth());
         allCourses.setMinWidth(vBox.getPrefWidth());
         statistics.setMinWidth(vBox.getPrefWidth());
-        Scene home = new Scene(vBox, 600, 400);
+        Scene home = new Scene(vBox, 700, 400);
         return home;
     }
 

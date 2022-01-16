@@ -65,6 +65,7 @@ public class StatisticOptionsOverview {
 
         Button mostCertificates = new Button("Top 3 courses with most certificates");
         mostCertificates.setOnAction((event -> {
+            
             // TableView<Certificate> table = new TableView<>();
             // ObservableList<Certificate> allStudents = DBConnection.studentRepo.getAllStudents();
             // table.setItems(allStudents);
