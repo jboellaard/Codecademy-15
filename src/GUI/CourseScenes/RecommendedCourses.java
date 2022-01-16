@@ -54,7 +54,8 @@ public class RecommendedCourses {
 
         Button back = new Button("Go back");
         back.setOnAction((event -> {
-            GUI.GUIStage.setScene(GUI.getHomeScene());
+            CourseOverview overview = new CourseOverview();
+            GUI.GUIStage.setScene(overview.getScene());
         }));
         
         buttons.getChildren().add(back);

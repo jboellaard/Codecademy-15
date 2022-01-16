@@ -157,6 +157,7 @@ public class CourseRepo {
                     top3Courses[i][0] = rs.getString("CourseName");
                     top3Courses[i][1] = String.valueOf(rs.getInt("NumberOfCertificates"));
                 }
+                i++;
             }
         }
         catch (Exception e) {

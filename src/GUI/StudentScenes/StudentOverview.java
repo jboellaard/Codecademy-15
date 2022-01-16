@@ -118,7 +118,13 @@ public class StudentOverview {
 
         Button progressWebcasts = new Button("Show progress webcasts");
         progressWebcasts.setOnAction((event) -> {
-            //new scene tableview with progress webcasts
+            Student selectedStudent = table.getSelectionModel().getSelectedItem();
+            if (selectedStudent!=null){
+                WebcastsViewedOverview showWebcasts = new WebcastsViewedOverview();
+                GUI.getStage().setScene(showWebcasts.getScene(selectedStudent));
+            } else {
+                noStudentSelected.setText("Please select a student first");
+            }
         });
         buttonsSecondRow.getChildren().add(progressWebcasts);
 
