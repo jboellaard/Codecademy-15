@@ -2,8 +2,6 @@ package DB;
 
 import Domain.*;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 import javafx.collections.*;
 
@@ -14,14 +12,21 @@ public class CourseRepo {
     private String driverUrl = DBConnection.getDriverUrl();
     final ObservableList<Course> allCourses = FXCollections.observableArrayList();
 
-    /* This method creates a course repository and calls the method to retrieve all courses from the database */
-    public CourseRepo(){
+    /*
+     * This method creates a course repository and calls the method to retrieve all
+     * courses from the database
+     */
+    public CourseRepo() {
         getAllCoursesFromDB();
     }
 
-    /* This method adds a course to the database and then adds the course to the list allCourses so that the connection does not have to be called again to update the list 
-       It returns true if the course was succesfully created and false if not */
-    public boolean create(Course course, CourseModule module){
+    /*
+     * This method adds a course to the database and then adds the course to the
+     * list allCourses so that the connection does not have to be called again to
+     * update the list
+     * It returns true if the course was succesfully created and false if not
+     */
+    public boolean create(Course course, CourseModule module) {
         Connection con = null;
         PreparedStatement pstmt = null;
 
@@ -33,31 +38,41 @@ public class CourseRepo {
             pstmt.setString(2, course.getIntroductionText());
             pstmt.setString(3, course.getSubject());
             pstmt.setString(4, course.getLevelIndication().name());
-            
+
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 allCourses.add(course);
-                if (DBConnection.courseModuleRepo.updateModuleUsed(course, module)) course.addModule(module);
+                if (DBConnection.courseModuleRepo.updateModuleUsed(course, module))
+                    course.addModule(module);
                 return true;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
-            if (con != null) try { con.close(); } catch(Exception e) {}
+        } finally {
+            if (pstmt != null)
+                try {
+                    pstmt.close();
+                } catch (Exception e) {
+                }
+            if (con != null)
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
         }
         return false;
     }
 
     /* This method returns the list with all courses in de database */
-    public ObservableList<Course> getAllCourses(){
+    public ObservableList<Course> getAllCourses() {
         return this.allCourses;
     }
 
-    /* This method retrieves all courses from the database and adds them to a list to be used more efficiently */
-    public void getAllCoursesFromDB(){
+    /*
+     * This method retrieves all courses from the database and adds them to a list
+     * to be used more efficiently
+     */
+    public void getAllCoursesFromDB() {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -69,28 +84,43 @@ public class CourseRepo {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                allCourses.add(new Course(rs.getString("CourseName"),rs.getString("Subject"),rs.getString("IntroductionText"),LevelIndication.valueOf(rs.getString("LevelIndication"))));
+                allCourses.add(new Course(rs.getString("CourseName"), rs.getString("Subject"),
+                        rs.getString("IntroductionText"), LevelIndication.valueOf(rs.getString("LevelIndication"))));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (rs != null) try { rs.close(); } catch(Exception e) {}
-            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
-            if (con != null) try { con.close(); } catch(Exception e) {}
+        } finally {
+            if (rs != null)
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                }
+            if (pstmt != null)
+                try {
+                    pstmt.close();
+                } catch (Exception e) {
+                }
+            if (con != null)
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
         }
     }
 
-    /* This method changes a course in the database, if it has been changed succesfully the method returns true, if not the method returns false. */
-    public boolean update(Course course, String previousName){
+    /*
+     * This method changes a course in the database, if it has been changed
+     * succesfully the method returns true, if not the method returns false.
+     */
+    public boolean update(Course course, String previousName) {
         Connection con = null;
         PreparedStatement pstmt = null;
 
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            pstmt = con.prepareStatement("UPDATE Course SET CourseName=?, Subject=?, IntroductionText=?, LevelIndication=? WHERE CourseName=?;");
+            pstmt = con.prepareStatement(
+                    "UPDATE Course SET CourseName=?, Subject=?, IntroductionText=?, LevelIndication=? WHERE CourseName=?;");
             pstmt.setString(1, course.getCourseName());
             pstmt.setString(2, course.getSubject());
             pstmt.setString(3, course.getIntroductionText());
@@ -98,22 +128,31 @@ public class CourseRepo {
             pstmt.setString(5, previousName);
 
             int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0){
+            if (rowsAffected > 0) {
                 return true;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
-            if (con != null) try { con.close(); } catch(Exception e) {}
+        } finally {
+            if (pstmt != null)
+                try {
+                    pstmt.close();
+                } catch (Exception e) {
+                }
+            if (con != null)
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
         }
         return false;
     }
-    
-    /* This method deletes a course from the database. If it was deleted succesfully, the method returns true, if not the method returns false. */
-    public boolean delete(Course course){
+
+    /*
+     * This method deletes a course from the database. If it was deleted
+     * succesfully, the method returns true, if not the method returns false.
+     */
+    public boolean delete(Course course) {
         Connection con = null;
         PreparedStatement pstmt = null;
 
@@ -128,18 +167,24 @@ public class CourseRepo {
                 allCourses.remove(course);
                 return true;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
-            if (con != null) try { con.close(); } catch(Exception e) {}
+        } finally {
+            if (pstmt != null)
+                try {
+                    pstmt.close();
+                } catch (Exception e) {
+                }
+            if (con != null)
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
         }
         return false;
     }
 
-    public String[][] getTop3CoursesWithMostCertificates(){
+    public String[][] getTop3CoursesWithMostCertificates() {
         String[][] top3Courses = new String[3][2];
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -149,29 +194,39 @@ public class CourseRepo {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
             pstmt = con.prepareStatement(
-            "SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.Certificate=1 GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;");
+                    "SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.Certificate=1 GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;");
             rs = pstmt.executeQuery();
             int i = 0;
             while (rs.next()) {
-                if (i<3) {
+                if (i < 3) {
                     top3Courses[i][0] = rs.getString("CourseName");
                     top3Courses[i][1] = String.valueOf(rs.getInt("NumberOfCertificates"));
                 }
                 i++;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (rs != null) try { rs.close(); } catch(Exception e) {}
-            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
-            if (con != null) try { con.close(); } catch(Exception e) {}
+        } finally {
+            if (rs != null)
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                }
+            if (pstmt != null)
+                try {
+                    pstmt.close();
+                } catch (Exception e) {
+                }
+            if (con != null)
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
         }
         return top3Courses;
     }
 
-    public ObservableList<Course> getRecommendedCourses(Course course){
+    public ObservableList<Course> getRecommendedCourses(Course course) {
         ObservableList<Course> recs = FXCollections.observableArrayList();
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -180,23 +235,35 @@ public class CourseRepo {
         try {
             Class.forName(driverUrl);
             con = DriverManager.getConnection(connectionUrl);
-            pstmt = con.prepareStatement("SELECT * FROM RecommendedCourse LEFT JOIN Course ON Course.CourseName=RecommendedCourse.CourseName WHERE Course.CourseName=?;");
-            pstmt.setString(1,course.getCourseName());
+            pstmt = con.prepareStatement(
+                    "SELECT * FROM RecommendedCourse LEFT JOIN Course ON Course.CourseName=RecommendedCourse.CourseName WHERE Course.CourseName=?;");
+            pstmt.setString(1, course.getCourseName());
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                recs.add(new Course(rs.getString("CourseName"),rs.getString("Subject"),rs.getString("IntroductionText"),LevelIndication.valueOf(rs.getString("LevelIndication"))));
+                recs.add(new Course(rs.getString("CourseName"), rs.getString("Subject"),
+                        rs.getString("IntroductionText"), LevelIndication.valueOf(rs.getString("LevelIndication"))));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (rs != null) try { rs.close(); } catch(Exception e) {}
-            if (pstmt != null) try { pstmt.close(); } catch(Exception e) {}
-            if (con != null) try { con.close(); } catch(Exception e) {}
+        } finally {
+            if (rs != null)
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                }
+            if (pstmt != null)
+                try {
+                    pstmt.close();
+                } catch (Exception e) {
+                }
+            if (con != null)
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
         }
         return recs;
     }
-    
+
 }
