@@ -1,9 +1,9 @@
 This application has been made as an assignment for Project Codecademy at Avans Breda, in the school year 2021-2022, at the Computer Science course.
 The application has been made by the following students:
-Joy Boellaard
-Tim van Vliet
-Lisa Tyem
-Joey van Kuijk
+Joy Boellaard,
+Tim van Vliet,
+Lisa Tyem,
+Joey van Kuijk.
 
 
 INSTALLATION:
