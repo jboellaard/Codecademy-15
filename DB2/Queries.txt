@@ -1,0 +1,24 @@
+--Voor een geselecteerd geslacht, geef aan voor hoeveel procent van de cursussen waarvoor ingeschreven is, het certificaat behaald is.
+SELECT COUNT(*) AS Certificates FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=? AND Enrollment.Certificate=1;
+SELECT COUNT(*) AS Total FROM Enrollment LEFT JOIN Student ON Enrollment.StudentEmail=Student.EmailAddress WHERE Student.Gender=?
+
+--Voor een geselecteerde cursus, geef per module de gemiddelde voortgang in percentage van de totale lengte, voor alle accounts.
+SELECT AVG(Progress) AS Average FROM ProgressModule WHERE ContentItemID=?;
+
+--Voor een geselecteerd account, geef welke certificaten behaald zijn.
+SELECT * FROM Certificate LEFT JOIN Enrollment ON Enrollment.EnrollmentID=Certificate.EnrollmentID WHERE StudentEmail = ?;
+
+--Geef een top 3 van meest bekeken webcasts.
+SELECT TOP 3 Title, Count(*) AS Views FROM ProgressWebcast LEFT JOIN Webcast ON Webcast.ContentItemID=ProgressWebcast.ContentItemID GROUP BY Title ORDER BY Views DESC;
+
+--Geef een top 3 van cursussen met meest uitgegeven certificaten.
+SELECT TOP 3 Course.CourseName, COUNT(*) AS NumberOfCertificates FROM Course LEFT JOIN Enrollment ON Enrollment.CourseName=Course.CourseName WHERE Enrollment.Certificate=1 GROUP BY Course.CourseName ORDER BY NumberOfCertificates DESC;
+
+--Voor een geselecteerde cursus, geef de aanbevolen cursussen.
+SELECT * FROM RecommendedCourse LEFT JOIN Course ON Course.CourseName=RecommendedCourse.CourseName WHERE Course.CourseName=?;
+
+--Voor een geselecteerde cursus, geef hoeveel cursisten deze in het geheel behaald hebben.
+SELECT COUNT(*) AS Amount FROM Enrollment WHERE CourseName=? AND Certificate=1;
+
+
+

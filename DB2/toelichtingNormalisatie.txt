@@ -1,0 +1,11 @@
+Er zijn in de database geen transitieve nog partiële afhankelijkheden. 
+De functionele afhankelijkheden zijn:
+Student EmailAddress -> Student Name, DateOfBirth, Gender, AddressID
+AddressID -> Zipcode, HouseNumber, Suffix, Street, City
+In het RDO hebben we Viewed nog aan Student zitten, maar in de Database zit hij nu aan Enrollment
+ContentItemID, EnrollmentID (ProgressModule) -> Progress
+ContentItemID, StudentEmail (ProgressWebcast) -> Progress
+ContentItemID -> PublicationDate, Status, Title, Version, Description, NameContactPerson, EmailContactPerson, FollowNumber, CourseName, DurationInSeconds, URL, NameSpeaker, NameOrganisation
+CertificateID -> EnrollmentID, Grade, NameStaffCodecademy
+StudentEmail, CourseName, SignUpDate (Enrollment) -> Certificate
+Course -> CourseName, Subject, IntroductionText, LevelIndication, EnrollmentID, RecommendedCourse
